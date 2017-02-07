@@ -2,9 +2,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="minor.dokterstas.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/action_Inventory"
+        android:orderInCategory="1"
+        android:title="@string/action_Inventory"
         app:showAsAction="never" />
+
+    <item android:id="@+id/Settings_1"
+        android:orderInCategory="2"
+        android:titleCondensed="setting 1"
+        android:title="Setting 1"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:checkable="true" />
+
+    <item android:id="@+id/Settings_2"
+        android:orderInCategory="3"
+        android:titleCondensed="setting 2"
+        android:title="Setting 2"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:checkable="true" />
+
+    <item android:id="@+id/Settings_3"
+        android:orderInCategory="4"
+        android:titleCondensed="setting 3"
+        android:title="Setting 3"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:checkable="true" />
 </menu>
