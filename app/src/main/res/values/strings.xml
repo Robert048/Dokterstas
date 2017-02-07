@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Dokterstas</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_inventory">InventoryActivity</string>
-    <string name="title_activity_edit">EditActivity</string>
     <string name="action_Inventory">Inventory</string>
     <string name="hello_world">Test item</string>
 </resources>

@@ -18,14 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".InventoryActivity"
-            android:label="@string/title_activity_inventory"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".EditActivity"
-            android:label="@string/title_activity_edit"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
