@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
+import android.content.Intent;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -175,6 +177,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_Inventory) {
+
+            Intent intent = new Intent(MainActivity.this, Edit.class);
+            startActivity(intent);
+
             //setContentView(R.layout.activity_edit);
             return true;
         }

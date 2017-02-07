@@ -2,4 +2,5 @@
     <string name="app_name">Dokterstas</string>
     <string name="action_Inventory">Inventory</string>
     <string name="hello_world">Test item</string>
+    <string name="title_activity_edit">Edit</string>
 </resources>
