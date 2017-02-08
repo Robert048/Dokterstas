@@ -1,5 +1,7 @@
 package minor.dokterstas;
 
+import android.database.DatabaseErrorHandler;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,10 +10,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import minor.dokterstas.database.DatabaseHelper;
+
 
 public class Edit extends AppCompatActivity {
 
+    DatabaseHelper TasDB;
     SparseArray<Group> groups = new SparseArray<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +35,13 @@ public class Edit extends AppCompatActivity {
         listView.setAdapter(adapter);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
+        TasDB = new DatabaseHelper(this);
+
+    }
+
+    public void createDatabase()
+    {
 
     }
 

@@ -16,6 +16,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
     SparseArray<Group> groups = new SparseArray<>();
 
     @Override
@@ -34,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             myDB = this.openOrCreateDatabase("DokterstasTest", MODE_PRIVATE, null);
 
-            //myDB.execSQL("DROP TABLE Category;");
-            //myDB.execSQL("DROP TABLE Item;");
+            myDB.execSQL("DROP TABLE Category;");
+            myDB.execSQL("DROP TABLE Item;");
 
             /* Create a Table in the Database. */
             myDB.execSQL("CREATE TABLE IF NOT EXISTS "
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     + " (ID INT, Name Varchar, CategoryID int);");
 
             /* Insert data to a Table*/
-/*
+
             myDB.execSQL("INSERT INTO "
                     + TableName1
                     + " (ID, Name)"
@@ -74,14 +75,14 @@ public class MainActivity extends AppCompatActivity {
             myDB.execSQL("INSERT INTO "
                     + TableName2
                     + " (ID, Name, CategoryID)"
-                    + " VALUES ('3', 'Product1', 2);"
+                    + " VALUES ('3', 'Product3', 2);"
             );
             myDB.execSQL("INSERT INTO "
                     + TableName2
                     + " (ID, Name, CategoryID)"
-                    + " VALUES ('4', 'Product3', 2);"
+                    + " VALUES ('4', 'Product4', 2);"
             );
-*/
+
 
             /*retrieve data from database */
             {
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar Item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
