@@ -1,11 +1,17 @@
 package minor.dokterstas;
 
 import android.app.Dialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
@@ -13,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 
@@ -27,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     SparseArray<Group> groups = new SparseArray<>();
     DatabaseHelper TasDB;
     List<Category> categoryList = new ArrayList<>();
-
+    NotificationCompat.Builder mBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,26 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         createList();
+
+
+
+
+        mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.notification_icon)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+
+
     }
 
     public void createList() {
@@ -110,9 +137,46 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.Menu_Settings) {
+            final Dialog dialog = new Dialog(this);
 
-            Intent intent = new Intent(MainActivity.this, Edit.class);
-            startActivity(intent);
+            dialog.setContentView(R.layout.settings);
+            dialog.setTitle("Settings");
+
+            CheckBox setting_expiration = (CheckBox) dialog.findViewById(R.id.setting_expiration);
+            setting_expiration.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putBoolean(getString(R.string.setting_expiration_checked), true);
+                    editor.commit();
+                    //https://developer.android.com/training/basics/data-storage/shared-preferences.html
+
+                    /*
+                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    // notificationID allows you to update the notification later on.
+                    mNotificationManager.notify(0, mBuilder.build());
+                    */
+                }
+            });
+
+            CheckBox setting_stock = (CheckBox) dialog.findViewById(R.id.setting_stock);
+            setting_stock.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            CheckBox setting_check = (CheckBox) dialog.findViewById(R.id.setting_check);
+            setting_check.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            dialog.show();
             return true;
         }
 
