@@ -5,27 +5,38 @@ package minor.dokterstas;
  */
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import minor.dokterstas.database.DatabaseHelper;
+
 public class ExpandableListAdapter extends BaseExpandableListAdapter{
     private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
+    private MainActivity context;
+    private DatabaseHelper db;
 
-    public ExpandableListAdapter(Activity act, SparseArray<Group> groups) {
+
+    public ExpandableListAdapter(Activity act, SparseArray<Group> groups, MainActivity context, DatabaseHelper db) {
+        this.db = db;
         activity = act;
         this.groups = groups;
         inflater = act.getLayoutInflater();
+        this.context = context;
     }
 
     @Override
@@ -71,9 +82,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
             convertView = inflater.inflate(R.layout.listrow_details, null);
         }
         text = (TextView) convertView.findViewById(R.id.checkbox);
-        text.setText(children);
+
+        final String[] separated = children.split("/");
 
 
+        text.setText(separated[0]);
         ArrayList<View> allViewsWithinMyTopView = getAllChildren(convertView);
         CheckBox test = (CheckBox) allViewsWithinMyTopView.get(1);
 
@@ -83,6 +96,41 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
                 CheckBox test = (CheckBox) arg1;
                 Log.v("long clicked", "" + test.getTag());
 
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.item_edit);
+                dialog.setTitle("Confirmation");
+
+                Button btnDelete = (Button) dialog.findViewById(R.id.delete);
+                Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
+
+                btnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        db.deleteItem(separated[1]);
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                        builder.setMessage(separated[0] + " verwijderd uit lijst." );
+                        builder.setTitle("Verwijderd");
+
+                        AlertDialog dialog2 = builder.create();
+                        dialog2.show();
+
+                        dialog.dismiss();
+
+                        context.createList();
+
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
                 return true;
             }
         });

@@ -140,6 +140,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_CATEGORIES, null, values);
     }
 
+    public void deleteItem(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues args = new ContentValues();
+        db.delete(TABLE_ITEMS,"I_ID=?",new String[]{id});
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS + " + TABLE_CATEGORIES);

@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         createList();
-
     }
 
     public void createList() {
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
             ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
             ExpandableListAdapter adapter = new ExpandableListAdapter(this,
-                    groups);
+                    groups, this, TasDB);
             listView.setAdapter(adapter);
         } catch (Exception e) {
             Log.e("Error", "Error", e);
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         for (int j = 0; j < Categories.size(); j++) {
             Group group = new Group(Categories.get(j).getName());
             for (int i = 0; i < Categories.get(j).getItems().size(); i++) {
-                group.children.add(Categories.get(j).getItems().get(i).getName());
+                group.children.add(Categories.get(j).getItems().get(i).getName() + "/" + Categories.get(j).getItems().get(i).getID());
             }
             groups.append(j, group);
         }
@@ -102,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -133,9 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     TasDB.resetAll(MainActivity.this);
-
-
-
                     dialog.dismiss();
                     finish();
                     startActivity(getIntent());

@@ -29,20 +29,13 @@ public class Edit extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         createData();
-        ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
-        ExpandableListAdapter adapter = new ExpandableListAdapter(this,
-                groups);
-        listView.setAdapter(adapter);
+
 
         TasDB = new DatabaseHelper(this);
         //TasDB.loadDefault();
 
     }
 
-    public void createDatabase()
-    {
-
-    }
 
     public void createData() {
         for (int j = 0; j < 5; j++) {
