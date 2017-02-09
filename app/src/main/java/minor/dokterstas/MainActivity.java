@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     SparseArray<Group> groups = new SparseArray<>();
     DatabaseHelper TasDB;
+    List<Category> categoryList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        List<Category> categoryList = new ArrayList<>();
+        createList();
+        ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
+        ExpandableListAdapter adapter = new ExpandableListAdapter(this,
+                groups);
+        listView.setAdapter(adapter);
+    }
+
+    public void createList()
+    {
 
         try {
 
@@ -73,10 +83,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e("Error", "Error", e);
         }
 
-        ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
-        ExpandableListAdapter adapter = new ExpandableListAdapter(this,
-                groups);
-        listView.setAdapter(adapter);
     }
 
     public void createData(List<Category> Categories) {
@@ -144,9 +150,11 @@ public class MainActivity extends AppCompatActivity {
                     dialog2.show();
                     dialog.dismiss();
 
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+                    createData(categoryList);
+                    ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
+                    ExpandableListAdapter adapter = new ExpandableListAdapter(MainActivity.this,
+                            groups);
+                    listView.setAdapter(adapter);
                 }
             });
 
