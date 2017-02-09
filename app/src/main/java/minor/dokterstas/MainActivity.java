@@ -1,6 +1,8 @@
 package minor.dokterstas;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.Cursor;
-import android.content.Intent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void createList()
-    {
+    public void createList() {
+        categoryList.clear();
+
 
         try {
 
@@ -80,8 +81,7 @@ public class MainActivity extends AppCompatActivity {
             ExpandableListAdapter adapter = new ExpandableListAdapter(this,
                     groups);
             listView.setAdapter(adapter);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             Log.e("Error", "Error", e);
         }
 
@@ -128,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
             dialog.setTitle("Categorie toevoegen");
 
             final EditText editText = (EditText) dialog.findViewById(R.id.editText);
-            Button btnSave          = (Button) dialog.findViewById(R.id.save);
-            Button btnCancel        = (Button) dialog.findViewById(R.id.cancel);
+            Button btnSave = (Button) dialog.findViewById(R.id.save);
+            Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
             btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -161,12 +161,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.Settings_1) {
-            if(item.isChecked())
-            {
+            if (item.isChecked()) {
                 item.setChecked(false);
-            }
-            else
-            {
+            } else {
                 item.setChecked(true);
             }
             return true;
