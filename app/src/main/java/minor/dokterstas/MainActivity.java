@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             TasDB = new DatabaseHelper(this);
 
             {
-                //Cursor c = myDB.rawQuery("SELECT * FROM " + TableName1, null);
                 Cursor c = TasDB.getAllDataFromTable(1);
 
                 int Column1 = c.getColumnIndex(TasDB.COLUMN_CATEGORIES_ID);
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             {
-               // Cursor c = myDB.rawQuery("SELECT * FROM " + TableName2, null);
                 Cursor c = TasDB.getAllDataFromTable(2);
 
                 int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_ID);
@@ -100,40 +98,21 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_Inventory) {
+        if (id == R.id.Menu_Settings) {
 
             Intent intent = new Intent(MainActivity.this, Edit.class);
             startActivity(intent);
+            return true;
+        }
 
-            //setContentView(R.layout.activity_edit);
+        if (id == R.id.Menu_Category) {
+
+            //open pop-up
+
             return true;
         }
 
         if (id == R.id.Settings_1) {
-            if(item.isChecked())
-            {
-                item.setChecked(false);
-            }
-            else
-            {
-                item.setChecked(true);
-            }
-            return true;
-        }
-
-        if (id == R.id.Settings_2) {
-            if(item.isChecked())
-            {
-                item.setChecked(false);
-            }
-            else
-            {
-                item.setChecked(true);
-            }
-            return true;
-        }
-
-        if (id == R.id.Settings_3) {
             if(item.isChecked())
             {
                 item.setChecked(false);

@@ -4,9 +4,9 @@
     tools:context="minor.dokterstas.MainActivity">
 
     <item
-        android:id="@+id/menu_Category"
+        android:id="@+id/Menu_Category"
         android:orderInCategory="1"
-        android:title="@string/menu_Category"
+        android:title="@string/Menu_Category"
         app:showAsAction="never" />
 
     <item
