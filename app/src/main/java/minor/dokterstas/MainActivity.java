@@ -36,10 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         createList();
-        ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
-        ExpandableListAdapter adapter = new ExpandableListAdapter(this,
-                groups);
-        listView.setAdapter(adapter);
+
     }
 
     public void createList()
@@ -78,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             createData(categoryList);
+
+            ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
+            ExpandableListAdapter adapter = new ExpandableListAdapter(this,
+                    groups);
+            listView.setAdapter(adapter);
         }
         catch(Exception e) {
             Log.e("Error", "Error", e);
@@ -150,11 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     dialog2.show();
                     dialog.dismiss();
 
-                    createData(categoryList);
-                    ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
-                    ExpandableListAdapter adapter = new ExpandableListAdapter(MainActivity.this,
-                            groups);
-                    listView.setAdapter(adapter);
+                    createList();
                 }
             });
 
