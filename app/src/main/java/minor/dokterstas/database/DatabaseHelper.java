@@ -23,6 +23,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_ITEMS = "items_table";
     public static final String COLUMN_ITEMS_ID = "I_ID";
     public static final String COLUMN_ITEMS_NAME = "NAME";
+    public static final String COLUMN_ITEMS_STOCK = "Stock";
+    public static final String COLUMN_ITEMS_EXPIRATION = "Expiration";
     public static final String COLUMN_ITEMS_CATEGORIES_ID = "C_ID";
 
 
@@ -42,6 +44,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + TABLE_ITEMS + " ("
                 + COLUMN_ITEMS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_ITEMS_NAME + " TEXT, "
+                + COLUMN_ITEMS_STOCK + " INTEGER, "
+                + COLUMN_ITEMS_EXPIRATION + " TEXT, "
                 + COLUMN_ITEMS_CATEGORIES_ID + " INTEGER, FOREIGN KEY("+ COLUMN_ITEMS_CATEGORIES_ID +") REFERENCES "+ TABLE_CATEGORIES  +"(" + COLUMN_CATEGORIES_ID + ") )");
 
 

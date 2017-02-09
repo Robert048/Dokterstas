@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putBoolean(getString(R.string.setting_expiration_checked), true);
                     editor.commit();
+                    //https://developer.android.com/training/basics/data-storage/shared-preferences.html
 
                     /*
                     NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
