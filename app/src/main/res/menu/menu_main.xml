@@ -18,7 +18,7 @@
     <item
         android:id="@+id/Menu_Reset"
         android:orderInCategory="1"
-        android:title="reset"
+        android:title="Reset to default"
         app:showAsAction="never" />
 
     <item android:id="@+id/Settings_1"

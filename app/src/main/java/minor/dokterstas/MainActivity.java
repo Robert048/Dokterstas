@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     public void createList() {
         categoryList.clear();
 
-
         try {
 
             /*retrieve data from database */
@@ -104,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar Item clicks here. The action bar will
@@ -120,7 +121,35 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.Menu_Reset) {
 
-            //reset database
+            final Dialog dialog = new Dialog(this);
+
+            dialog.setContentView(R.layout.confirmation);
+            dialog.setTitle("Confirmation");
+
+            Button btnYes = (Button) dialog.findViewById(R.id.yes);
+            Button btnNo = (Button) dialog.findViewById(R.id.no);
+
+            btnYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TasDB.resetAll(MainActivity.this);
+
+
+
+                    dialog.dismiss();
+                    finish();
+                    startActivity(getIntent());
+                }
+            });
+
+            btnNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
 
             return true;
         }

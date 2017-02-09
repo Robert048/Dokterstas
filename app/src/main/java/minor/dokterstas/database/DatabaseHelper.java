@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();
+
     }
 
     @Override
@@ -122,6 +123,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor res = db.rawQuery(query, null);
         return res;
+    }
+
+    public void resetAll(Context context)
+    {
+        context.deleteDatabase(DATABASE_NAME);
     }
 
     public void addCategory(String name)
