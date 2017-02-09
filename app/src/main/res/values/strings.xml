@@ -4,4 +4,7 @@
     <string name="Menu_Category">New Category</string>
     <string name="product_name">product</string>
     <string name="title_activity_edit">Edit</string>
+    <string name="setting_expiration">Notificatie weergeven als product houdbaarheidsdatum bereikt is</string>
+    <string name="setting_stock">Notificatie weergeven als product bijna op raakt</string>
+    <string name="setting_check">Notificatie voor de controle van de inhoud van de tas</string>
 </resources>

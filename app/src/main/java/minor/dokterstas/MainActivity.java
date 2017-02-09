@@ -1,11 +1,14 @@
 package minor.dokterstas;
 
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
@@ -13,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 
@@ -27,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     SparseArray<Group> groups = new SparseArray<>();
     DatabaseHelper TasDB;
     List<Category> categoryList = new ArrayList<>();
-
+    NotificationCompat.Builder mBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         createList();
-
     }
 
     public void createList() {
@@ -113,9 +116,36 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.Menu_Settings) {
+            final Dialog dialog = new Dialog(this);
 
-            Intent intent = new Intent(MainActivity.this, Edit.class);
-            startActivity(intent);
+            dialog.setContentView(R.layout.settings);
+            dialog.setTitle("Settings");
+
+            CheckBox setting_expiration = (CheckBox) dialog.findViewById(R.id.setting_expiration);
+            setting_expiration.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            CheckBox setting_stock = (CheckBox) dialog.findViewById(R.id.setting_stock);
+            setting_stock.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            CheckBox setting_check = (CheckBox) dialog.findViewById(R.id.setting_check);
+            setting_check.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            dialog.show();
             return true;
         }
 
@@ -123,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
             final Dialog dialog = new Dialog(this);
 
-            dialog.setContentView(R.layout.confirmation);
+            dialog.setContentView(R.layout.settings);
             dialog.setTitle("Confirmation");
 
             Button btnYes = (Button) dialog.findViewById(R.id.yes);
