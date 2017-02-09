@@ -124,6 +124,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public void addCategory(String name)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CATEGORIES_NAME, name);
+
+        db.insert(TABLE_CATEGORIES, null, values);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS + " + TABLE_CATEGORIES);

@@ -1,12 +1,17 @@
 package minor.dokterstas;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
@@ -109,6 +114,43 @@ public class MainActivity extends AppCompatActivity {
 
             //open pop-up
 
+            final Dialog dialog = new Dialog(this);
+
+            dialog.setContentView(R.layout.createcategory);
+            dialog.setTitle("Categorie toevoegen");
+
+            final EditText editText = (EditText) dialog.findViewById(R.id.editText);
+            Button btnSave          = (Button) dialog.findViewById(R.id.save);
+            Button btnCancel        = (Button) dialog.findViewById(R.id.cancel);
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TasDB.addCategory(editText.getText().toString());
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                    builder.setMessage(editText.getText().toString() + " categorie toegevoegd.");
+                    builder.setTitle("Nieuwe categorie");
+
+                    AlertDialog dialog2 = builder.create();
+                    dialog2.show();
+                    dialog.dismiss();
+
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            });
+
+            dialog.show();
             return true;
         }
 

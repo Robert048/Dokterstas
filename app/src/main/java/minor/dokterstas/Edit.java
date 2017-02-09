@@ -34,8 +34,6 @@ public class Edit extends AppCompatActivity {
                 groups);
         listView.setAdapter(adapter);
 
-
-
         TasDB = new DatabaseHelper(this);
         //TasDB.loadDefault();
 
