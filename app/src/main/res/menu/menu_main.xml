@@ -15,6 +15,12 @@
         android:title="@string/Menu_Settings"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/Menu_Reset"
+        android:orderInCategory="1"
+        android:title="reset"
+        app:showAsAction="never" />
+
     <item android:id="@+id/Settings_1"
         android:orderInCategory="2"
         android:titleCondensed="setting 1"

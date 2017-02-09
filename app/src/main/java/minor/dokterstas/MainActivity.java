@@ -118,6 +118,13 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.Menu_Reset) {
+
+            //reset database
+
+            return true;
+        }
+
         if (id == R.id.Menu_Category) {
 
             //open pop-up
