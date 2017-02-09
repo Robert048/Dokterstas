@@ -30,69 +30,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         List<Category> categoryList = new ArrayList<>();
 
-       /* SQLiteDatabase myDB= null;
-        String TableName1 = "Category";
-        String TableName2 = "Item";
-        */
-
-        /* Create a Database. */
         try {
 
-          /* myDB = this.openOrCreateDatabase("DokterstasTest", MODE_PRIVATE, null);
-
-            myDB.execSQL("DROP TABLE Category;");
-            myDB.execSQL("DROP TABLE Item;");
-
-            /* Create a Table in the Database. */
-
-          /*  myDB.execSQL("CREATE TABLE IF NOT EXISTS "
-                    + TableName1
-                    + " (ID INT, Name Varchar);");
-
-            myDB.execSQL("CREATE TABLE IF NOT EXISTS "
-                    + TableName2
-                    + " (ID INT, Name Varchar, CategoryID int);");
-
-            /* Insert data to a Table*/
-
-         /*   myDB.execSQL("INSERT INTO "
-                    + TableName1
-                    + " (ID, Name)"
-                    + " VALUES ('1', 'category1');"
-            );
-
-            myDB.execSQL("INSERT INTO "
-                    + TableName1
-                    + " (ID, Name)"
-                    + " VALUES ('2', 'category2');"
-            );
-
-
-            myDB.execSQL("INSERT INTO "
-                    + TableName2
-                    + " (ID, Name, CategoryID)"
-                    + " VALUES ('1', 'Product1', 1);"
-            );
-            myDB.execSQL("INSERT INTO "
-                    + TableName2
-                    + " (ID, Name, CategoryID)"
-                    + " VALUES ('2', 'Product2', 1);"
-            );
-            myDB.execSQL("INSERT INTO "
-                    + TableName2
-                    + " (ID, Name, CategoryID)"
-                    + " VALUES ('3', 'Product3', 2);"
-            );
-            myDB.execSQL("INSERT INTO "
-                    + TableName2
-                    + " (ID, Name, CategoryID)"
-                    + " VALUES ('4', 'Product4', 2);"
-            );
-
-            */
-
             /*retrieve data from database */
-
             TasDB = new DatabaseHelper(this);
 
             {

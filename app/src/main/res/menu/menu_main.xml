@@ -4,29 +4,21 @@
     tools:context="minor.dokterstas.MainActivity">
 
     <item
-        android:id="@+id/action_Inventory"
+        android:id="@+id/menu_Category"
         android:orderInCategory="1"
-        android:title="@string/action_Inventory"
+        android:title="@string/menu_Category"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/Menu_Settings"
+        android:orderInCategory="1"
+        android:title="@string/Menu_Settings"
         app:showAsAction="never" />
 
     <item android:id="@+id/Settings_1"
         android:orderInCategory="2"
         android:titleCondensed="setting 1"
-        android:title="Setting 1"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:checkable="true" />
-
-    <item android:id="@+id/Settings_2"
-        android:orderInCategory="3"
-        android:titleCondensed="setting 2"
-        android:title="Setting 2"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:checkable="true" />
-
-    <item android:id="@+id/Settings_3"
-        android:orderInCategory="4"
-        android:titleCondensed="setting 3"
-        android:title="Setting 3"
+        android:title="test"
         android:icon="@android:drawable/ic_menu_preferences"
         android:checkable="true" />
 </menu>
