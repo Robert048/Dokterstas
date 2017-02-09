@@ -5,15 +5,17 @@ package minor.dokterstas;
  */
 
 import android.app.Activity;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter{
     private final SparseArray<Group> groups;
@@ -36,6 +38,30 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         return 0;
     }
 
+    private ArrayList<View> getAllChildren(View v) {
+
+        if (!(v instanceof ViewGroup)) {
+            ArrayList<View> viewArrayList = new ArrayList<View>();
+            viewArrayList.add(v);
+            return viewArrayList;
+        }
+
+        ArrayList<View> result = new ArrayList<View>();
+
+        ViewGroup vg = (ViewGroup) v;
+        for (int i = 0; i < vg.getChildCount(); i++) {
+
+            View child = vg.getChildAt(i);
+
+            ArrayList<View> viewArrayList = new ArrayList<View>();
+            viewArrayList.add(v);
+            viewArrayList.addAll(getAllChildren(child));
+
+            result.addAll(viewArrayList);
+        }
+        return result;
+    }
+
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
@@ -44,13 +70,31 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_details, null);
         }
-        text = (TextView) convertView.findViewById(R.id.textView1);
+        text = (TextView) convertView.findViewById(R.id.checkbox);
         text.setText(children);
-        convertView.setOnClickListener(new OnClickListener() {
+
+
+        ArrayList<View> allViewsWithinMyTopView = getAllChildren(convertView);
+        CheckBox test = (CheckBox) allViewsWithinMyTopView.get(1);
+
+        test.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
-            public void onClick(View v) {
-                Toast.makeText(activity, children,
-                        Toast.LENGTH_SHORT).show();
+            public boolean onLongClick(View arg1) {
+                CheckBox test = (CheckBox) arg1;
+                Log.v("long clicked", "" + test.getTag());
+
+                return true;
+            }
+        });
+
+        convertView.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View arg1) {
+                // TODO Auto-generated method stub
+
+                Log.v("long clicked","clicked: ");
+
+                return true;
             }
         });
         return convertView;
