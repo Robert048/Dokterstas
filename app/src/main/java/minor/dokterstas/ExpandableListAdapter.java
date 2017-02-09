@@ -90,7 +90,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         convertView.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View arg1) {
-                // TODO Auto-generated method stub
 
                 Log.v("long clicked","clicked: ");
 
