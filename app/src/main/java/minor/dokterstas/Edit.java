@@ -37,6 +37,7 @@ public class Edit extends AppCompatActivity {
 
 
         TasDB = new DatabaseHelper(this);
+        //TasDB.loadDefault();
 
     }
 

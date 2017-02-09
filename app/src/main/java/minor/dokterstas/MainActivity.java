@@ -14,10 +14,13 @@ import android.content.Intent;
 import java.util.ArrayList;
 import java.util.List;
 
+import minor.dokterstas.database.DatabaseHelper;
+
 public class MainActivity extends AppCompatActivity {
 
 
     SparseArray<Group> groups = new SparseArray<>();
+    DatabaseHelper TasDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +28,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        List<Category> categoryList = new ArrayList<>();
 
-        SQLiteDatabase myDB= null;
+       /* SQLiteDatabase myDB= null;
         String TableName1 = "Category";
         String TableName2 = "Item";
-        List<Category> categoryList = new ArrayList<>();
+        */
 
         /* Create a Database. */
         try {
-            myDB = this.openOrCreateDatabase("DokterstasTest", MODE_PRIVATE, null);
+
+          /* myDB = this.openOrCreateDatabase("DokterstasTest", MODE_PRIVATE, null);
 
             myDB.execSQL("DROP TABLE Category;");
             myDB.execSQL("DROP TABLE Item;");
 
             /* Create a Table in the Database. */
-            myDB.execSQL("CREATE TABLE IF NOT EXISTS "
+
+          /*  myDB.execSQL("CREATE TABLE IF NOT EXISTS "
                     + TableName1
                     + " (ID INT, Name Varchar);");
 
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
             /* Insert data to a Table*/
 
-            myDB.execSQL("INSERT INTO "
+         /*   myDB.execSQL("INSERT INTO "
                     + TableName1
                     + " (ID, Name)"
                     + " VALUES ('1', 'category1');"
@@ -83,13 +89,18 @@ public class MainActivity extends AppCompatActivity {
                     + " VALUES ('4', 'Product4', 2);"
             );
 
+            */
 
             /*retrieve data from database */
-            {
-                Cursor c = myDB.rawQuery("SELECT * FROM " + TableName1, null);
 
-                int Column1 = c.getColumnIndex("ID");
-                int Column2 = c.getColumnIndex("Name");
+            TasDB = new DatabaseHelper(this);
+
+            {
+                //Cursor c = myDB.rawQuery("SELECT * FROM " + TableName1, null);
+                Cursor c = TasDB.getAllDataFromTable(1);
+
+                int Column1 = c.getColumnIndex(TasDB.COLUMN_CATEGORIES_ID);
+                int Column2 = c.getColumnIndex(TasDB.COLUMN_CATEGORIES_NAME);
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
@@ -98,11 +109,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             {
-                Cursor c = myDB.rawQuery("SELECT * FROM " + TableName2, null);
+               // Cursor c = myDB.rawQuery("SELECT * FROM " + TableName2, null);
+                Cursor c = TasDB.getAllDataFromTable(2);
 
-                int Column1 = c.getColumnIndex("ID");
-                int Column2 = c.getColumnIndex("Name");
-                int Column3 = c.getColumnIndex("CategoryID");
+                int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_ID);
+                int Column2 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
+                int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_CATEGORIES_ID);
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
@@ -116,10 +128,8 @@ public class MainActivity extends AppCompatActivity {
         }
         catch(Exception e) {
             Log.e("Error", "Error", e);
-        } finally {
-            if (myDB != null)
-                myDB.close();
         }
+
         ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
         ExpandableListAdapter adapter = new ExpandableListAdapter(this,
                 groups);
