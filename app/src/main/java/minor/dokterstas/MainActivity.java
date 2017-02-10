@@ -1,6 +1,7 @@
 package minor.dokterstas;
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             final Dialog dialog = new Dialog(this);
 
             dialog.setContentView(R.layout.settings);
-            dialog.setTitle("Settings");
+            dialog.setTitle("settings");
 
             CheckBox setting_expiration = (CheckBox) dialog.findViewById(R.id.setting_expiration);
             setting_expiration.setOnClickListener(new View.OnClickListener() {
@@ -262,7 +263,12 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void showTimePickerDialog(View view) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
     }
 }

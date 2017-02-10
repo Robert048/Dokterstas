@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.Date;
+
 /**
  * Created by Hakob on 8-2-2017.
  */
@@ -21,10 +23,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_ITEMS = "items_table";
     public static final String COLUMN_ITEMS_ID = "I_ID";
     public static final String COLUMN_ITEMS_NAME = "NAME";
-    public static final String COLUMN_ITEMS_STOCK = "Stock";
-    public static final String COLUMN_ITEMS_EXPIRATION = "Expiration";
+    public static final String COLUMN_ITEMS_STOCK = "STOCK";
+    public static final String COLUMN_ITEMS_EXPIRATION = "EXPIRATION";
     public static final String COLUMN_ITEMS_CATEGORIES_ID = "C_ID";
-
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -43,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ITEMS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_ITEMS_NAME + " TEXT, "
                 + COLUMN_ITEMS_STOCK + " INTEGER, "
-                + COLUMN_ITEMS_EXPIRATION + " TEXT, "
+                + COLUMN_ITEMS_EXPIRATION + " DATETIME DEFAULT CURRENT_TIMESTAMP, "
                 + COLUMN_ITEMS_CATEGORIES_ID + " INTEGER, FOREIGN KEY("+ COLUMN_ITEMS_CATEGORIES_ID +") REFERENCES "+ TABLE_CATEGORIES  +"(" + COLUMN_CATEGORIES_ID + ") )");
 
 
@@ -111,6 +112,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, itemValues8);
     }
 
+
+    public void insertDate(Date date)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ITEMS_EXPIRATION, date.getTime());
+        db.insert(TABLE_ITEMS, null, values);
+    }
 
     public Cursor getAllDataFromTable(int table) {
         SQLiteDatabase db = this.getWritableDatabase();

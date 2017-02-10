@@ -85,7 +85,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
         final String[] separated = children.split("/");
 
-
         text.setText(separated[0]);
         ArrayList<View> allViewsWithinMyTopView = getAllChildren(convertView);
         CheckBox test = (CheckBox) allViewsWithinMyTopView.get(1);
