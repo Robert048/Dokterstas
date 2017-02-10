@@ -18,13 +18,18 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import minor.dokterstas.database.DatabaseHelper;
 
@@ -251,6 +256,66 @@ public class MainActivity extends AppCompatActivity {
                     dialog.dismiss();
 
                     createList();
+                }
+            });
+
+            dialog.show();
+            return true;
+        }
+
+        if (id == R.id.Menu_Item) {
+
+            //open pop-up
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.create_item);
+            dialog.setTitle("Item toevoegen");
+
+            Spinner category = (Spinner) dialog.findViewById(R.id.spinner);
+            final EditText editText = (EditText) dialog.findViewById(R.id.editText);
+            Button btnSave = (Button) dialog.findViewById(R.id.save);
+            Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
+
+            //spinner settings
+            List<String> categories = new ArrayList<>();
+            for (Category cat : categoryList) {
+                categories.add(cat.getName());
+            }
+
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
+
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            category.setAdapter(dataAdapter);
+
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /*
+                    TasDB.addCategory(editText.getText().toString());
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                    builder.setMessage(editText.getText().toString() + " categorie toegevoegd.");
+                    builder.setTitle("Nieuwe categorie");
+
+                    AlertDialog dialog2 = builder.create();
+                    dialog2.show();
+                    dialog.dismiss();
+
+                    createList();
+                    */
+                    //TODO database add item
                 }
             });
 
