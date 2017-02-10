@@ -19,13 +19,18 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import minor.dokterstas.database.DatabaseHelper;
 
@@ -91,12 +96,16 @@ public class MainActivity extends AppCompatActivity {
 
                 int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_ID);
                 int Column2 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
-                int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_CATEGORIES_ID);
+                //int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_EXPIRATION);
+                //int Column4 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
+                int Column5 = c.getColumnIndex(TasDB.COLUMN_ITEMS_CATEGORIES_ID);
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
-                    int CategoryID = c.getInt(Column3);
-                    Item item = new Item(ID, Name);
+                    //String tht = c.getString(Column3);
+                    //int voorraad = c.getInt(Column4);
+                    int CategoryID = c.getInt(Column5);
+                    Item item = new Item(ID, Name, "", 1);
                     Category category = categoryList.get(CategoryID - 1);
                     category.addItem(item);
                 }
@@ -117,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         for (int j = 0; j < Categories.size(); j++) {
             Group group = new Group(Categories.get(j).getName());
             for (int i = 0; i < Categories.get(j).getItems().size(); i++) {
-                group.children.add(Categories.get(j).getItems().get(i).getName() + "/" + Categories.get(j).getItems().get(i).getID());
+                group.children.add(Categories.get(j).getItems().get(i).getName() + "/" + Categories.get(j).getItems().get(i).getID() + "/" + Categories.get(j).getItems().get(i).getTht() + "\n" + Categories.get(j).getItems().get(i).getVoorraad() + " op voorraad");
             }
             groups.append(j, group);
         }
@@ -248,6 +257,66 @@ public class MainActivity extends AppCompatActivity {
                     dialog.dismiss();
 
                     createList();
+                }
+            });
+
+            dialog.show();
+            return true;
+        }
+
+        if (id == R.id.Menu_Item) {
+
+            //open pop-up
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.create_item);
+            dialog.setTitle("Item toevoegen");
+
+            Spinner category = (Spinner) dialog.findViewById(R.id.spinner);
+            final EditText editText = (EditText) dialog.findViewById(R.id.editText);
+            Button btnSave = (Button) dialog.findViewById(R.id.save);
+            Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
+
+            //spinner settings
+            List<String> categories = new ArrayList<>();
+            for (Category cat : categoryList) {
+                categories.add(cat.getName());
+            }
+
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
+
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            category.setAdapter(dataAdapter);
+
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /*
+                    TasDB.addCategory(editText.getText().toString());
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                    builder.setMessage(editText.getText().toString() + " categorie toegevoegd.");
+                    builder.setTitle("Nieuwe categorie");
+
+                    AlertDialog dialog2 = builder.create();
+                    dialog2.show();
+                    dialog.dismiss();
+
+                    createList();
+                    */
+                    //TODO database add item
                 }
             });
 

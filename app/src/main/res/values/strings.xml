@@ -2,6 +2,7 @@
     <string name="app_name">Dokterstas</string>
     <string name="Menu_Settings">Settings</string>
     <string name="Menu_Category">New Category</string>
+    <string name="Menu_Item">New item</string>
     <string name="product_name">product</string>
     <string name="title_activity_edit">Edit</string>
     <string name="setting_expiration">Notificatie weergeven als product houdbaarheidsdatum bereikt is</string>

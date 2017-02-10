@@ -10,19 +10,25 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/Menu_Item"
+        android:orderInCategory="2"
+        android:title="@string/Menu_Item"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/Menu_Settings"
-        android:orderInCategory="1"
+        android:orderInCategory="3"
         android:title="@string/Menu_Settings"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/Menu_Reset"
-        android:orderInCategory="1"
+        android:orderInCategory="4"
         android:title="Reset to default"
         app:showAsAction="never" />
 
     <item android:id="@+id/Settings_1"
-        android:orderInCategory="2"
+        android:orderInCategory="5"
         android:titleCondensed="setting 1"
         android:title="test"
         android:icon="@android:drawable/ic_menu_preferences"

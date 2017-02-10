@@ -77,15 +77,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final String children = (String) getChild(groupPosition, childPosition);
-        TextView text = null;
+        CheckBox text = null;
+        TextView text2 = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_details, null);
         }
-        text = (TextView) convertView.findViewById(R.id.checkbox);
+        text = (CheckBox) convertView.findViewById(R.id.checkbox);
+        text2 = (TextView) convertView.findViewById(R.id.TextView);
 
         final String[] separated = children.split("/");
 
         text.setText(separated[0]);
+        text2.setText(separated[2]);
         ArrayList<View> allViewsWithinMyTopView = getAllChildren(convertView);
         CheckBox test = (CheckBox) allViewsWithinMyTopView.get(1);
 
