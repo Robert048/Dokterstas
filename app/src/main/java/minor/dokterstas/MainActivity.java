@@ -90,12 +90,16 @@ public class MainActivity extends AppCompatActivity {
 
                 int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_ID);
                 int Column2 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
-                int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_CATEGORIES_ID);
+                //int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_EXPIRATION);
+                //int Column4 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
+                int Column5 = c.getColumnIndex(TasDB.COLUMN_ITEMS_CATEGORIES_ID);
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
-                    int CategoryID = c.getInt(Column3);
-                    Item item = new Item(ID, Name);
+                    //String tht = c.getString(Column3);
+                    //int voorraad = c.getInt(Column4);
+                    int CategoryID = c.getInt(Column5);
+                    Item item = new Item(ID, Name, "", 1);
                     Category category = categoryList.get(CategoryID - 1);
                     category.addItem(item);
                 }
@@ -116,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         for (int j = 0; j < Categories.size(); j++) {
             Group group = new Group(Categories.get(j).getName());
             for (int i = 0; i < Categories.get(j).getItems().size(); i++) {
-                group.children.add(Categories.get(j).getItems().get(i).getName() + "/" + Categories.get(j).getItems().get(i).getID());
+                group.children.add(Categories.get(j).getItems().get(i).getName() + "/" + Categories.get(j).getItems().get(i).getID() + "/" + Categories.get(j).getItems().get(i).getTht() + "\n" + Categories.get(j).getItems().get(i).getVoorraad() + " op voorraad");
             }
             groups.append(j, group);
         }
