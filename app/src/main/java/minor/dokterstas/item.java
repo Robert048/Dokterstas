@@ -1,7 +1,7 @@
 package minor.dokterstas;
 
 /**
- * Created by rober on 8-2-2017.
+ * Created by Hakob on 10-2-2017.
  */
 
 public class Item {

@@ -104,6 +104,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
                 Button btnDelete = (Button) dialog.findViewById(R.id.delete);
                 Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
+                Button btnPlus = (Button) dialog.findViewById(R.id.plus);
+                Button btnMinus = (Button) dialog.findViewById(R.id.minus);
 
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -119,9 +121,21 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
                         dialog2.show();
 
                         dialog.dismiss();
-
                         context.createList();
+                    }
+                });
 
+                btnPlus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        db.addStock(separated[1]);
+                    }
+                });
+
+                btnMinus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        db.removeStock(separated[1]);
                     }
                 });
 

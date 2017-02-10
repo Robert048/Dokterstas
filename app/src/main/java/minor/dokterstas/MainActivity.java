@@ -2,7 +2,6 @@ package minor.dokterstas;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -19,18 +18,15 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import minor.dokterstas.database.DatabaseHelper;
 
@@ -75,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         categoryList.clear();
 
         try {
-
             /*retrieve data from database */
             TasDB = new DatabaseHelper(this);
 
@@ -97,15 +92,16 @@ public class MainActivity extends AppCompatActivity {
                 int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_ID);
                 int Column2 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
                 //int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_EXPIRATION);
-                //int Column4 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
+                int Column4 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
                 int Column5 = c.getColumnIndex(TasDB.COLUMN_ITEMS_CATEGORIES_ID);
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
                     //String tht = c.getString(Column3);
-                    //int voorraad = c.getInt(Column4);
+                    int voorraad = c.getInt(Column4);
                     int CategoryID = c.getInt(Column5);
-                    Item item = new Item(ID, Name, "", 1);
+
+                    Item item = new Item(ID, Name, "", voorraad );
                     Category category = categoryList.get(CategoryID - 1);
                     category.addItem(item);
                 }

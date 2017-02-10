@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.Date;
@@ -73,16 +74,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //INSERT DEFAULT ITEMS IN CATEGORIES
         ContentValues itemValues = new ContentValues();
         itemValues.put(COLUMN_ITEMS_NAME, "Injectienaalden");
+        itemValues.put(COLUMN_ITEMS_STOCK, 10);
         itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 2);
         db.insert(TABLE_ITEMS, null, itemValues);
 
         ContentValues itemValues2 = new ContentValues();
         itemValues2.put(COLUMN_ITEMS_NAME, "Naaldencontainer");
+        itemValues.put(COLUMN_ITEMS_STOCK, 5);
         itemValues2.put(COLUMN_ITEMS_CATEGORIES_ID, 2);
         db.insert(TABLE_ITEMS, null, itemValues2);
 
         ContentValues itemValues3 = new ContentValues();
         itemValues3.put(COLUMN_ITEMS_NAME, "Acetylsalicylzuur");
+        itemValues.put(COLUMN_ITEMS_STOCK, 5);
         itemValues3.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
         db.insert(TABLE_ITEMS, null, itemValues3);
 
@@ -120,6 +124,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_EXPIRATION, date.getTime());
         db.insert(TABLE_ITEMS, null, values);
+    }
+
+    public void addStock(String item_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_STOCK + " = " + COLUMN_ITEMS_STOCK + " +1 WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
+    }
+
+    public void removeStock(String item_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //db.execSQL("UPDATE " + TABLE_ITEMS + " SET" + COLUMN_ITEMS_STOCK + " = " + COLUMN_ITEMS_STOCK + " -1 WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
+    }
+
+    public Cursor getStock(String item_id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select * from " + TABLE_ITEMS + " where " + COLUMN_ITEMS_ID + " = " + item_id;
+        Cursor result = db.rawQuery(query, null);
+        return result;
     }
 
     public Cursor getAllDataFromTable(int table) {
