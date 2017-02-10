@@ -6,6 +6,7 @@ package minor.dokterstas;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -18,6 +19,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -102,10 +105,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
                 dialog.setContentView(R.layout.item_edit);
                 dialog.setTitle("Confirmation");
 
+                TextView text = (TextView) dialog.findViewById(R.id.textView2);
                 Button btnDelete = (Button) dialog.findViewById(R.id.delete);
                 Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
                 Button btnPlus = (Button) dialog.findViewById(R.id.plus);
                 Button btnMinus = (Button) dialog.findViewById(R.id.minus);
+                Button btnDate = (Button) dialog.findViewById(R.id.date);
+
+                text.setText(test.getText());
 
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
