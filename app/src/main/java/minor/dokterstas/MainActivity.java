@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -274,15 +273,13 @@ public class MainActivity extends AppCompatActivity {
             Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
             //spinner settings
-            HashMap<Integer, String> categories = new HashMap<Integer, String>();
+            ArrayList<String> categories = new ArrayList<>();
             for (Category cat : categoryList) {
-                categories.put(cat.getID(), cat.getName());
+                categories.add(cat.getID(), cat.getName());
             }
 
             // Creating adapter for spinner
-            SimpleAdapter adapter = new SimpleAdapter(this, categories, android.R.layout.simple_spinner_item,
-                    new Integer[] { 0 },new int[]{R.id.spinner});
-            ArrayAdapter<HashMap<Integer, String>> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
