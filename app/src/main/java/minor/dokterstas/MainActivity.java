@@ -91,17 +91,17 @@ public class MainActivity extends AppCompatActivity {
 
                 int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_ID);
                 int Column2 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
-                //int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_EXPIRATION);
+                int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_EXPIRATION);
                 int Column4 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
                 int Column5 = c.getColumnIndex(TasDB.COLUMN_ITEMS_CATEGORIES_ID);
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
-                    //String tht = c.getString(Column3);
+                    String tht = c.getString(Column3);
                     int voorraad = c.getInt(Column4);
                     int CategoryID = c.getInt(Column5);
 
-                    Item item = new Item(ID, Name, "", voorraad );
+                    Item item = new Item(ID, Name, tht, voorraad );
                     Category category = categoryList.get(CategoryID - 1);
                     category.addItem(item);
                 }
@@ -267,26 +267,25 @@ public class MainActivity extends AppCompatActivity {
             dialog.setContentView(R.layout.create_item);
             dialog.setTitle("Item toevoegen");
 
-            Spinner category = (Spinner) dialog.findViewById(spinner);
+            final Spinner category = (Spinner) dialog.findViewById(spinner);
             final EditText editText = (EditText) dialog.findViewById(R.id.editText);
             Button btnSave = (Button) dialog.findViewById(R.id.save);
             Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
             //spinner settings
-            ArrayList<String> categories = new ArrayList<>();
+            List<Category> categories = new ArrayList<>();
             for (Category cat : categoryList) {
-                categories.add(cat.getID(), cat.getName());
+                categories.add(new Category(cat.getID(), cat.getName()));
             }
 
             // Creating adapter for spinner
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+            ArrayAdapter<Category> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
 
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             // attaching data adapter to spinner
             category.setAdapter(dataAdapter);
-
 
             btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -298,26 +297,19 @@ public class MainActivity extends AppCompatActivity {
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    /*
-                    TasDB.addCategory(editText.getText().toString());
 
+                    Category cat = (Category) category.getSelectedItem();
+                    TasDB.addItem(editText.getText().toString(), cat.getID());
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-                    builder.setMessage(editText.getText().toString() + " categorie toegevoegd.");
-                    builder.setTitle("Nieuwe categorie");
+                    builder.setMessage(editText.getText().toString() + " item toegevoegd aan categorie: " + cat.getName());
+                    builder.setTitle("Nieuwe item");
 
                     AlertDialog dialog2 = builder.create();
                     dialog2.show();
                     dialog.dismiss();
 
                     createList();
-                    */
-                    //TODO database add item
-
-                    Spinner spinnerCode = (Spinner) findViewById(R.id.spinner);
-                    TasDB.addItem(editText.getText().toString(), spinnerCode.getId());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
 
                 }
             });

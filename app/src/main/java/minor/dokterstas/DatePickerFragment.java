@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
@@ -28,6 +29,13 @@ public class DatePickerFragment extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        // Do something with the date chosen by the user
+  /*      AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(" verwijderd uit lijst." );
+        builder.setTitle("Verwijderd");
+
+        AlertDialog dialog2 = builder.create();
+        dialog2.show(); */
+
     }
 }

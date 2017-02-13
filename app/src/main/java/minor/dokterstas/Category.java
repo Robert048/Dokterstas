@@ -39,4 +39,10 @@ public class Category {
     {
         return items;
     }
+
+    @Override
+    public String toString()
+    {
+        return name;
+    }
 }
