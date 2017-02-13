@@ -23,12 +23,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import minor.dokterstas.database.DatabaseHelper;
+
+import static minor.dokterstas.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         createList();
-
-
-
 
         mBuilder =
                 new NotificationCompat.Builder(this)
@@ -267,19 +268,21 @@ public class MainActivity extends AppCompatActivity {
             dialog.setContentView(R.layout.create_item);
             dialog.setTitle("Item toevoegen");
 
-            Spinner category = (Spinner) dialog.findViewById(R.id.spinner);
+            Spinner category = (Spinner) dialog.findViewById(spinner);
             final EditText editText = (EditText) dialog.findViewById(R.id.editText);
             Button btnSave = (Button) dialog.findViewById(R.id.save);
             Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
             //spinner settings
-            List<String> categories = new ArrayList<>();
+            HashMap<Integer, String> categories = new HashMap<Integer, String>();
             for (Category cat : categoryList) {
-                categories.add(cat.getName());
+                categories.put(cat.getID(), cat.getName());
             }
 
             // Creating adapter for spinner
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
+            SimpleAdapter adapter = new SimpleAdapter(this, categories, android.R.layout.simple_spinner_item,
+                    new Integer[] { 0 },new int[]{R.id.spinner});
+            ArrayAdapter<HashMap<Integer, String>> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -313,6 +316,12 @@ public class MainActivity extends AppCompatActivity {
                     createList();
                     */
                     //TODO database add item
+
+                    Spinner spinnerCode = (Spinner) findViewById(R.id.spinner);
+                    TasDB.addItem(editText.getText().toString(), spinnerCode.getId());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+
                 }
             });
 

@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + TABLE_ITEMS + " ("
                 + COLUMN_ITEMS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_ITEMS_NAME + " TEXT, "
-                + COLUMN_ITEMS_STOCK + " INTEGER, "
+                + COLUMN_ITEMS_STOCK + " INTEGER DEFAULT 1, "
                 + COLUMN_ITEMS_EXPIRATION + " DATETIME DEFAULT CURRENT_TIMESTAMP, "
                 + COLUMN_ITEMS_CATEGORIES_ID + " INTEGER, FOREIGN KEY("+ COLUMN_ITEMS_CATEGORIES_ID +") REFERENCES "+ TABLE_CATEGORIES  +"(" + COLUMN_CATEGORIES_ID + ") )");
 
@@ -137,7 +137,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //db.execSQL("UPDATE " + TABLE_ITEMS + " SET" + COLUMN_ITEMS_STOCK + " = " + COLUMN_ITEMS_STOCK + " -1 WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
+        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_STOCK + " = " + COLUMN_ITEMS_STOCK + " -1 WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
     }
 
     public Cursor getStock(String item_id)
@@ -176,6 +176,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_CATEGORIES_NAME, name);
 
         db.insert(TABLE_CATEGORIES, null, values);
+    }
+
+    public void addItem(String name, int categoryId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ITEMS_NAME, name);
+        values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
+        db.insert(TABLE_ITEMS, null, values);
     }
 
     public void deleteItem(String id)
