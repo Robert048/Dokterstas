@@ -5,7 +5,10 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.DatePicker;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -36,6 +39,5 @@ public class DatePickerFragment extends DialogFragment
 
         AlertDialog dialog2 = builder.create();
         dialog2.show(); */
-
     }
 }

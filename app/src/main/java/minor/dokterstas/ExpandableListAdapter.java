@@ -6,8 +6,7 @@ package minor.dokterstas;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.SparseArray;
@@ -18,15 +17,12 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.EditText;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-
 import minor.dokterstas.database.DatabaseHelper;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter{
+public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
@@ -80,48 +76,106 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final String children = (String) getChild(groupPosition, childPosition);
-        CheckBox text = null;
-        TextView text2 = null;
+        CheckBox txtNaam = null;
+        TextView txtData = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_details, null);
         }
-        text = (CheckBox) convertView.findViewById(R.id.checkbox);
-        text2 = (TextView) convertView.findViewById(R.id.TextView);
+        txtNaam = (CheckBox) convertView.findViewById(R.id.checkbox);
+        txtData = (TextView) convertView.findViewById(R.id.TextView);
 
         final String[] separated = children.split("/");
 
-        text.setText(separated[0]);
-        text2.setText(separated[2]);
+        txtNaam.setText(separated[0]);
+        txtData.setText(separated[2]);
         ArrayList<View> allViewsWithinMyTopView = getAllChildren(convertView);
-        CheckBox test = (CheckBox) allViewsWithinMyTopView.get(1);
+        CheckBox checkbox = (CheckBox) allViewsWithinMyTopView.get(1);
 
-        test.setOnLongClickListener(new View.OnLongClickListener(){
+        checkbox.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View arg1) {
-                CheckBox test = (CheckBox) arg1;
-                Log.v("long clicked", "" + test.getTag());
+                CheckBox checkbox = (CheckBox) arg1;
 
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.item_edit);
                 dialog.setTitle("Confirmation");
 
-                TextView text = (TextView) dialog.findViewById(R.id.textView2);
-                Button btnDelete = (Button) dialog.findViewById(R.id.delete);
-                Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
+                TextView txtTitel = (TextView) dialog.findViewById(R.id.txtTitel);
+                final EditText txtVoorraad = (EditText) dialog.findViewById(R.id.txtVoorraad);
                 Button btnPlus = (Button) dialog.findViewById(R.id.plus);
                 Button btnMinus = (Button) dialog.findViewById(R.id.minus);
+
+                TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
                 Button btnDate = (Button) dialog.findViewById(R.id.date);
 
-                text.setText(test.getText());
+                Button btnDelete = (Button) dialog.findViewById(R.id.delete);
+                Button btnSave = (Button) dialog.findViewById(R.id.save);
+                Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
+
+                txtTitel.setText(checkbox.getText());
+
+
+                String ID = separated[1];
+                Cursor c = db.getStock(ID);
+                String voorraad = "";
+                if(c.moveToFirst()){
+                    voorraad = c.getString(c.getColumnIndex("STOCK"));
+                }
+                String date = "";
+
+
+                txtVoorraad.setText(voorraad);
+                txtDate.setText(date);
+
+                btnPlus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String stock = txtVoorraad.getText().toString();
+                        int aantal = Integer.parseInt(stock);
+                        aantal = aantal + 1;
+                        txtVoorraad.setText("" + aantal);
+                    }
+                });
+
+                btnMinus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String stock = txtVoorraad.getText().toString();
+                        int aantal = Integer.parseInt(stock);
+                        aantal = aantal - 1;
+                        txtVoorraad.setText("" + aantal);
+                    }
+                });
+
+                btnDate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        //TODO Date button
+                        ((MainActivity)activity).datePicker(view);
+
+                    }
+
+
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
 
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        //TODO confirmation box
                         db.deleteItem(separated[1]);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                        builder.setMessage(separated[0] + " verwijderd uit lijst." );
+                        builder.setMessage(separated[0] + " verwijderd uit lijst.");
                         builder.setTitle("Verwijderd");
 
                         AlertDialog dialog2 = builder.create();
@@ -132,24 +186,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
                     }
                 });
 
-                btnPlus.setOnClickListener(new View.OnClickListener() {
+                btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        db.addStock(separated[1]);
-                    }
-                });
-
-                btnMinus.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        db.removeStock(separated[1]);
-                    }
-                });
-
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                        db.setStock(separated[1], txtVoorraad.getText().toString());
                         dialog.dismiss();
+                        context.createList();
                     }
                 });
 
@@ -158,11 +200,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
             }
         });
 
-        convertView.setOnLongClickListener(new View.OnLongClickListener(){
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View arg1) {
 
-                Log.v("long clicked","clicked: ");
+                Log.v("long clicked", "clicked: ");
 
                 return true;
             }
@@ -221,5 +263,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
     }
+
 
 }

@@ -1,5 +1,6 @@
 package minor.dokterstas;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
@@ -15,25 +16,29 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
-
+import android.widget.TextView;
+import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import minor.dokterstas.database.DatabaseHelper;
 
+import static minor.dokterstas.R.id.design_navigation_view;
 import static minor.dokterstas.R.id.spinner;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
 
     SparseArray<Group> groups = new SparseArray<>();
@@ -63,10 +68,11 @@ public class MainActivity extends AppCompatActivity {
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
-
-
     }
 
+
+    //Method to repopulate the category list including its items.
+    //and reloads the checklists
     public void createList() {
         categoryList.clear();
 
@@ -106,7 +112,15 @@ public class MainActivity extends AppCompatActivity {
                     category.addItem(item);
                 }
             }
-            createData(categoryList);
+
+            //Create items in categories
+            for (int j = 0; j < categoryList.size(); j++) {
+                Group group = new Group(categoryList.get(j).getName());
+                for (int i = 0; i < categoryList.get(j).getItems().size(); i++) {
+                    group.children.add(categoryList.get(j).getItems().get(i).getName() + "/" + categoryList.get(j).getItems().get(i).getID() + "/" + categoryList.get(j).getItems().get(i).getTht() + "\n" + categoryList.get(j).getItems().get(i).getVoorraad() + " op voorraad");
+                }
+                groups.append(j, group);
+            }
 
             ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
             ExpandableListAdapter adapter = new ExpandableListAdapter(this,
@@ -116,16 +130,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e("Error", "Error", e);
         }
 
-    }
-
-    public void createData(List<Category> Categories) {
-        for (int j = 0; j < Categories.size(); j++) {
-            Group group = new Group(Categories.get(j).getName());
-            for (int i = 0; i < Categories.get(j).getItems().size(); i++) {
-                group.children.add(Categories.get(j).getItems().get(i).getName() + "/" + Categories.get(j).getItems().get(i).getID() + "/" + Categories.get(j).getItems().get(i).getTht() + "\n" + Categories.get(j).getItems().get(i).getVoorraad() + " op voorraad");
-            }
-            groups.append(j, group);
-        }
     }
 
     @Override
@@ -333,5 +337,24 @@ public class MainActivity extends AppCompatActivity {
     public void showTimePickerDialog(View view) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "datePicker");
+    }
+
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+        //TODO date to database
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view2 = inflater.inflate(R.layout.item_edit, null);
+
+        TextView txtDate = (TextView) view2.findViewById(R.id.txtDate);
+        txtDate.setText(year + "/" + month + "/" + dayOfMonth);
+    }
+
+    public void datePicker(View view){
+
+        DatePickerFragment2 fragment = new DatePickerFragment2();
+
+        fragment.show(getSupportFragmentManager(), "Tag");
     }
 }

@@ -128,18 +128,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, values);
     }
 
-    public void addStock(String item_id)
+    public void setStock(String item_id, String stock)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_STOCK + " = " + COLUMN_ITEMS_STOCK + " +1 WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
-    }
-
-    public void removeStock(String item_id)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_STOCK + " = " + COLUMN_ITEMS_STOCK + " -1 WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
+        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_STOCK + " = " + stock + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
     }
 
     public Cursor getStock(String item_id)
