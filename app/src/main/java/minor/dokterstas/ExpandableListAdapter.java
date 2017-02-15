@@ -6,6 +6,7 @@ package minor.dokterstas;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -19,6 +20,8 @@ import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import minor.dokterstas.database.DatabaseHelper;
 
@@ -144,6 +147,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         int aantal = Integer.parseInt(stock);
                         aantal = aantal - 1;
                         txtVoorraad.setText("" + aantal);
+                        if(MainActivity.minimumStock >= aantal)
+                        {
+                            CharSequence text = "Lage voorraad";
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                        }
                     }
                 });
 

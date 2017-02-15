@@ -28,14 +28,13 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import minor.dokterstas.database.DatabaseHelper;
-
-import static minor.dokterstas.R.id.design_navigation_view;
 import static minor.dokterstas.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     DatabaseHelper TasDB;
     List<Category> categoryList = new ArrayList<>();
     NotificationCompat.Builder mBuilder;
+    public static final int minimumStock = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         createList();
-
+        setNotifications();
         mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.notification_icon)
@@ -69,6 +69,79 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
     }
+
+    private void setNotifications() {
+        try {
+            /*retrieve data from database */
+            TasDB = new DatabaseHelper(this);
+            //Check Stock per item
+            Cursor c = TasDB.getAllItems();
+            int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
+            int Column2 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
+            int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_EXPIRATION);
+            String namen = "";
+            String voorraden = "";
+            String namen2 = "";
+            String expirationDateText = "";
+            while (c.moveToNext()) {
+                String Name = c.getString(Column1);
+                int Stock = c.getInt(Column2);
+                String date = c.getString(Column3);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+                Date expirationDate = format.parse(date);
+                if (minimumStock >= Stock) {
+                    if(namen == "")
+                    {
+                        namen = Name + "\n";
+                        voorraden = Stock + "\n";
+                    }
+                    else
+                    {
+                        namen = namen + Name + "\n";
+                        voorraden = voorraden + Stock + "\n";
+                    }
+                }
+                Calendar calendar = new GregorianCalendar();
+                if(expirationDate.before(calendar.getTime()))
+                {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(expirationDate);
+                    if(namen2 == "")
+                    {
+                        namen2 = Name + "\n";
+                        expirationDateText = cal.get(Calendar.DATE) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR) + "\n";
+                    }
+                    else
+                    {
+                        namen2 = namen2 + Name + "\n";
+                        expirationDateText = expirationDateText + cal.get(Calendar.DATE) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR) + "\n";
+                    }
+                }
+            }
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.stock_message);
+            dialog.setTitle("Voorraad meldingen");
+            TextView txtName = (TextView) dialog.findViewById(R.id.txtName);
+            TextView txtStock = (TextView) dialog.findViewById(R.id.txtStock);
+            TextView txtName2 = (TextView) dialog.findViewById(R.id.txtName2);
+            TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
+            txtName.setText(namen);
+            txtStock.setText(voorraden);
+            txtName2.setText(namen2);
+            txtDate.setText(expirationDateText);
+            dialog.show();
+
+            //Check date per item
+
+
+            //checklist controle
+
+
+        } catch (Exception e) {
+            Log.e("Error", "Error", e);
+        }
+    }
+
 
 
     //Method to repopulate the category list including its items.
