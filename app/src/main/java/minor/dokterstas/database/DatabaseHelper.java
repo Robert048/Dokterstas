@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import org.joda.time.DateTime;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -45,7 +50,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ITEMS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_ITEMS_NAME + " TEXT, "
                 + COLUMN_ITEMS_STOCK + " INTEGER DEFAULT 1, "
-                + COLUMN_ITEMS_EXPIRATION + " DATETIME DEFAULT CURRENT_DATE, "
+//                + COLUMN_ITEMS_EXPIRATION + " DATETIME DEFAULT CURRENT_DATE, "
+                + COLUMN_ITEMS_EXPIRATION + " LONG DEFAULT 1000000000000, "
                 + COLUMN_ITEMS_CATEGORIES_ID + " INTEGER, FOREIGN KEY("+ COLUMN_ITEMS_CATEGORIES_ID +") REFERENCES "+ TABLE_CATEGORIES  +"(" + COLUMN_CATEGORIES_ID + ") )");
 
 
@@ -127,6 +133,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ITEMS_EXPIRATION, date.getTime());
         db.insert(TABLE_ITEMS, null, values);
     }
+
+    public void updateDate(int item_id,int year, int month, int dayOfMonth)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        DateTime dateTime = new DateTime();
+        dateTime = dateTime.withDate(year,month+1,dayOfMonth);
+        long milis = dateTime.getMillis();
+        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_EXPIRATION + " = " + milis + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
+
+        String kabout = "kabouter";
+    }
+
+
 
 
     public void setStock(String item_id, String stock)

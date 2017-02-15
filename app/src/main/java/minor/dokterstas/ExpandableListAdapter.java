@@ -163,7 +163,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onClick(View view) {
 
                         //TODO Date button
-                        ((MainActivity)activity).datePicker(view);
+                        ((MainActivity)activity).datePicker(view, separated[1]);
 
                     }
 

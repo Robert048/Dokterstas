@@ -28,6 +28,12 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import org.joda.time.DateTime;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        JodaTimeAndroid.init(this);
         createList();
         setNotifications();
         mBuilder =
@@ -176,11 +183,18 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
-                    String tht = c.getString(Column3);
+                    long tht = c.getLong(Column3);
                     int voorraad = c.getInt(Column4);
                     int CategoryID = c.getInt(Column5);
 
-                    Item item = new Item(ID, Name, tht, voorraad );
+                    DateTime dt = new DateTime();
+                    dt = dt.withMillis(tht);
+
+
+                    String dateText = String.valueOf(dt.dayOfMonth().get()) + " | " + String.valueOf(dt.monthOfYear().get()) + " | " +  String.valueOf(dt.year().get());
+
+
+                    Item item = new Item(ID, Name, dateText, voorraad );
                     Category category = categoryList.get(CategoryID - 1);
                     category.addItem(item);
                 }
@@ -422,12 +436,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         TextView txtDate = (TextView) view2.findViewById(R.id.txtDate);
         txtDate.setText(year + "/" + month + "/" + dayOfMonth);
+
     }
 
-    public void datePicker(View view){
+    public void datePicker(View view, String g){
 
-        DatePickerFragment2 fragment = new DatePickerFragment2();
-
-        fragment.show(getSupportFragmentManager(), "Tag");
+        DatePickerFragment fragment = new DatePickerFragment();
+        fragment.itemId = g;
+        fragment.activity = this;
+        fragment.show(getFragmentManager(), g);
     }
 }
