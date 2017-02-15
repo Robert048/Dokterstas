@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     dt = dt.withMillis(tht);
 
 
-                    String dateText = String.valueOf(dt.dayOfMonth().get()) + " | " + String.valueOf(dt.monthOfYear().get()) + " | " +  String.valueOf(dt.year().get());
+                    String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
 
 
                     Item item = new Item(ID, Name, dateText, voorraad );
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             for (int j = 0; j < categoryList.size(); j++) {
                 Group group = new Group(categoryList.get(j).getName());
                 for (int i = 0; i < categoryList.get(j).getItems().size(); i++) {
-                    group.children.add(categoryList.get(j).getItems().get(i).getName() + "/" + categoryList.get(j).getItems().get(i).getID() + "/" + categoryList.get(j).getItems().get(i).getTht() + "\n" + categoryList.get(j).getItems().get(i).getVoorraad() + " op voorraad");
+                    group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + categoryList.get(j).getItems().get(i).getTht() + "\n" + categoryList.get(j).getItems().get(i).getVoorraad() + " op voorraad");
                 }
                 groups.append(j, group);
             }

@@ -87,7 +87,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         txtNaam = (CheckBox) convertView.findViewById(R.id.checkbox);
         txtData = (TextView) convertView.findViewById(R.id.TextView);
 
-        final String[] separated = children.split("/");
+        final String[] separated = children.split("-");
 
         txtNaam.setText(separated[0]);
         txtData.setText(separated[2]);

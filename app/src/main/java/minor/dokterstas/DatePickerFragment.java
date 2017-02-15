@@ -25,6 +25,7 @@ public class DatePickerFragment extends DialogFragment
     DatabaseHelper TasDB;
     public String itemId;
     public Activity activity;
+    public Dialog dialog;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
