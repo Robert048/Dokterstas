@@ -40,7 +40,7 @@ import java.util.List;
 import minor.dokterstas.database.DatabaseHelper;
 import static minor.dokterstas.R.id.spinner;
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class MainActivity extends AppCompatActivity{
 
 
     SparseArray<Group> groups = new SparseArray<>();
@@ -433,25 +433,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    public void showTimePickerDialog(View view) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
-    }
-
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-        //TODO date to database
-        LayoutInflater inflater = this.getLayoutInflater();
-        View view2 = inflater.inflate(R.layout.item_edit, null);
-
-        TextView txtDate = (TextView) view2.findViewById(R.id.txtDate);
-        txtDate.setText(year + "/" + month + "/" + dayOfMonth);
-
     }
 
     public void datePicker(View view, String g){
