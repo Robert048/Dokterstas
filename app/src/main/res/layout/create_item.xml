@@ -4,6 +4,15 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <TextView
+        android:text="Kies categorie voor nieuwe voorwerp:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:id="@+id/textView2" />
+
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
@@ -17,6 +26,18 @@
 
         <requestFocus />
     </EditText>
+
+    <CheckBox
+        android:text="Heeft THT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/thtBox" />
+
+    <CheckBox
+        android:text="Heeft voorraad aantal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/voorraadBox" />
 
     <LinearLayout
         android:layout_width="fill_parent"
