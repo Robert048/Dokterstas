@@ -30,16 +30,8 @@ import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-
 import net.danlew.android.joda.JodaTimeAndroid;
-
 import org.joda.time.DateTime;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -64,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         JodaTimeAndroid.init(this);
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        minimumStock = sharedPref.getInt("minimumStock", minimumStock);
+
         createList();
         setNotifications();
         mBuilder =
@@ -257,6 +252,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                         Toast.makeText(MainActivity.this, "Minimum voorraad aangepast naar: " + txtMinimumVoorraad.getText(), Toast.LENGTH_SHORT).show();
                         setMinimumStock(Integer.parseInt(txtMinimumVoorraad.getText().toString()));
+
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt("minimumStock", minimumStock);
+                        editor.commit();
                         return true;
                     }
                     return false;
@@ -270,11 +270,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
 
 
-                    //SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
-                    //SharedPreferences.Editor editor = sharedPref.edit();
-                    //editor.putBoolean(getString(R.string.setting_expiration_checked), true);
-                    //editor.commit();
-                    //https://developer.android.com/training/basics/data-storage/shared-preferences.html
+
 
                     /*
                     NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
