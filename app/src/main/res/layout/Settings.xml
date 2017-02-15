@@ -13,6 +13,27 @@
         android:textSize="22sp"
         android:id="@+id/textView"
         android:layout_weight="0.02" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:text="Melding weergeven als voorraad lager is dan: "
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_weight="0.02" />
+        <EditText
+            android:textColor="@android:color/tertiary_text_dark"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:id="@+id/txtMinimumVoorraad"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -25,16 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <CheckBox
-            android:id="@+id/setting_stock"
-            android:text="@string/setting_stock"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,10 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     DatabaseHelper TasDB;
     List<Category> categoryList = new ArrayList<>();
     NotificationCompat.Builder mBuilder;
-    public static final int minimumStock = 5;
+    private static int minimumStock = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +79,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         try {
             /*retrieve data from database */
             TasDB = new DatabaseHelper(this);
-            //Check Stock per item
+
+            //Check Stock and expiration date per item
             Cursor c = TasDB.getAllItems();
             int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
             int Column2 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
@@ -89,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 String date = c.getString(Column3);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
                 Date expirationDate = format.parse(date);
-                if (minimumStock >= Stock) {
+                if (minimumStock > Stock) {
                     if(namen == "")
                     {
                         namen = Name + "\n";
@@ -130,18 +136,20 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             txtName2.setText(namen2);
             txtDate.setText(expirationDateText);
             dialog.show();
-
-            //Check date per item
-
-
-            //checklist controle
-
-
         } catch (Exception e) {
             Log.e("Error", "Error", e);
         }
     }
 
+    public static int getMinimumStock()
+    {
+        return minimumStock;
+    }
+
+    public void setMinimumStock(int Stock)
+    {
+        minimumStock = Stock;
+    }
 
 
     //Method to repopulate the category list including its items.
@@ -224,15 +232,31 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
             dialog.setContentView(R.layout.settings);
             dialog.setTitle("settings");
+            final TextView txtMinimumVoorraad = (TextView) dialog.findViewById(R.id.txtMinimumVoorraad) ;
+            txtMinimumVoorraad.setText("" + getMinimumStock());
+            txtMinimumVoorraad.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        Toast.makeText(MainActivity.this, "Minimum voorraad aangepast naar: " + txtMinimumVoorraad.getText(), Toast.LENGTH_SHORT).show();
+                        setMinimumStock(Integer.parseInt(txtMinimumVoorraad.getText().toString()));
+                        return true;
+                    }
+                    return false;
+                }
+            });
 
             CheckBox setting_expiration = (CheckBox) dialog.findViewById(R.id.setting_expiration);
             setting_expiration.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putBoolean(getString(R.string.setting_expiration_checked), true);
-                    editor.commit();
+
+
+
+                    //SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                    //SharedPreferences.Editor editor = sharedPref.edit();
+                    //editor.putBoolean(getString(R.string.setting_expiration_checked), true);
+                    //editor.commit();
                     //https://developer.android.com/training/basics/data-storage/shared-preferences.html
 
                     /*
@@ -240,14 +264,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     // notificationID allows you to update the notification later on.
                     mNotificationManager.notify(0, mBuilder.build());
                     */
-                }
-            });
-
-            CheckBox setting_stock = (CheckBox) dialog.findViewById(R.id.setting_stock);
-            setting_stock.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
                 }
             });
 
