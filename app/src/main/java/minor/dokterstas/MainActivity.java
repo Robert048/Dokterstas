@@ -93,9 +93,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             while (c.moveToNext()) {
                 String Name = c.getString(Column1);
                 int Stock = c.getInt(Column2);
-                String date = c.getString(Column3);
+                long date = c.getLong(Column3);
+
+                DateTime dt = new DateTime();
+                dt = dt.withMillis(date);
+                String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
+
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-                Date expirationDate = format.parse(date);
+               // Date expirationDate = format.parse(date);
                 if (minimumStock >= Stock) {
                     if(namen == "")
                     {
@@ -108,7 +113,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                         voorraden = voorraden + Stock + "\n";
                     }
                 }
-                Calendar calendar = new GregorianCalendar();
+                expirationDateText = dateText;
+    /*            Calendar calendar = new GregorianCalendar();
                 if(expirationDate.before(calendar.getTime()))
                 {
                     Calendar cal = Calendar.getInstance();
@@ -124,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                         expirationDateText = expirationDateText + cal.get(Calendar.DATE) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR) + "\n";
                     }
                 }
+                */
             }
             final Dialog dialog = new Dialog(this);
             dialog.setContentView(R.layout.stock_message);
