@@ -43,6 +43,29 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginStart="30dp"
+        android:id="@+id/thtLayout"
+        android:visibility="gone">
+
+        <TextView
+            android:text="Aantal op voorraad: "
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <EditText
+            android:text="0"
+            android:textColor="@android:color/tertiary_text_dark"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:id="@+id/txtVoorraad"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="10dp">
 
         <Button

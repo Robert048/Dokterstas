@@ -1,9 +1,5 @@
 package minor.dokterstas;
 
-/**
- * Created by Hakob on 10-2-2017.
- */
-
 public class Item {
     private int ID;
     private String name;

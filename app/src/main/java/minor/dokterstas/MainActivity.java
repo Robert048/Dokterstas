@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import minor.dokterstas.database.DatabaseHelper;
+
+import static minor.dokterstas.R.id.checkbox;
 import static minor.dokterstas.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity{
@@ -371,6 +374,7 @@ public class MainActivity extends AppCompatActivity{
 
             final Spinner category = (Spinner) dialog.findViewById(spinner);
             final EditText editText = (EditText) dialog.findViewById(R.id.editText);
+            final CheckBox checkbox = (CheckBox) dialog.findViewById(R.id.voorraadBox);
             Button btnSave = (Button) dialog.findViewById(R.id.save);
             Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
@@ -382,6 +386,22 @@ public class MainActivity extends AppCompatActivity{
 
             // attaching data adapter to spinner
             category.setAdapter(dataAdapter);
+
+            checkbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(checkbox.isChecked())
+                    {
+                        LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.thtLayout);
+                        layout.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.thtLayout);
+                        layout.setVisibility(View.GONE);
+                    }
+                }
+            });
 
             btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
