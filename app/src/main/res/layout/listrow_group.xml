@@ -7,7 +7,7 @@
     android:gravity="left"
     android:paddingLeft="27dp"
     android:paddingTop="4dp"
-
+    android:background="@color/colorAccent"
     android:text="Category"
     android:textSize="20sp"
     android:textStyle="bold" />
