@@ -105,8 +105,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 dt = dt.withMillis(date);
                 String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-               // Date expirationDate = format.parse(date);
+                Date expirationDate = dt.toDate();
                 if (minimumStock >= Stock) {
                     if(namen == "")
                     {
@@ -119,24 +118,21 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                         voorraden = voorraden + Stock + "\n";
                     }
                 }
-                expirationDateText = dateText;
-    /*            Calendar calendar = new GregorianCalendar();
+                Calendar calendar = new GregorianCalendar();
                 if(expirationDate.before(calendar.getTime()))
                 {
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(expirationDate);
                     if(namen2 == "")
                     {
                         namen2 = Name + "\n";
-                        expirationDateText = cal.get(Calendar.DATE) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR) + "\n";
+                        expirationDateText = dateText + "\n";
                     }
                     else
                     {
                         namen2 = namen2 + Name + "\n";
-                        expirationDateText = expirationDateText + cal.get(Calendar.DATE) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR) + "\n";
+                        expirationDateText = expirationDateText + dateText + "\n";
                     }
                 }
-                */
+
             }
             final Dialog dialog = new Dialog(this);
             dialog.setContentView(R.layout.stock_message);
