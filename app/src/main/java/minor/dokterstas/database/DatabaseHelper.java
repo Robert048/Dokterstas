@@ -128,6 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, values);
     }
 
+
     public void setStock(String item_id, String stock)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -139,6 +140,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select * from " + TABLE_ITEMS + " where " + COLUMN_ITEMS_ID + " = " + item_id;
+        Cursor result = db.rawQuery(query, null);
+        return result;
+    }
+
+    public Cursor getAllItems()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select * from " + TABLE_ITEMS;
         Cursor result = db.rawQuery(query, null);
         return result;
     }
