@@ -1,8 +1,6 @@
 package minor.dokterstas;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -17,14 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
@@ -102,7 +98,7 @@ public class MainActivity extends AppCompatActivity{
 
                 Date expirationDate = dt.toDate();
                 if (minimumStock >= Stock) {
-                    if(namen == "")
+                    if(namen.equals(""))
                     {
                         namen = Name + "\n";
                         voorraden = Stock + "\n";
@@ -116,7 +112,7 @@ public class MainActivity extends AppCompatActivity{
                 Calendar calendar = new GregorianCalendar();
                 if(expirationDate.before(calendar.getTime()))
                 {
-                    if(namen2 == "")
+                    if(namen2.equals(""))
                     {
                         namen2 = Name + "\n";
                         expirationDateText = dateText + "\n";
@@ -256,7 +252,7 @@ public class MainActivity extends AppCompatActivity{
                         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putInt("minimumStock", minimumStock);
-                        editor.commit();
+                        editor.apply();
                         return true;
                     }
                     return false;
@@ -378,12 +374,6 @@ public class MainActivity extends AppCompatActivity{
             Button btnSave = (Button) dialog.findViewById(R.id.save);
             Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
-            //spinner settings
-            List<Category> categories = new ArrayList<>();
-            for (Category cat : categoryList) {
-                categories.add(new Category(cat.getID(), cat.getName()));
-            }
-
             // Creating adapter for spinner
             ArrayAdapter<Category> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
 
@@ -435,7 +425,7 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public void datePicker(View view, String g){
+    public void datePicker(String g){
 
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.itemId = g;

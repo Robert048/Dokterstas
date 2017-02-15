@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Created by rober on 8-2-2017.
- */
-
 public class Category {
     private int ID;
     private String name;

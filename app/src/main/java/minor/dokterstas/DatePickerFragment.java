@@ -5,19 +5,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.DatePicker;
-import android.widget.TextView;
-
 import java.util.Calendar;
 
 import minor.dokterstas.database.DatabaseHelper;
-
-/**
- * Created by Hakob on 10-2-2017.
- */
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {

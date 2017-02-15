@@ -1,12 +1,8 @@
 package minor.dokterstas;
 
-/**
- * Created by robert on 7-2-2017.
- */
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -21,7 +17,6 @@ import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import minor.dokterstas.database.DatabaseHelper;
 
@@ -54,19 +49,19 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private ArrayList<View> getAllChildren(View v) {
 
         if (!(v instanceof ViewGroup)) {
-            ArrayList<View> viewArrayList = new ArrayList<View>();
+            ArrayList<View> viewArrayList = new ArrayList<>();
             viewArrayList.add(v);
             return viewArrayList;
         }
 
-        ArrayList<View> result = new ArrayList<View>();
+        ArrayList<View> result = new ArrayList<>();
 
         ViewGroup vg = (ViewGroup) v;
         for (int i = 0; i < vg.getChildCount(); i++) {
 
             View child = vg.getChildAt(i);
 
-            ArrayList<View> viewArrayList = new ArrayList<View>();
+            ArrayList<View> viewArrayList = new ArrayList<>();
             viewArrayList.add(v);
             viewArrayList.addAll(getAllChildren(child));
 
@@ -79,8 +74,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final String children = (String) getChild(groupPosition, childPosition);
-        CheckBox txtNaam = null;
-        TextView txtData = null;
+        CheckBox txtNaam;
+        TextView txtData;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_details, null);
         }
@@ -163,7 +158,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onClick(View view) {
 
                         //TODO Date button
-                        ((MainActivity)activity).datePicker(view, separated[1]);
+                        ((MainActivity)activity).datePicker(separated[1]);
 
                     }
 
