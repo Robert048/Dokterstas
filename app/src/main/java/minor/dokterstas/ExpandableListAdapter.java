@@ -147,7 +147,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         int aantal = Integer.parseInt(stock);
                         aantal = aantal - 1;
                         txtVoorraad.setText("" + aantal);
-                        if(MainActivity.minimumStock >= aantal)
+                        if(MainActivity.getMinimumStock() >= aantal)
                         {
                             CharSequence text = "Lage voorraad";
                             int duration = Toast.LENGTH_SHORT;
