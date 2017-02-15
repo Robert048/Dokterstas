@@ -30,16 +30,8 @@ import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-
 import net.danlew.android.joda.JodaTimeAndroid;
-
 import org.joda.time.DateTime;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,7 +40,7 @@ import java.util.List;
 import minor.dokterstas.database.DatabaseHelper;
 import static minor.dokterstas.R.id.spinner;
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class MainActivity extends AppCompatActivity{
 
 
     SparseArray<Group> groups = new SparseArray<>();
@@ -64,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         JodaTimeAndroid.init(this);
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        minimumStock = sharedPref.getInt("minimumStock", minimumStock);
+
         createList();
         setNotifications();
         mBuilder =
@@ -257,6 +252,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                         Toast.makeText(MainActivity.this, "Minimum voorraad aangepast naar: " + txtMinimumVoorraad.getText(), Toast.LENGTH_SHORT).show();
                         setMinimumStock(Integer.parseInt(txtMinimumVoorraad.getText().toString()));
+
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt("minimumStock", minimumStock);
+                        editor.commit();
                         return true;
                     }
                     return false;
@@ -270,11 +270,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
 
 
-                    //SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
-                    //SharedPreferences.Editor editor = sharedPref.edit();
-                    //editor.putBoolean(getString(R.string.setting_expiration_checked), true);
-                    //editor.commit();
-                    //https://developer.android.com/training/basics/data-storage/shared-preferences.html
+
 
                     /*
                     NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -437,25 +433,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    public void showTimePickerDialog(View view) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
-    }
-
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-        //TODO date to database
-        LayoutInflater inflater = this.getLayoutInflater();
-        View view2 = inflater.inflate(R.layout.item_edit, null);
-
-        TextView txtDate = (TextView) view2.findViewById(R.id.txtDate);
-        txtDate.setText(year + "/" + month + "/" + dayOfMonth);
-
     }
 
     public void datePicker(View view, String g){
