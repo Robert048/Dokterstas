@@ -1,5 +1,6 @@
 package minor.dokterstas;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -12,12 +13,18 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+import minor.dokterstas.database.DatabaseHelper;
+
 /**
  * Created by Hakob on 10-2-2017.
  */
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
+
+    DatabaseHelper TasDB;
+    public String itemId;
+    public Activity activity;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -27,17 +34,14 @@ public class DatePickerFragment extends DialogFragment
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
+        TasDB = new DatabaseHelper(activity);
+
+
         // Create a new instance of DatePickerDialog and return it
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-  /*      AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        builder.setMessage(" verwijderd uit lijst." );
-        builder.setTitle("Verwijderd");
-
-        AlertDialog dialog2 = builder.create();
-        dialog2.show(); */
+        TasDB.updateDate(Integer.parseInt(itemId),year,month,day);
     }
 }
