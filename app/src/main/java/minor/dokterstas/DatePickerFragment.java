@@ -35,5 +35,6 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         TasDB.updateDate(Integer.parseInt(itemId),year,month,day);
+        ((MainActivity)activity).createList();
     }
 }

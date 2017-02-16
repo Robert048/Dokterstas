@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity{
             int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
             int Column2 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
             int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_EXPIRATION);
+            int Column4 = c.getColumnIndex(TasDB.COLUMN_ITEMS_TYPE);
             String namen = "";
             String voorraden = "";
             String namen2 = "";
@@ -94,13 +95,14 @@ public class MainActivity extends AppCompatActivity{
                 String Name = c.getString(Column1);
                 int Stock = c.getInt(Column2);
                 long date = c.getLong(Column3);
+                int type = c.getInt(Column4);
 
                 DateTime dt = new DateTime();
                 dt = dt.withMillis(date);
                 String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
 
                 Date expirationDate = dt.toDate();
-                if (minimumStock >= Stock) {
+                if (minimumStock >= Stock && (type == 1 || type == 3)) {
                     if(namen.equals(""))
                     {
                         namen = Name + "\n";
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity{
                     }
                 }
                 Calendar calendar = new GregorianCalendar();
-                if(expirationDate.before(calendar.getTime()))
+                if(expirationDate.before(calendar.getTime()) && (type == 2 || type == 3))
                 {
                     if(namen2.equals(""))
                     {
@@ -185,21 +187,21 @@ public class MainActivity extends AppCompatActivity{
                 int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_EXPIRATION);
                 int Column4 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
                 int Column5 = c.getColumnIndex(TasDB.COLUMN_ITEMS_CATEGORIES_ID);
+                int Column6 = c.getColumnIndex(TasDB.COLUMN_ITEMS_TYPE);
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
                     long tht = c.getLong(Column3);
                     int voorraad = c.getInt(Column4);
                     int CategoryID = c.getInt(Column5);
-
+                    int type = c.getInt(Column6);
                     DateTime dt = new DateTime();
                     dt = dt.withMillis(tht);
 
 
                     String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
 
-
-                    Item item = new Item(ID, Name, dateText, voorraad );
+                    Item item = new Item(ID, Name, dateText, voorraad, type);
                     Category category = categoryList.get(CategoryID - 1);
                     category.addItem(item);
                 }
@@ -209,7 +211,12 @@ public class MainActivity extends AppCompatActivity{
             for (int j = 0; j < categoryList.size(); j++) {
                 Group group = new Group(categoryList.get(j).getName());
                 for (int i = 0; i < categoryList.get(j).getItems().size(); i++) {
-                    group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + categoryList.get(j).getItems().get(i).getTht() + "\n" + categoryList.get(j).getItems().get(i).getVoorraad() + " op voorraad");
+                    int type = categoryList.get(j).getItems().get(i).getType();
+                    if(type == 0) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "- ");
+                    else if(type == 1) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + "\n" + categoryList.get(j).getItems().get(i).getVoorraad() + " op voorraad");
+                    else if(type == 2) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + categoryList.get(j).getItems().get(i).getTht());
+                    else if(type == 3) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + categoryList.get(j).getItems().get(i).getTht() + "\n" + categoryList.get(j).getItems().get(i).getVoorraad() + " op voorraad");
+
                 }
                 groups.append(j, group);
             }
@@ -374,7 +381,9 @@ public class MainActivity extends AppCompatActivity{
 
             final Spinner category = (Spinner) dialog.findViewById(spinner);
             final EditText editText = (EditText) dialog.findViewById(R.id.editText);
-            final CheckBox checkbox = (CheckBox) dialog.findViewById(R.id.voorraadBox);
+            final CheckBox checkboxVoorraad = (CheckBox) dialog.findViewById(R.id.voorraadBox);
+            final CheckBox checkboxTht = (CheckBox) dialog.findViewById(R.id.thtBox);
+            final EditText voorraadText = (EditText) dialog.findViewById(R.id.txtVoorraad);
             Button btnSave = (Button) dialog.findViewById(R.id.save);
             Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
@@ -387,10 +396,10 @@ public class MainActivity extends AppCompatActivity{
             // attaching data adapter to spinner
             category.setAdapter(dataAdapter);
 
-            checkbox.setOnClickListener(new View.OnClickListener() {
+            checkboxVoorraad.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(checkbox.isChecked())
+                    if(checkboxVoorraad.isChecked())
                     {
                         LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.thtLayout);
                         layout.setVisibility(View.VISIBLE);
@@ -413,23 +422,43 @@ public class MainActivity extends AppCompatActivity{
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-
-
-
                     Category cat = (Category) category.getSelectedItem();
-                    TasDB.addItem(editText.getText().toString(), cat.getID());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    long itemId = 0;
+                    int type; // 0=geen Voorraad en geen datum, 1=Voorraad, 2=houdbaarheidsdatum, 3=Voorraad en houdbaarheidsdatum
+                    if(checkboxVoorraad.isChecked())
+                    {
+                        if (checkboxTht.isChecked())
+                        {
+                            type = 3;
+                        }
+                        else
+                        {
+                            type = 1;
+                        }
+                        itemId = TasDB.addItem(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), type);
+                    }
+                    else
+                    {
+                        if (checkboxTht.isChecked())
+                        {
+                            type = 2;
+                        }
+                        else
+                        {
+                            type = 0;
+                        }
+                        itemId = TasDB.addItem(editText.getText().toString(), cat.getID(), type);
+                    }
 
-                    builder.setMessage(editText.getText().toString() + " item toegevoegd aan categorie: " + cat.getName());
-                    builder.setTitle("Nieuwe item");
+                    Toast.makeText(MainActivity.this, editText.getText().toString() + " toegevoegd aan categorie: " + cat.getName(), Toast.LENGTH_LONG).show();
 
-                    AlertDialog dialog2 = builder.create();
-                    dialog2.show();
                     dialog.dismiss();
 
+                    if (checkboxTht.isChecked())
+                    {
+                        datePicker("" + itemId);
+                    }
                     createList();
-
                 }
             });
 
@@ -448,11 +477,11 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public void datePicker(String g){
+    public void datePicker(String id){
 
         DatePickerFragment fragment = new DatePickerFragment();
-        fragment.itemId = g;
+        fragment.itemId = id;
         fragment.activity = this;
-        fragment.show(getFragmentManager(), g);
+        fragment.show(getFragmentManager(), id);
     }
 }

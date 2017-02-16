@@ -30,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ITEMS_ID = "I_ID";
     public static final String COLUMN_ITEMS_NAME = "NAME";
     public static final String COLUMN_ITEMS_STOCK = "STOCK";
+    public static final String COLUMN_ITEMS_TYPE = "TYPE";
     public static final String COLUMN_ITEMS_EXPIRATION = "EXPIRATION";
     public static final String COLUMN_ITEMS_CATEGORIES_ID = "C_ID";
 
@@ -50,8 +51,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ITEMS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_ITEMS_NAME + " TEXT, "
                 + COLUMN_ITEMS_STOCK + " INTEGER DEFAULT 1, "
-//                + COLUMN_ITEMS_EXPIRATION + " DATETIME DEFAULT CURRENT_DATE, "
-                + COLUMN_ITEMS_EXPIRATION + " LONG DEFAULT 1000000000000, "
+                + COLUMN_ITEMS_TYPE + " INTEGER DEFAULT 0, "
+                + COLUMN_ITEMS_EXPIRATION + " LONG DEFAULT 10000000000, "
                 + COLUMN_ITEMS_CATEGORIES_ID + " INTEGER, FOREIGN KEY("+ COLUMN_ITEMS_CATEGORIES_ID +") REFERENCES "+ TABLE_CATEGORIES  +"(" + COLUMN_CATEGORIES_ID + ") )");
 
 
@@ -78,60 +79,65 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         //INSERT DEFAULT ITEMS IN CATEGORIES
-        ContentValues itemValues = new ContentValues();
-        itemValues.put(COLUMN_ITEMS_NAME, "Injectienaalden");
-        itemValues.put(COLUMN_ITEMS_STOCK, 10);
-        itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 2);
-        db.insert(TABLE_ITEMS, null, itemValues);
-
-        ContentValues itemValues2 = new ContentValues();
-        itemValues2.put(COLUMN_ITEMS_NAME, "Naaldencontainer");
-        itemValues.put(COLUMN_ITEMS_STOCK, 5);
-        itemValues2.put(COLUMN_ITEMS_CATEGORIES_ID, 2);
-        db.insert(TABLE_ITEMS, null, itemValues2);
-
-        ContentValues itemValues3 = new ContentValues();
-        itemValues3.put(COLUMN_ITEMS_NAME, "Acetylsalicylzuur");
-        itemValues.put(COLUMN_ITEMS_STOCK, 5);
-        itemValues3.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
-        db.insert(TABLE_ITEMS, null, itemValues3);
-
-        ContentValues itemValues4 = new ContentValues();
-        itemValues4.put(COLUMN_ITEMS_NAME, "Atropine");
-        itemValues4.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
-        db.insert(TABLE_ITEMS, null, itemValues4);
-
-        ContentValues itemValues5 = new ContentValues();
-        itemValues5.put(COLUMN_ITEMS_NAME, "Pen");
-        itemValues5.put(COLUMN_ITEMS_CATEGORIES_ID, 3);
-        db.insert(TABLE_ITEMS, null, itemValues5);
-
-        ContentValues itemValues6 = new ContentValues();
-        itemValues6.put(COLUMN_ITEMS_NAME, "Receptenpapier");
-        itemValues6.put(COLUMN_ITEMS_CATEGORIES_ID, 3);
-        db.insert(TABLE_ITEMS, null, itemValues6);
-
-        ContentValues itemValues7 = new ContentValues();
-        itemValues7.put(COLUMN_ITEMS_NAME, "Stethoscoop");
-        itemValues7.put(COLUMN_ITEMS_CATEGORIES_ID, 4);
-        db.insert(TABLE_ITEMS, null, itemValues7);
-
-        ContentValues itemValues8 = new ContentValues();
-        itemValues8.put(COLUMN_ITEMS_NAME, "Pleisters");
-        itemValues8.put(COLUMN_ITEMS_CATEGORIES_ID, 5);
-        db.insert(TABLE_ITEMS, null, itemValues8);
-    }
-
-
-    public void insertDate(Date date)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-
-        values.put(COLUMN_ITEMS_EXPIRATION, date.getTime());
-        db.insert(TABLE_ITEMS, null, values);
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Injectienaalden");
+            itemValues.put(COLUMN_ITEMS_STOCK, 10);
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 2);
+            itemValues.put(COLUMN_ITEMS_TYPE, 1);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Naaldencontainer");
+            itemValues.put(COLUMN_ITEMS_STOCK, 5);
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 2);
+            itemValues.put(COLUMN_ITEMS_TYPE, 0);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Acetylsalicylzuur");
+            itemValues.put(COLUMN_ITEMS_STOCK, 5);
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Pen");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 3);
+            itemValues.put(COLUMN_ITEMS_TYPE, 1);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Receptenpapier");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 3);
+            itemValues.put(COLUMN_ITEMS_TYPE, 1);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Stethoscoop");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 4);
+            itemValues.put(COLUMN_ITEMS_TYPE, 0);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Pleisters");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 5);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
     }
 
     public void updateDate(int item_id,int year, int month, int dayOfMonth)
@@ -142,12 +148,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         dateTime = dateTime.withDate(year,month+1,dayOfMonth);
         long milis = dateTime.getMillis();
         db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_EXPIRATION + " = " + milis + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
-
-        String kabout = "kabouter";
     }
-
-
-
 
     public void setStock(String item_id, String stock)
     {
@@ -202,48 +203,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_CATEGORIES, null, values);
     }
 
-    public void addItem(String name, int categoryId)
+    public long addItem(String name, int categoryId, int type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
-        db.insert(TABLE_ITEMS, null, values);
+        values.put(COLUMN_ITEMS_TYPE, type);
+        return db.insert(TABLE_ITEMS, null, values);
     }
 
-    public void addItem(String name, int categoryId, long datetime)
+
+    public long addItem(String name, int categoryId, int voorraad, int type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
-        values.put(COLUMN_ITEMS_EXPIRATION, datetime);
-        db.insert(TABLE_ITEMS, null, values);
-    }
-
-    public void addItem(String name, int categoryId, long datetime, int voorraad)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_ITEMS_NAME, name);
-        values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
-        values.put(COLUMN_ITEMS_EXPIRATION, datetime);
-        values.put(COLUMN_ITEMS_STOCK, voorraad);
-        db.insert(TABLE_ITEMS, null, values);
-    }
-
-    public void addItem(String name, int categoryId, int voorraad)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_ITEMS_NAME, name);
-        values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
-        values.put(COLUMN_ITEMS_STOCK, voorraad);
-        db.insert(TABLE_ITEMS, null, values);
+        values.put(COLUMN_ITEMS_TYPE, type);
+        return db.insert(TABLE_ITEMS, null, values);
     }
 
     public void deleteItem(String id)
