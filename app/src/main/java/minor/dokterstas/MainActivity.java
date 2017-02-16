@@ -1,5 +1,6 @@
 package minor.dokterstas;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity{
     List<Category> categoryList = new ArrayList<>();
     NotificationCompat.Builder mBuilder;
     private static int minimumStock = 5;
+    private int counter;
+    private int counterAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +77,31 @@ public class MainActivity extends AppCompatActivity{
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
+
+
+        Cursor c = TasDB.countAllItems();
+        int column1 = c.getColumnIndex("count(*)");
+        while (c.moveToNext()) {
+            counterAmount = c.getInt(column1);
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 13);
+        calendar.set(Calendar.MINUTE, 01);
+        calendar.set(Calendar.SECOND, 0);
+        Intent intent1 = new Intent(MainActivity.this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0,intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) MainActivity.this.getSystemService(MainActivity.this.ALARM_SERVICE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
     }
+
+
 
     private void setNotifications() {
         try {
             /*retrieve data from database */
             TasDB = new DatabaseHelper(this);
-
             //Check Stock and expiration date per item
             Cursor c = TasDB.getAllItems();
             int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
@@ -483,5 +504,20 @@ public class MainActivity extends AppCompatActivity{
         fragment.itemId = id;
         fragment.activity = this;
         fragment.show(getFragmentManager(), id);
+    }
+
+    public void checkbox_checked(View view) {
+        if(((CheckBox)view).isChecked())
+        {
+            counter++;
+        }
+        else if(!((CheckBox)view).isChecked())
+        {
+            counter--;
+        }
+        if(counter == counterAmount)
+        {
+            Toast.makeText(MainActivity.this, "Lijst klaar", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -173,6 +173,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor countAllItems()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select count(*) from " + TABLE_ITEMS;
+        Cursor result = db.rawQuery(query, null);
+        return result;
+    }
+
     public Cursor getAllDataFromTable(int table) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "";

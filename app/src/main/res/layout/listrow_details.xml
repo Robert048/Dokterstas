@@ -20,7 +20,9 @@
         android:textSize="14sp"
         android:textStyle="bold"
         android:textColorLink="@color/colorPrimaryDark"
-        android:longClickable="true"/>
+        android:longClickable="true"
+        android:onClick="checkbox_checked"/>
+
 
     <TextView
         android:id="@+id/TextView"

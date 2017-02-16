@@ -14,10 +14,12 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+                <receiver android:name="com.example.alarmmanagernotifcation.AlarmReceiver"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
