@@ -212,6 +212,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, values);
     }
 
+    public void addItem(String name, int categoryId, long datetime)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ITEMS_NAME, name);
+        values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
+        values.put(COLUMN_ITEMS_EXPIRATION, datetime);
+        db.insert(TABLE_ITEMS, null, values);
+    }
+
+    public void addItem(String name, int categoryId, long datetime, int voorraad)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ITEMS_NAME, name);
+        values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
+        values.put(COLUMN_ITEMS_EXPIRATION, datetime);
+        values.put(COLUMN_ITEMS_STOCK, voorraad);
+        db.insert(TABLE_ITEMS, null, values);
+    }
+
+    public void addItem(String name, int categoryId, int voorraad)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ITEMS_NAME, name);
+        values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
+        values.put(COLUMN_ITEMS_STOCK, voorraad);
+        db.insert(TABLE_ITEMS, null, values);
+    }
+
     public void deleteItem(String id)
     {
         SQLiteDatabase db = this.getWritableDatabase();

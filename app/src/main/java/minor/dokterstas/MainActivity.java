@@ -414,6 +414,9 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
 
+
+
+
                     Category cat = (Category) category.getSelectedItem();
                     TasDB.addItem(editText.getText().toString(), cat.getID());
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
