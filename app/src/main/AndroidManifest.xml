@@ -2,20 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="minor.dokterstas">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <receiver android:name="minor.dokterstas.alarmmanagernotifcation.AlarmReceiver"/>
+    <receiver android:name="minor.dokterstas.AlarmReceiver"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver android:name=".SampleAlarmReceiver"></receiver>
+        <service android:name=".SampleSchedulingService" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
-                <receiver android:name="com.example.alarmmanagernotifcation.AlarmReceiver"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
