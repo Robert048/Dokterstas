@@ -37,7 +37,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import minor.dokterstas.database.DatabaseHelper;
 
-import static minor.dokterstas.R.id.checkbox;
 import static minor.dokterstas.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity{
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity{
             counterAmount = c.getInt(column1);
         }
 
-        SampleAlarmReceiver alarm = new SampleAlarmReceiver();
+        AlarmReceiver alarm = new AlarmReceiver();
         alarm.setAlarm(this);
 
         Calendar calendar = Calendar.getInstance();
@@ -97,14 +96,14 @@ public class MainActivity extends AppCompatActivity{
         calendar.set(Calendar.SECOND, 00);
 
         alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
+        Intent intent = new Intent(this, BootReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 1000 * 60 * 20, alarmIntent);
 
         /*
-        Intent intent1 = new Intent(MainActivity.this, AlarmReceiver.class);
+        Intent intent1 = new Intent(MainActivity.this, BootReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0,intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) MainActivity.this.getSystemService(MainActivity.this.ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);

@@ -17,13 +17,13 @@ import java.net.URL;
 
 /**
  * This {@code IntentService} does the app's actual work.
- * {@code SampleAlarmReceiver} (a {@code WakefulBroadcastReceiver}) holds a
+ * {@code AlarmReceiver} (a {@code WakefulBroadcastReceiver}) holds a
  * partial wake lock for this service while the service does its work. When the
  * service is finished, it calls {@code completeWakefulIntent()} to release the
  * wake lock.
  */
-public class SampleSchedulingService extends IntentService {
-    public SampleSchedulingService() {
+public class SchedulingService extends IntentService {
+    public SchedulingService() {
         super("SchedulingService");
     }
 
@@ -65,7 +65,7 @@ public class SampleSchedulingService extends IntentService {
             Log.i(TAG, "No doodle found. :-(");
         }
         // Release the wake lock provided by the BroadcastReceiver.
-        SampleAlarmReceiver.completeWakefulIntent(intent);
+        AlarmReceiver.completeWakefulIntent(intent);
         // END_INCLUDE(service_onhandle)
     }
 
