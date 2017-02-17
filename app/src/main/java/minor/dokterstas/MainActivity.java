@@ -33,6 +33,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import minor.dokterstas.database.DatabaseHelper;
+
+import static minor.dokterstas.R.id.checkbox;
 import static minor.dokterstas.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity{
@@ -40,9 +42,9 @@ public class MainActivity extends AppCompatActivity{
     SparseArray<Group> groups = new SparseArray<>();
     DatabaseHelper TasDB;
     List<Category> categoryList = new ArrayList<>();
-    NotificationCompat.Builder mBuilder;
     private static int minimumStock = 5;
     private static Time alarmTime = new Time(8,30,0);
+    private static boolean alarmUsed = false;
     private int counter;
     private int counterAmount;
     AlarmReceiver alarm = new AlarmReceiver();
@@ -59,25 +61,13 @@ public class MainActivity extends AppCompatActivity{
         String time = sharedPref.getString("alarmTime", "8:30:00");
         String[] timeArray = time.split(":");
         alarmTime = new Time(Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]) ,Integer.parseInt(timeArray[2]));
-
+        alarmUsed = sharedPref.getBoolean("alarmUsed", alarmUsed);
+        if(alarmUsed)
+        {
+            alarm.setAlarm(this);
+        }
         createList();
         setNotifications();
-        /*
-        mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.notification_icon)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!");
-
-        Intent resultIntent = new Intent(this, MainActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(MainActivity.class);
-
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(resultPendingIntent);
-*/
 
         Cursor c = TasDB.countAllItems();
         int column1 = c.getColumnIndex("count(*)");
@@ -287,14 +277,29 @@ public class MainActivity extends AppCompatActivity{
             });
 
             CheckBox setting_check = (CheckBox) dialog.findViewById(R.id.setting_check);
+            if(alarmUsed)
+            {
+                setting_check.setChecked(true);
+                alarm.setAlarm(MainActivity.this);
+            }
             setting_check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(((CheckBox)view).isChecked()) {
+                        Toast.makeText(MainActivity.this, "Alarm dagelijks om: " + alarmTime, Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("alarmUsed", true);
+                        editor.apply();
                         alarm.setAlarm(MainActivity.this);
                     }
                     else
                     {
+                        Toast.makeText(MainActivity.this, "Dagelijks alarm uitgezet", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("alarmUsed", false);
+                        editor.apply();
                         alarm.cancelAlarm(MainActivity.this);
                     }
                 }
