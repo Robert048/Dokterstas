@@ -242,6 +242,13 @@ public class MainActivity extends AppCompatActivity{
             ExpandableListAdapter adapter = new ExpandableListAdapter(this,
                     groups, this, TasDB);
             listView.setAdapter(adapter);
+
+            for ( int i = 0; i < listView.getCount(); i++ ) {
+                listView.expandGroup(i);
+            }
+
+           // listView.expandGroup(0);
+
         } catch (Exception e) {
             Log.e("Error", "Error", e);
         }
