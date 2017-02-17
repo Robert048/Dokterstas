@@ -17,6 +17,12 @@ import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.text.DateFormat;
 import java.util.ArrayList;
 import minor.dokterstas.database.DatabaseHelper;
 
@@ -94,7 +100,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             public boolean onLongClick(View arg1) {
                 CheckBox checkbox = (CheckBox) arg1;
 
-                final Dialog dialog = new Dialog(context);
+                final CustomDialog dialog = new CustomDialog(context);
                 dialog.setContentView(R.layout.item_edit);
                 dialog.setTitle("Confirmation");
 
@@ -114,16 +120,26 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 
                 String ID = separated[1];
-                Cursor c = db.getStock(ID);
+                Cursor c = db.getItem(ID);
                 String voorraad = "";
                 if(c.moveToFirst()){
                     voorraad = c.getString(c.getColumnIndex("STOCK"));
                 }
-                String date = "";
 
+                long date = 0;
+
+
+                if(c.moveToFirst()){
+                    date = c.getLong(c.getColumnIndex("EXPIRATION"));
+                }
+
+                DateTime dTime = new DateTime();
+                dTime = dTime.withMillis(date);
+
+                DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy");
 
                 txtVoorraad.setText(voorraad);
-                txtDate.setText(date);
+                txtDate.setText(dTime.toString(dateTimeFormatter));
 
                 btnPlus.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -158,7 +174,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onClick(View view) {
 
                         //TODO Date button
-                        ((MainActivity)activity).datePicker(separated[1]);
+                        ((MainActivity)activity).datePicker(separated[1],dialog);
 
                     }
 
@@ -198,6 +214,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         db.setStock(separated[1], txtVoorraad.getText().toString());
                         dialog.dismiss();
                         context.createList();
+                        db.updateDate(Integer.parseInt(separated[1]),dialog.year,dialog.month,dialog.day);
+                        ((MainActivity)activity).createList();
                     }
                 });
 

@@ -30,6 +30,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import net.danlew.android.joda.JodaTimeAndroid;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -134,7 +137,11 @@ public class MainActivity extends AppCompatActivity{
 
                 DateTime dt = new DateTime();
                 dt = dt.withMillis(date);
-                String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
+
+                DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+
+                //String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
+                String dateText = dt.toString(dateTimeFormatter);
 
                 Date expirationDate = dt.toDate();
                 if (minimumStock >= Stock && (type == 1 || type == 3)) {
@@ -234,7 +241,10 @@ public class MainActivity extends AppCompatActivity{
                     dt = dt.withMillis(tht);
 
 
-                    String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+                    String dateText = dt.toString(dateTimeFormatter);
+
+                    //String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
 
                     Item item = new Item(ID, Name, dateText, voorraad, type);
                     Category category = categoryList.get(CategoryID - 1);
@@ -517,6 +527,15 @@ public class MainActivity extends AppCompatActivity{
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.itemId = id;
         fragment.activity = this;
+        fragment.show(getFragmentManager(), id);
+    }
+
+    public void datePicker(String id, CustomDialog dialog){
+
+        DatePickerFragment fragment = new DatePickerFragment();
+        fragment.itemId = id;
+        fragment.activity = this;
+        fragment.dialog = dialog;
         fragment.show(getFragmentManager(), id);
     }
 

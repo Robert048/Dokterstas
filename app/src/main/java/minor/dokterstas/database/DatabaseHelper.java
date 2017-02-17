@@ -157,7 +157,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_STOCK + " = " + stock + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
     }
 
-    public Cursor getStock(String item_id)
+    public Cursor getItem(String item_id)
     {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select * from " + TABLE_ITEMS + " where " + COLUMN_ITEMS_ID + " = " + item_id;
