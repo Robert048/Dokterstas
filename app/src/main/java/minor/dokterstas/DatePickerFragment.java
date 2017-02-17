@@ -51,7 +51,5 @@ public class DatePickerFragment extends DialogFragment
         dialog.year = year;
         dialog.month = month;
         dialog.day = day;
-
-
     }
 }

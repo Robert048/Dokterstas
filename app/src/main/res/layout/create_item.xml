@@ -45,13 +45,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
-        <EditText
-            android:textColor="@android:color/tertiary_text_dark"
-            android:textSize="15sp"
-            android:inputType="datetime"
-            android:id="@+id/txtDate"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+        <TextView
+            android:text=""
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtDate"/>
+        <Button
+            android:id="@+id/createDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="set date"
+            android:onClick="showDatePickerNewItem"/>
     </LinearLayout>
 
     <CheckBox

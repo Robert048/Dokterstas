@@ -418,7 +418,7 @@ public class MainActivity extends AppCompatActivity{
         if (id == R.id.Menu_Item) {
 
             //open pop-up
-            final Dialog dialog = new Dialog(this);
+            final CustomDialog dialog = new CustomDialog(this);
             dialog.setContentView(R.layout.create_item);
             dialog.setTitle("Item toevoegen");
 
@@ -427,6 +427,7 @@ public class MainActivity extends AppCompatActivity{
             final CheckBox checkboxVoorraad = (CheckBox) dialog.findViewById(R.id.voorraadBox);
             final CheckBox checkboxTht = (CheckBox) dialog.findViewById(R.id.thtBox);
             final EditText voorraadText = (EditText) dialog.findViewById(R.id.txtVoorraad);
+            Button btnDate = (Button) dialog.findViewById(R.id.createDate);
             Button btnSave = (Button) dialog.findViewById(R.id.save);
             Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
@@ -478,6 +479,14 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
+            btnDate.setOnClickListener(new View.OnClickListener() {
+                                           @Override
+                                           public void onClick(View view) {
+                                               //TODO Date button
+                                               (MainActivity.this).datePicker(dialog);
+                                           }
+                                       });
+
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -488,35 +497,35 @@ public class MainActivity extends AppCompatActivity{
                     {
                         if (checkboxTht.isChecked())
                         {
-                            type = 3;
+                            DateTime dateTime = new DateTime();
+                            dateTime = dateTime.withDate(dialog.year,dialog.month+1,dialog.day);
+                            long milis = dateTime.getMillis();
+
+                            itemId = TasDB.addItem(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()),milis , 3);
+
                         }
                         else
                         {
-                            type = 1;
+                            itemId = TasDB.addItem(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), 1);
                         }
-                        itemId = TasDB.addItem(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), type);
                     }
                     else
                     {
                         if (checkboxTht.isChecked())
                         {
-                            type = 2;
-                        }
+                            DateTime dateTime = new DateTime();
+                            dateTime = dateTime.withDate(dialog.year,dialog.month+1,dialog.day);
+                            long milis = dateTime.getMillis();
+                            itemId = TasDB.addItem(editText.getText().toString(), cat.getID(),milis , 2);                        }
                         else
                         {
                             type = 0;
+                            itemId = TasDB.addItem(editText.getText().toString(), cat.getID(), 0);
                         }
-                        itemId = TasDB.addItem(editText.getText().toString(), cat.getID(), type);
                     }
 
                     Toast.makeText(MainActivity.this, editText.getText().toString() + " toegevoegd aan categorie: " + cat.getName(), Toast.LENGTH_LONG).show();
-
                     dialog.dismiss();
-
-                    if (checkboxTht.isChecked())
-                    {
-                        datePicker("" + itemId);
-                    }
                     createList();
                 }
             });
@@ -534,6 +543,14 @@ public class MainActivity extends AppCompatActivity{
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void datePicker(CustomDialog dialog){
+
+        DatePickerFragment fragment = new DatePickerFragment();
+        fragment.activity = this;
+        fragment.dialog = dialog;
+        fragment.show(getFragmentManager(), "");
     }
 
     public void datePicker(String id){
@@ -566,5 +583,8 @@ public class MainActivity extends AppCompatActivity{
         {
             Toast.makeText(MainActivity.this, "Lijst klaar", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void showDatePickerNewItem(View view) {
     }
 }

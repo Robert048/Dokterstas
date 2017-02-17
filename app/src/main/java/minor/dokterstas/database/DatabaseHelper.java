@@ -210,6 +210,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_CATEGORIES, null, values);
     }
 
+
     public long addItem(String name, int categoryId, int type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -221,6 +222,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_ITEMS, null, values);
     }
 
+    public long addItem(String name, int categoryId,long datum, int type)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ITEMS_NAME, name);
+        values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
+        values.put(COLUMN_ITEMS_EXPIRATION, datum);
+        values.put(COLUMN_ITEMS_TYPE, type);
+        return db.insert(TABLE_ITEMS, null, values);
+    }
 
     public long addItem(String name, int categoryId, int voorraad, int type)
     {
@@ -229,6 +241,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
+        values.put(COLUMN_ITEMS_STOCK, voorraad);
+        values.put(COLUMN_ITEMS_TYPE, type);
+        return db.insert(TABLE_ITEMS, null, values);
+    }
+
+    public long addItem(String name, int categoryId, int voorraad, long datum, int type)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ITEMS_NAME, name);
+        values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
+        values.put(COLUMN_ITEMS_STOCK, voorraad);
+        values.put(COLUMN_ITEMS_EXPIRATION, datum);
         values.put(COLUMN_ITEMS_TYPE, type);
         return db.insert(TABLE_ITEMS, null, values);
     }
