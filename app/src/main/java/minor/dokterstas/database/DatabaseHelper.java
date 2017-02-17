@@ -111,6 +111,153 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         {
             ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Budesonide");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Bumetanide");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Clemastine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Dexamethason");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Dexamethason drank");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Diazepam");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Diclofenac");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Epinefrine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Fentanyl");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Furosemide");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Glucagonpoeder");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Glucoseoplossing");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Haloperidol");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Ipratropiumbromide");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Lorazepam");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Midazolam");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Morfine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "NaCl");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Nitroglycerine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Prednisolon");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Salbutamol");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
             itemValues.put(COLUMN_ITEMS_NAME, "Pen");
             itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 3);
             itemValues.put(COLUMN_ITEMS_TYPE, 1);

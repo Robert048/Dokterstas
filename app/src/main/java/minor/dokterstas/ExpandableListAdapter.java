@@ -236,7 +236,21 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         db.setStock(separated[1], txtVoorraad.getText().toString());
                         dialog.dismiss();
                         context.createList();
-                        db.updateDate(Integer.parseInt(separated[1]),dialog.year,dialog.month,dialog.day);
+
+                        Cursor dbItem = db.getItem(separated[1]);
+                        int type = 0;
+                        if(dbItem.moveToFirst()){
+                            type = dbItem.getInt(dbItem.getColumnIndex("TYPE"));
+                        }
+
+                        switch (type) {
+                            case 2:
+                                db.updateDate(Integer.parseInt(separated[1]),dialog.year,dialog.month,dialog.day);
+                                break;
+                            case 3:
+                                db.updateDate(Integer.parseInt(separated[1]),dialog.year,dialog.month,dialog.day);
+                                break;
+                        }
                         ((MainActivity)activity).createList();
                     }
                 });
