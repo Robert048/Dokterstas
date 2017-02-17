@@ -243,10 +243,10 @@ public class MainActivity extends AppCompatActivity{
                     groups, this, TasDB);
             listView.setAdapter(adapter);
 
-            for ( int i = 0; i < listView.getCount(); i++ ) {
+            int count = adapter.getGroupCount();
+            for ( int i = 0; i < count; i++ ) {
                 listView.expandGroup(i);
             }
-
            // listView.expandGroup(0);
 
         } catch (Exception e) {
