@@ -1,14 +1,10 @@
 package minor.dokterstas;
 
-import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.NotificationCompat;
@@ -30,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import net.danlew.android.joda.JodaTimeAndroid;
 import org.joda.time.DateTime;
-
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,11 +33,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import minor.dokterstas.database.DatabaseHelper;
-
 import static minor.dokterstas.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity{
-
 
     SparseArray<Group> groups = new SparseArray<>();
     DatabaseHelper TasDB;
