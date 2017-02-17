@@ -32,6 +32,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/thtBox" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="30dp"
+        android:id="@+id/thtLayout"
+        android:visibility="gone">
+
+        <TextView
+            android:text="Datum: "
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <EditText
+            android:textColor="@android:color/tertiary_text_dark"
+            android:textSize="15sp"
+            android:inputType="datetime"
+            android:id="@+id/txtDate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <CheckBox
         android:text="Heeft voorraad aantal"
@@ -44,7 +65,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginStart="30dp"
-        android:id="@+id/thtLayout"
+        android:id="@+id/voorraadLayout"
         android:visibility="gone">
 
         <TextView

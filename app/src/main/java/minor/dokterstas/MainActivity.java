@@ -444,6 +444,22 @@ public class MainActivity extends AppCompatActivity{
                 public void onClick(View v) {
                     if(checkboxVoorraad.isChecked())
                     {
+                        LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.voorraadLayout);
+                        layout.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.voorraadLayout);
+                        layout.setVisibility(View.GONE);
+                    }
+                }
+            });
+
+            checkboxTht.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(checkboxTht.isChecked())
+                    {
                         LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.thtLayout);
                         layout.setVisibility(View.VISIBLE);
                     }
