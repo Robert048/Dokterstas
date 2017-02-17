@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,6 +100,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public boolean onLongClick(View arg1) {
                 CheckBox checkbox = (CheckBox) arg1;
+                Cursor dbItem = db.getItem(separated[1]);
 
                 final CustomDialog dialog = new CustomDialog(context);
                 dialog.setContentView(R.layout.item_edit);
@@ -109,6 +111,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 Button btnPlus = (Button) dialog.findViewById(R.id.plus);
                 Button btnMinus = (Button) dialog.findViewById(R.id.minus);
 
+                LinearLayout dateLayout = (LinearLayout) dialog.findViewById(R.id.dateLayout);
+                LinearLayout stockLayout = (LinearLayout) dialog.findViewById(R.id.stockLayout);
+
                 TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
                 Button btnDate = (Button) dialog.findViewById(R.id.date);
 
@@ -116,8 +121,25 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 Button btnSave = (Button) dialog.findViewById(R.id.save);
                 Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
-                txtTitel.setText(checkbox.getText());
+                int type = 3;
+                if(dbItem.moveToFirst()){
+                    type = dbItem.getInt(dbItem.getColumnIndex("TYPE"));
+                }
 
+                switch (type) {
+                    case 0:
+                        dateLayout.setVisibility(View.GONE);
+                        stockLayout.setVisibility(View.GONE);
+                        btnSave.setVisibility(View.GONE);
+                        break;
+                    case 1:
+                        dateLayout.setVisibility(View.GONE);
+                        break;
+                    case 2:
+                        stockLayout.setVisibility(View.GONE);
+                        break;
+                }
+                txtTitel.setText(checkbox.getText());
 
                 String ID = separated[1];
                 Cursor c = db.getItem(ID);
