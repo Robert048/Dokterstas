@@ -34,18 +34,12 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-
-        <CheckBox
-            android:id="@+id/setting_expiration"
-            android:text="@string/setting_expiration"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+        </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -56,6 +50,25 @@
             android:text="@string/setting_check"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:text="Tijdstip voor notificatie: "
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <EditText
+            android:textColor="@android:color/tertiary_text_dark"
+            android:textSize="15sp"
+            android:id="@+id/txtTime"
+            android:inputType="time"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </LinearLayout>

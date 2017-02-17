@@ -5,9 +5,11 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
+import java.sql.Time;
 import java.util.Calendar;
 
 /**
@@ -58,9 +60,12 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        // Set the alarm's trigger time to 8:30 a.m.
-        calendar.set(Calendar.HOUR_OF_DAY, 12);
-        calendar.set(Calendar.MINUTE, 05);
+        // Set the alarm's trigger time
+        Time time = MainActivity.getAlarmTime();
+        String[] timeArray = time.toString().split(":");
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]));
+        calendar.set(Calendar.SECOND, Integer.parseInt(timeArray[2]));
 
         /*
          * If you don't have precise time requirements, use an inexact repeating alarm

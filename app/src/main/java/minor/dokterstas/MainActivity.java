@@ -30,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import net.danlew.android.joda.JodaTimeAndroid;
 import org.joda.time.DateTime;
+
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,10 +49,9 @@ public class MainActivity extends AppCompatActivity{
     List<Category> categoryList = new ArrayList<>();
     NotificationCompat.Builder mBuilder;
     private static int minimumStock = 5;
+    private static Time alarmTime = new Time(8,30,0);
     private int counter;
     private int counterAmount;
-    private AlarmManager alarmMgr;
-    private PendingIntent alarmIntent;
     AlarmReceiver alarm = new AlarmReceiver();
 
     @Override
@@ -62,9 +63,13 @@ public class MainActivity extends AppCompatActivity{
         JodaTimeAndroid.init(this);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         minimumStock = sharedPref.getInt("minimumStock", minimumStock);
+        String time = sharedPref.getString("alarmTime", "8:30:00");
+        String[] timeArray = time.split(":");
+        alarmTime = new Time(Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]) ,Integer.parseInt(timeArray[2]));
 
         createList();
         setNotifications();
+        /*
         mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.notification_icon)
@@ -79,7 +84,7 @@ public class MainActivity extends AppCompatActivity{
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
-
+*/
 
         Cursor c = TasDB.countAllItems();
         int column1 = c.getColumnIndex("count(*)");
@@ -87,29 +92,6 @@ public class MainActivity extends AppCompatActivity{
             counterAmount = c.getInt(column1);
         }
 
-        alarm.cancelAlarm(this);
-        alarm.setAlarm(this);
-
-        /*
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 11);
-        calendar.set(Calendar.MINUTE, 02);
-        calendar.set(Calendar.SECOND, 00);
-
-        alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, BootReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                1000 * 60 * 20, alarmIntent);
-
-
-        Intent intent1 = new Intent(MainActivity.this, BootReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0,intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager am = (AlarmManager) MainActivity.this.getSystemService(MainActivity.this.ALARM_SERVICE);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        */
     }
 
 
@@ -187,6 +169,11 @@ public class MainActivity extends AppCompatActivity{
     public static int getMinimumStock()
     {
         return minimumStock;
+    }
+
+    public static Time getAlarmTime()
+    {
+        return alarmTime;
     }
 
     public void setMinimumStock(int Stock)
@@ -306,30 +293,41 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
-            CheckBox setting_expiration = (CheckBox) dialog.findViewById(R.id.setting_expiration);
-            setting_expiration.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-
-
-
-
-                    /*
-                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    // notificationID allows you to update the notification later on.
-                    mNotificationManager.notify(0, mBuilder.build());
-                    */
-                }
-            });
-
             CheckBox setting_check = (CheckBox) dialog.findViewById(R.id.setting_check);
             setting_check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if(((CheckBox)view).isChecked()) {
+                        alarm.setAlarm(MainActivity.this);
+                    }
+                    else
+                    {
+                        alarm.cancelAlarm(MainActivity.this);
+                    }
                 }
             });
+
+            final TextView txtTime = (TextView) dialog.findViewById(R.id.txtTime);
+            txtTime.setText("" + alarmTime);
+            txtTime.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        Toast.makeText(MainActivity.this, "Notificatie tijdstip aangepast naar: " + txtTime.getText(), Toast.LENGTH_SHORT).show();
+
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("AlarmTime", txtTime.getText().toString());
+                        editor.apply();
+                        //cancel old alarm
+                        alarm.cancelAlarm(MainActivity.this);
+                        alarm.setAlarm(MainActivity.this);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
 
             dialog.show();
             return true;
