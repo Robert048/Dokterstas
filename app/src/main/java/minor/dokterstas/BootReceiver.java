@@ -11,15 +11,15 @@ import android.content.Intent;
  * When the user cancels the alarm, the receiver is disabled, so that rebooting the
  * device will not trigger this receiver.
  */
-
+// BEGIN_INCLUDE(autostart)
 public class BootReceiver extends BroadcastReceiver {
     AlarmReceiver alarm = new AlarmReceiver();
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO Auto-generated method stub
-        //if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED"))
+        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED"))
         {
-            //alarm.setAlarm(context);
+            alarm.setAlarm(context);
         }
     }
 }
+//END_INCLUDE(autostart)

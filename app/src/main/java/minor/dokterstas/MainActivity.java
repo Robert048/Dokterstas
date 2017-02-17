@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity{
     private int counterAmount;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
+    AlarmReceiver alarm = new AlarmReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +87,14 @@ public class MainActivity extends AppCompatActivity{
             counterAmount = c.getInt(column1);
         }
 
-        AlarmReceiver alarm = new AlarmReceiver();
+        alarm.cancelAlarm(this);
         alarm.setAlarm(this);
 
+        /*
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 14);
-        calendar.set(Calendar.MINUTE, 44);
+        calendar.set(Calendar.HOUR_OF_DAY, 11);
+        calendar.set(Calendar.MINUTE, 02);
         calendar.set(Calendar.SECOND, 00);
 
         alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity{
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 1000 * 60 * 20, alarmIntent);
 
-        /*
+
         Intent intent1 = new Intent(MainActivity.this, BootReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0,intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) MainActivity.this.getSystemService(MainActivity.this.ALARM_SERVICE);

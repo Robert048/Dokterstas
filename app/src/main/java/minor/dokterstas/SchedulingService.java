@@ -52,16 +52,16 @@ public class SchedulingService extends IntentService {
         try {
             result = loadFromNetwork(urlString);
         } catch (IOException e) {
-            Log.i(TAG, " RIP");
+            Log.i(TAG, "connection error");
         }
 
         // If the app finds the string "doodle" in the Google home page content, it
         // indicates the presence of a doodle. Post a "Doodle Alert" notification.
         if (result.indexOf(SEARCH_STRING) != -1) {
-            sendNotification("test");
+            sendNotification("doodle found");
             Log.i(TAG, "Found doodle!!");
         } else {
-            sendNotification(" test");
+            sendNotification("no doodle");
             Log.i(TAG, "No doodle found. :-(");
         }
         // Release the wake lock provided by the BroadcastReceiver.
@@ -80,7 +80,7 @@ public class SchedulingService extends IntentService {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.notification_icon)
-                        .setContentTitle(" test")
+                        .setContentTitle("alert")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
                         .setContentText(msg);
