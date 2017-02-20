@@ -35,4 +35,10 @@ public class Item {
     public int getType() {
         return type;
     }
+
+    public String toString()
+    {
+        return name;
+    }
+
 }

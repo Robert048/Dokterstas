@@ -2,58 +2,40 @@ package minor.dokterstas;
 
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.database.Cursor;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.app.Notification;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
-import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.List;
+
 import minor.dokterstas.database.DatabaseHelper;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
-    //private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
     private MainActivity context;
     private DatabaseHelper db;
     ArrayList<ArrayList<Integer>> check_states = new ArrayList<>();
-    private String[] groups = { "People Names", "Dog Names", "Cat Names", "Fish Names" }; //headers
-    private String[][] children = {
-            {"Arnold", "Barry", "Chuck", "David","Arnold", "Barry", "Chuck", "David","Arnold", "Barry", "Chuck", "David","Arnold", "Barry", "Chuck", "David","Arnold", "Barry", "Chuck", "David","Arnold", "Barry", "Chuck", "David"},
-            {"Ace", "Bandit", "Cha-Cha", "Deuce"},
-            {"Fluffy", "Snuggles"},
-            {"Goldy", "Bubbles"}
-    };
+    private List<Category> groups;
+    private List<List<Item>> children;
 
 
-    public ExpandableListAdapter(Activity act, SparseArray<Group> groups, MainActivity context, DatabaseHelper db) {
+    public ExpandableListAdapter(Activity act, List<Category> groups, List<List<Item>> children, MainActivity context, DatabaseHelper db) {
         this.db = db;
         activity = act;
-        //this.groups = groups;
+        this.groups = groups;
+        this.children = children;
         inflater = act.getLayoutInflater();
         this.context = context;
 
-        for(int i = 0; i < children.length; i++) {
+        for(int i = 0; i < children.size(); i++) {
             ArrayList<Integer> tmp = new ArrayList<>();
-            for(int j = 0; j < children[i].length; j++) {
+            for(int j = 0; j < children.get(i).size(); j++) {
                 tmp.add(0);
             }
             check_states.add(tmp);
@@ -62,7 +44,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     //Get Methods
     public Object getChild(int groupPosition, int childPosition) {
-        return children[groupPosition][childPosition];
+        return children.get(groupPosition).get(childPosition);
     }
 
     public long getChildId(int groupPosition, int childPosition) {
@@ -70,7 +52,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     public int getChildrenCount(int groupPosition) {
-        return children[groupPosition].length;
+        return children.get(groupPosition).size();
     }
 
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
@@ -111,11 +93,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     public Object getGroup(int groupPosition) {
-        return groups[groupPosition];
+        return groups.get(groupPosition);
     }
 
     public int getGroupCount() {
-        return groups.length;
+        return groups.size();
     }
 
     public long getGroupId(int groupPosition) {

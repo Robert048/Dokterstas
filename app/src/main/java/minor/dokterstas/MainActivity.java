@@ -38,7 +38,9 @@ import static minor.dokterstas.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity{
 
-    SparseArray<Group> groups = new SparseArray<>();
+    private List<Category> groups = new ArrayList<>();
+    private List<List<Item>> children = new ArrayList<>();
+    //SparseArray<Group> groups = new SparseArray<>();
     DatabaseHelper TasDB;
     List<Category> categoryList = new ArrayList<>();
     private static int minimumStock = 5;
@@ -222,21 +224,29 @@ public class MainActivity extends AppCompatActivity{
 
             //Create items in categories
             for (int j = 0; j < categoryList.size(); j++) {
-                Group group = new Group(categoryList.get(j).getName());
+                groups = categoryList;
+                List<Item> child = new ArrayList<>();
+
+
+                //Group group = new Group(categoryList.get(j).getName());
                 for (int i = 0; i < categoryList.get(j).getItems().size(); i++) {
+                    child.add(categoryList.get(j).getItems().get(i));
+                    /*
                     int type = categoryList.get(j).getItems().get(i).getType();
-                    if(type == 0) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "- ");
+                    if(type == 0) Child.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "- ");
                     else if(type == 1) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + "\n" + categoryList.get(j).getItems().get(i).getVoorraad() + " op voorraad");
                     else if(type == 2) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + categoryList.get(j).getItems().get(i).getTht());
                     else if(type == 3) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + categoryList.get(j).getItems().get(i).getTht() + "\n" + categoryList.get(j).getItems().get(i).getVoorraad() + " op voorraad");
-
+*/
                 }
-                groups.append(j, group);
+                children.add(child);
+
+                //groups.append(j, group);
             }
 
             ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
             ExpandableListAdapter adapter = new ExpandableListAdapter(this,
-                    groups, this, TasDB);
+                    groups, children, this, TasDB);
             listView.setAdapter(adapter);
 
            /* int count = adapter.getGroupCount();
