@@ -126,6 +126,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
                 LinearLayout dateLayout = (LinearLayout) dialog.findViewById(R.id.dateLayout);
                 LinearLayout stockLayout = (LinearLayout) dialog.findViewById(R.id.stockLayout);
+                LinearLayout volumeLayout = (LinearLayout) dialog.findViewById(R.id.volumeLayout);
+
+                final EditText txtVolume = (EditText) dialog.findViewById(R.id.txtVolume);
 
                 TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
                 Button btnDate = (Button) dialog.findViewById(R.id.date);
@@ -138,12 +141,28 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     case 0:
                         dateLayout.setVisibility(View.GONE);
                         stockLayout.setVisibility(View.GONE);
+                        volumeLayout.setVisibility(View.GONE);
                         btnSave.setVisibility(View.GONE);
                         break;
                     case 1:
                         dateLayout.setVisibility(View.GONE);
+                        volumeLayout.setVisibility(View.GONE);
                         break;
                     case 2:
+                        stockLayout.setVisibility(View.GONE);
+                        volumeLayout.setVisibility(View.GONE);
+                        break;
+                    case 3:
+                        volumeLayout.setVisibility(View.GONE);
+                        break;
+                    case 4:
+                        stockLayout.setVisibility(View.GONE);
+                        dateLayout.setVisibility(View.GONE);
+                        break;
+                    case 5:
+                        dateLayout.setVisibility(View.GONE);
+                        break;
+                    case 6:
                         stockLayout.setVisibility(View.GONE);
                         break;
                 }
@@ -216,6 +235,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //TODO opslaan van volume
                         db.updateStock(item.getID(), txtVoorraad.getText().toString());
                         dialog.dismiss();
                         context.createList();
