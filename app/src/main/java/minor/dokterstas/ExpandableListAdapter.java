@@ -29,29 +29,125 @@ import java.util.ArrayList;
 import minor.dokterstas.database.DatabaseHelper;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
-    private final SparseArray<Group> groups;
+    //private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
     private MainActivity context;
     private DatabaseHelper db;
+    ArrayList<ArrayList<Integer>> check_states = new ArrayList<>();
+    private String[] groups = { "People Names", "Dog Names", "Cat Names", "Fish Names" }; //headers
+    private String[][] children = {
+            {"Arnold", "Barry", "Chuck", "David","Arnold", "Barry", "Chuck", "David","Arnold", "Barry", "Chuck", "David","Arnold", "Barry", "Chuck", "David","Arnold", "Barry", "Chuck", "David","Arnold", "Barry", "Chuck", "David"},
+            {"Ace", "Bandit", "Cha-Cha", "Deuce"},
+            {"Fluffy", "Snuggles"},
+            {"Goldy", "Bubbles"}
+    };
 
 
     public ExpandableListAdapter(Activity act, SparseArray<Group> groups, MainActivity context, DatabaseHelper db) {
         this.db = db;
         activity = act;
-        this.groups = groups;
+        //this.groups = groups;
         inflater = act.getLayoutInflater();
         this.context = context;
+
+        for(int i = 0; i < children.length; i++) {
+            ArrayList<Integer> tmp = new ArrayList<>();
+            for(int j = 0; j < children[i].length; j++) {
+                tmp.add(0);
+            }
+            check_states.add(tmp);
+        }
     }
 
+    //Get Methods
+    public Object getChild(int groupPosition, int childPosition) {
+        return children[groupPosition][childPosition];
+    }
+
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
+
+    public int getChildrenCount(int groupPosition) {
+        return children[groupPosition].length;
+    }
+
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+                             View convertView, ViewGroup parent) {
+        View grid;
+
+
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        grid = inflater.inflate(R.layout.listrow_details, parent, false);
+
+        final int grpPos = groupPosition;
+        final int childPos = childPosition;
+
+        final CheckBox header = (CheckBox)grid.findViewById(R.id.checkbox);
+        header.setText(getChild(groupPosition, childPosition).toString());
+        if(check_states.get(grpPos).get(childPos) == 1)
+            header.setChecked(true);
+        else
+            header.setChecked(false);
+
+        header.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(header.isChecked()) {
+                    check_states.get(grpPos).set(childPos, 1);
+                    header.setChecked(true);
+                }
+                else
+                {
+                    check_states.get(grpPos).set(childPos, 0);
+                    header.setChecked(false);
+                }
+
+            }
+        });
+
+        return grid;
+    }
+
+    public Object getGroup(int groupPosition) {
+        return groups[groupPosition];
+    }
+
+    public int getGroupCount() {
+        return groups.length;
+    }
+
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
+                             ViewGroup parent) {
+        if(convertView==null) {
+            convertView = inflater.inflate(R.layout.listrow_group, null);
+        }
+
+        CheckedTextView header = (CheckedTextView)convertView.findViewById(R.id.textView1);
+        header.setText(getGroup(groupPosition).toString());
+
+        return convertView;
+    }
+
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
+    public boolean hasStableIds() {
+        return true;
+    }
+
+
+
+/*
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return groups.get(groupPosition).children.get(childPosition);
-    }
-
-
-    public void onCreate(int groupPosition){
-
     }
 
     @Override
@@ -330,5 +426,5 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
-
+*/
 }

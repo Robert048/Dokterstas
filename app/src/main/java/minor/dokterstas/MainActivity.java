@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
@@ -29,15 +28,12 @@ import org.joda.time.DateTime;
 import java.sql.Time;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import minor.dokterstas.database.DatabaseHelper;
-
-import static minor.dokterstas.R.id.checkbox;
 import static minor.dokterstas.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity{
