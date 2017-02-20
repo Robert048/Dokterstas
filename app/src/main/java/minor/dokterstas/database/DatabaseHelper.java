@@ -111,6 +111,105 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         {
             ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+        {
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(COLUMN_ITEMS_NAME, "Atropine");
+            itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
+            itemValues.put(COLUMN_ITEMS_TYPE, 3);
+            db.insert(TABLE_ITEMS, null, itemValues);
+        }
+
+  /*      {
+            ContentValues itemValues = new ContentValues();
             itemValues.put(COLUMN_ITEMS_NAME, "Budesonide");
             itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
             itemValues.put(COLUMN_ITEMS_TYPE, 3);
@@ -255,7 +354,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             itemValues.put(COLUMN_ITEMS_CATEGORIES_ID, 1);
             itemValues.put(COLUMN_ITEMS_TYPE, 3);
             db.insert(TABLE_ITEMS, null, itemValues);
-        }
+        } */
         {
             ContentValues itemValues = new ContentValues();
             itemValues.put(COLUMN_ITEMS_NAME, "Pen");
