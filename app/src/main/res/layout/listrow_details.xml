@@ -31,7 +31,8 @@
         android:layout_height="wrap_content"
         android:drawablePadding="5dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textAlignment="viewEnd" />
 
     <View
         android:layout_width="match_parent"
