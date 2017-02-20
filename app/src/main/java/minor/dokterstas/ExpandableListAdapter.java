@@ -3,9 +3,7 @@ package minor.dokterstas;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.database.Cursor;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +51,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         inflater = act.getLayoutInflater();
         this.context = context;
 
-        for(int i = 0; i < children.size(); i++) {
+        for (int i = 0; i < children.size(); i++) {
             ArrayList<Integer> tmp = new ArrayList<>();
-            for(int j = 0; j < children.get(i).size(); j++) {
+            for (int j = 0; j < children.get(i).size(); j++) {
                 tmp.add(0);
             }
             check_states.add(tmp);
@@ -75,32 +73,29 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return children.get(groupPosition).size();
     }
 
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
-    {
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         View grid;
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         grid = inflater.inflate(R.layout.listrow_details, parent, false);
 
         final int grpPos = groupPosition;
         final int childPos = childPosition;
 
         TextView txtData = (TextView) grid.findViewById(R.id.TextView);
-        final CheckBox boxNaam = (CheckBox)grid.findViewById(R.id.checkbox);
+        final CheckBox boxNaam = (CheckBox) grid.findViewById(R.id.checkbox);
         boxNaam.setText(getChild(grpPos, childPos).toString());
-        if(check_states.get(grpPos).get(childPos) == 1)
+        if (check_states.get(grpPos).get(childPos) == 1)
             boxNaam.setChecked(true);
         else
             boxNaam.setChecked(false);
 
-        boxNaam.setOnClickListener(new View.OnClickListener(){
+        boxNaam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(boxNaam.isChecked()) {
+                if (boxNaam.isChecked()) {
                     check_states.get(grpPos).set(childPos, 1);
                     boxNaam.setChecked(true);
-                }
-                else
-                {
+                } else {
                     check_states.get(grpPos).set(childPos, 0);
                     boxNaam.setChecked(false);
                 }
@@ -152,14 +147,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
                 Cursor c = db.getItem(item.getID());
                 String voorraad = "";
-                if(c.moveToFirst()){
+                if (c.moveToFirst()) {
                     voorraad = c.getString(c.getColumnIndex("STOCK"));
                 }
 
                 long date = 0;
 
 
-                if(c.moveToFirst()){
+                if (c.moveToFirst()) {
                     date = c.getLong(c.getColumnIndex("EXPIRATION"));
                 }
 
@@ -190,8 +185,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         int aantal = Integer.parseInt(stock);
                         aantal = aantal - 1;
                         txtVoorraad.setText("" + aantal);
-                        if(MainActivity.getMinimumStock() >= aantal)
-                        {
+                        if (MainActivity.getMinimumStock() >= aantal) {
                             CharSequence text = "Lage voorraad";
                             int duration = Toast.LENGTH_SHORT;
 
@@ -206,7 +200,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onClick(View view) {
 
                         //TODO Date button
-                        ((MainActivity)activity).datePicker("" + item.getID(),dialog);
+                        ((MainActivity) activity).datePicker("" + item.getID(), dialog);
 
                     }
 
@@ -248,6 +242,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         context.createList();
 
                         Cursor dbItem = db.getItem(item.getID());
+
+
+
+
                         /*int type = 0;
                         if(dbItem.moveToFirst()){
                             type = dbItem.getInt(dbItem.getColumnIndex("TYPE"));
@@ -255,13 +253,20 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
                         switch (item.getType()) {
                             case 2:
-                                db.updateDate(item.getID(),dialog.year,dialog.month,dialog.day);
+                                if (dialog.day == 0) {
+                                } else {
+                                    db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
+                                }
                                 break;
                             case 3:
-                                db.updateDate(item.getID(),dialog.year,dialog.month,dialog.day);
+                                if (dialog.day == 0) {
+                                    db.setStock(item.getID(), txtVoorraad.getText().toString());
+                                } else {
+                                    db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
+                                }
                                 break;
                         }
-                        ((MainActivity)activity).createList();
+                        ((MainActivity) activity).createList();
                     }
                 });
 
@@ -287,11 +292,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
                              ViewGroup parent) {
-        if(convertView==null) {
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_group, null);
         }
 
-        CheckedTextView header = (CheckedTextView)convertView.findViewById(R.id.textView1);
+        CheckedTextView header = (CheckedTextView) convertView.findViewById(R.id.textView1);
         header.setText(getGroup(groupPosition).toString());
 
         return convertView;

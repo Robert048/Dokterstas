@@ -385,6 +385,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+
+
     public void updateDate(int item_id,int year, int month, int dayOfMonth)
     {
         SQLiteDatabase db = this.getWritableDatabase();

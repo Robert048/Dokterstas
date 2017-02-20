@@ -3,11 +3,11 @@
     android:id="@+id/textView1"
     android:layout_width="wrap_content"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:layout_marginLeft="8dp"
+    android:layout_marginLeft="0dp"
     android:gravity="left"
     android:paddingLeft="27dp"
     android:paddingTop="4dp"
-    android:background="@color/colorAccent"
+    android:background="@color/colorPrimary"
     android:text="Category"
     android:textSize="20sp"
     android:textStyle="bold" />
