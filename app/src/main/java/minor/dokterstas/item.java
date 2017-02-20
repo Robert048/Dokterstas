@@ -5,7 +5,7 @@ public class Item {
     private String name;
     private String tht;
     private int voorraad;
-    private int type;
+    private int type; // 0=geen Voorraad en geen datum, 1=Voorraad, 2=houdbaarheidsdatum, 3=Voorraad en houdbaarheidsdatum
 
     public Item(int ID, String name, String tht, int voorraad, int type) {
         this.ID = ID;

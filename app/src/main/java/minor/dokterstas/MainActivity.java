@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity{
     private static int minimumStock = 5;
     private static Time alarmTime = new Time(8,30,0);
     private static boolean alarmUsed = false;
-    private int counter;
     private int counterAmount;
     AlarmReceiver alarm = new AlarmReceiver();
 
@@ -146,6 +145,11 @@ public class MainActivity extends AppCompatActivity{
         } catch (Exception e) {
             Log.e("Error", "Error", e);
         }
+    }
+
+    public int getCounterAmount()
+    {
+        return counterAmount;
     }
 
     public static int getMinimumStock()
@@ -528,30 +532,12 @@ public class MainActivity extends AppCompatActivity{
         fragment.show(getFragmentManager(), "");
     }
 
-    public void datePicker(String id, CustomDialog dialog){
+    public void datePicker(String id, CustomDialog dialog) {
 
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.itemId = id;
         fragment.activity = this;
         fragment.dialog = dialog;
         fragment.show(getFragmentManager(), id);
-    }
-
-    public void checkbox_checked(View view) {
-        if(((CheckBox)view).isChecked())
-        {
-            counter++;
-        }
-        else if(!((CheckBox)view).isChecked())
-        {
-            counter--;
-        }
-        if(counter == counterAmount)
-        {
-            Toast.makeText(MainActivity.this, "Lijst klaar", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void showDatePickerNewItem(View view) {
     }
 }

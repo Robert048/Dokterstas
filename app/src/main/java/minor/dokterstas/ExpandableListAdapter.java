@@ -26,6 +26,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     ArrayList<ArrayList<Integer>> check_states = new ArrayList<>();
     private List<Category> groups;
     private List<List<Item>> children = new ArrayList<>();
+    private int counter;
 
 
     public ExpandableListAdapter(Activity act, List<Category> groups, MainActivity context, DatabaseHelper db) {
@@ -89,11 +90,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 if (boxNaam.isChecked()) {
+                    counter++;
                     check_states.get(grpPos).set(childPos, 1);
                     boxNaam.setChecked(true);
                 } else {
+                    counter--;
                     check_states.get(grpPos).set(childPos, 0);
                     boxNaam.setChecked(false);
+                }
+                if(counter == context.getCounterAmount())
+                {
+                    Toast.makeText(activity, "Lijst klaar", Toast.LENGTH_SHORT).show();
                 }
             }
         });
