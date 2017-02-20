@@ -203,6 +203,7 @@ public class MainActivity extends AppCompatActivity{
                 int Column4 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
                 int Column5 = c.getColumnIndex(TasDB.COLUMN_ITEMS_CATEGORIES_ID);
                 int Column6 = c.getColumnIndex(TasDB.COLUMN_ITEMS_TYPE);
+                int Column7 = c.getColumnIndex(TasDB.COLUMN_ITEMS_VOLUME);
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
@@ -210,14 +211,13 @@ public class MainActivity extends AppCompatActivity{
                     int voorraad = c.getInt(Column4);
                     int CategoryID = c.getInt(Column5);
                     int type = c.getInt(Column6);
+                    int volume = c.getInt(Column7);
                     DateTime dt = new DateTime();
                     dt = dt.withMillis(tht);
 
                     DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy");
                     String dateText = dt.toString(dateTimeFormatter);
 
-                    //TODO volume van database
-                    int volume = 0;
                     Item item = new Item(ID, Name, dateText, voorraad, volume, type);
                     Category category = categoryList.get(CategoryID - 1);
                     category.addItem(item);
