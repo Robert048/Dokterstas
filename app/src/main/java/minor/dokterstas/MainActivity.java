@@ -38,11 +38,8 @@ import static minor.dokterstas.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity{
 
-    private List<Category> groups = new ArrayList<>();
-    private List<List<Item>> children = new ArrayList<>();
-    //SparseArray<Group> groups = new SparseArray<>();
     DatabaseHelper TasDB;
-    List<Category> categoryList = new ArrayList<>();
+    private List<Category> categoryList = new ArrayList<>();
     private static int minimumStock = 5;
     private static Time alarmTime = new Time(8,30,0);
     private static boolean alarmUsed = false;
@@ -75,10 +72,7 @@ public class MainActivity extends AppCompatActivity{
         while (c.moveToNext()) {
             counterAmount = c.getInt(column1);
         }
-
     }
-
-
 
     private void setNotifications() {
         try {
@@ -210,11 +204,8 @@ public class MainActivity extends AppCompatActivity{
                     DateTime dt = new DateTime();
                     dt = dt.withMillis(tht);
 
-
                     DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy");
                     String dateText = dt.toString(dateTimeFormatter);
-
-                    //String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
 
                     Item item = new Item(ID, Name, dateText, voorraad, type);
                     Category category = categoryList.get(CategoryID - 1);
@@ -222,38 +213,12 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
 
-            //Create items in categories
-            for (int j = 0; j < categoryList.size(); j++) {
-                groups = categoryList;
-                List<Item> child = new ArrayList<>();
 
-
-                //Group group = new Group(categoryList.get(j).getName());
-                for (int i = 0; i < categoryList.get(j).getItems().size(); i++) {
-                    child.add(categoryList.get(j).getItems().get(i));
-                    /*
-                    int type = categoryList.get(j).getItems().get(i).getType();
-                    if(type == 0) Child.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "- ");
-                    else if(type == 1) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + "\n" + categoryList.get(j).getItems().get(i).getVoorraad() + " op voorraad");
-                    else if(type == 2) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + categoryList.get(j).getItems().get(i).getTht());
-                    else if(type == 3) group.children.add(categoryList.get(j).getItems().get(i).getName() + "-" + categoryList.get(j).getItems().get(i).getID() + "-" + categoryList.get(j).getItems().get(i).getTht() + "\n" + categoryList.get(j).getItems().get(i).getVoorraad() + " op voorraad");
-*/
-                }
-                children.add(child);
-
-                //groups.append(j, group);
-            }
 
             ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
             ExpandableListAdapter adapter = new ExpandableListAdapter(this,
-                    groups, children, this, TasDB);
+                    categoryList, this, TasDB);
             listView.setAdapter(adapter);
-
-           /* int count = adapter.getGroupCount();
-            for ( int i = 0; i < count; i++ ) {
-                listView.expandGroup(i);
-            } */
-           // listView.expandGroup(0);
 
         } catch (Exception e) {
             Log.e("Error", "Error", e);

@@ -41,4 +41,14 @@ public class Item {
         return name;
     }
 
+    public String getData()
+    {
+        String returnString = "";
+        if(type == 0) returnString = "";
+        else if(type == 1) returnString = "\n" + voorraad + " op voorraad";
+        else if(type == 2) returnString = "" + tht;
+        else if(type == 3) returnString = tht + "\n" + voorraad + " op voorraad";
+
+        return returnString;
+    }
 }
