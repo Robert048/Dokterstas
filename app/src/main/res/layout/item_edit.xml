@@ -38,18 +38,32 @@
 
         <Button
             android:id="@+id/minus"
+            android:text="-"
+
             android:layout_weight="1.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
 
-            android:text="-"/>
+            />
 
         <Button
             android:id="@+id/plus"
+            android:text="+"
             android:layout_weight="1.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+"/>
+            android:textColor="#FFFFFF"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"/>
     </LinearLayout>
 
     <LinearLayout
@@ -67,12 +81,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtDate"/>
+
         <Button
             android:id="@+id/date"
-            android:layout_width="wrap_content"
+            android:layout_width="95dp"
             android:layout_height="wrap_content"
             android:text="set date"
-            android:onClick="showTimePickerDialog"/>
+            android:onClick="showTimePickerDialog"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:layout_weight="1.17" />
     </LinearLayout>
 
     <LinearLayout
@@ -84,22 +106,42 @@
         <Button
             android:id="@+id/delete"
             android:layout_weight = "0"
+            android:text="delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="delete" />
+            android:textColor="#FFFFFF"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"/>
         <Button
             android:id="@+id/save"
             android:layout_weight = "1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="save"/>
+            android:text="save"
+
+            android:textColor="#FFFFFF"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"/>/>
 
         <Button
             android:id="@+id/cancel"
-            android:layout_weight = "0"
+            android:layout_weight = "1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cancel"/>
+            android:text="cancel"
+
+            android:textColor="#FFFFFF"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"/>
     </LinearLayout>
 
 

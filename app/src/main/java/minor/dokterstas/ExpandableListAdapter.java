@@ -182,7 +182,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnDate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         //TODO Date button
                         ((MainActivity) activity).datePicker("" + item.getID(), dialog);
                     }
@@ -198,7 +197,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         //TODO confirmation box
                         db.deleteItem("" + item.getID());
 

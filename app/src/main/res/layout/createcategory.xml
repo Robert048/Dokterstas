@@ -33,6 +33,9 @@
         <Button
             android:id="@+id/save"
 
+            android:text="SAVE"
+            android:textColor="#FFFFFF"
+
             android:layout_marginTop="15dp"
             android:layout_weight="1"
             android:layout_width="fill_parent"
@@ -43,10 +46,6 @@
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
-
-
-            android:text="SAVE"
-            android:textColor="#FFFFFF"
             />
 
         <Button
