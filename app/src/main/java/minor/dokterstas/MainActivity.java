@@ -24,6 +24,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.andexert.expandablelayout.library.ExpandableLayout;
+import com.andexert.expandablelayout.library.ExpandableLayoutListView;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 import org.joda.time.DateTime;
 import java.sql.Time;
@@ -42,6 +46,9 @@ import static minor.dokterstas.R.id.spinner;
 
 public class MainActivity extends AppCompatActivity{
 
+    private final String[] array = {"Hello", "World", "Android", "is", "Awesome", "World", "Android", "is", "Awesome", "World", "Android", "is", "Awesome", "World", "Android", "is", "Awesome"};
+
+
     SparseArray<Group> groups = new SparseArray<>();
     DatabaseHelper TasDB;
     List<Category> categoryList = new ArrayList<>();
@@ -56,6 +63,16 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.view_row, R.id.header_text, array);
+        final ExpandableLayoutListView expandableLayoutListView =(ExpandableLayoutListView) findViewById(R.id.listview);
+
+        expandableLayoutListView.setAdapter(arrayAdapter);
+
+/*
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         JodaTimeAndroid.init(this);
@@ -78,6 +95,7 @@ public class MainActivity extends AppCompatActivity{
             counterAmount = c.getInt(column1);
         }
 
+*/
     }
 
 
