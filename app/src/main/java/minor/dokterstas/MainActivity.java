@@ -152,6 +152,11 @@ public class MainActivity extends AppCompatActivity{
         return counterAmount;
     }
 
+    public void decreaseCounterAmount()
+    {
+        counterAmount--;
+    }
+
     public static int getMinimumStock()
     {
         return minimumStock;
@@ -503,6 +508,7 @@ public class MainActivity extends AppCompatActivity{
                         }
                     }
 
+                    counterAmount++;
                     Toast.makeText(MainActivity.this, editText.getText().toString() + " toegevoegd aan categorie: " + cat.getName(), Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                     createList();

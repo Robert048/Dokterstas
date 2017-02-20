@@ -209,6 +209,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         dialog2.show();
 
                         dialog.dismiss();
+                        context.decreaseCounterAmount();
                         context.createList();
                     }
                 });
