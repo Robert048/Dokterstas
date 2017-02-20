@@ -264,24 +264,65 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onClick(View view) {
                         //TODO opslaan van volume
-                        db.updateStock(item.getID(), txtVoorraad.getText().toString());
                         dialog.dismiss();
                         context.createList();
 
                         switch (item.getType()) {
+                            case 1:
+                                //alleen voorraad
+                                db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                break;
                             case 2:
-                                if (dialog.day == 0) {
-                                } else {
+                                if (dialog.day == 0)
+                                {
+                                    //geen datum opgegeven
+                                }
+                                else {
+                                    //alleen datum
                                     db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
                                 }
                                 break;
                             case 3:
                                 if (dialog.day == 0) {
+                                    //alleen voorraad
                                     db.updateStock(item.getID(), txtVoorraad.getText().toString());
                                 } else {
+                                    // voorraad en tht
                                     db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
                                 }
                                 break;
+                            case 4:
+                                db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                break;
+                            case 5:
+                                db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                break;
+                            case 6:
+                                if (dialog.day == 0)
+                                {
+                                    db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                }
+                                else
+                                {
+                                    db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                    db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
+                                }
+                                break;
+                            case 7:
+                                if (dialog.day == 0)
+                                {
+                                    db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                    db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                }
+                                else
+                                {
+                                    db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                    db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                    db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
+                                }
+                                break;
+
                         }
                         ((MainActivity) activity).createList();
                     }

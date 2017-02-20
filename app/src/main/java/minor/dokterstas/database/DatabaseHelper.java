@@ -305,6 +305,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_STOCK + " = " + stock + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
     }
 
+    public void updateVolume(int item_id, String volume)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_VOLUME + " = " + volume + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
+    }
+
     public Cursor getItem(int item_id)
     {
         SQLiteDatabase db = this.getReadableDatabase();
