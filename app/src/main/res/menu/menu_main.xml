@@ -26,11 +26,4 @@
         android:orderInCategory="4"
         android:title="Reset to default"
         app:showAsAction="never" />
-
-    <item android:id="@+id/Settings_1"
-        android:orderInCategory="5"
-        android:titleCondensed="setting 1"
-        android:title="test"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:checkable="true" />
 </menu>

@@ -512,15 +512,6 @@ public class MainActivity extends AppCompatActivity{
             dialog.show();
             return true;
         }
-
-        if (id == R.id.Settings_1) {
-            if (item.isChecked()) {
-                item.setChecked(false);
-            } else {
-                item.setChecked(true);
-            }
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
