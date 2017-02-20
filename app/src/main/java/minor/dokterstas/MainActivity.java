@@ -469,8 +469,6 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
                     Category cat = (Category) category.getSelectedItem();
-                    long itemId = 0;
-                    int type; // 0=geen Voorraad en geen datum, 1=Voorraad, 2=houdbaarheidsdatum, 3=Voorraad en houdbaarheidsdatum
                     if(checkboxVoorraad.isChecked())
                     {
                         if (checkboxTht.isChecked())
@@ -479,12 +477,12 @@ public class MainActivity extends AppCompatActivity{
                             dateTime = dateTime.withDate(dialog.year,dialog.month+1,dialog.day);
                             long milis = dateTime.getMillis();
 
-                            itemId = TasDB.addItem(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()),milis , 3);
+                            TasDB.addItem(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()),milis , 3);
 
                         }
                         else
                         {
-                            itemId = TasDB.addItem(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), 1);
+                            TasDB.addItem(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), 1);
                         }
                     }
                     else
@@ -494,11 +492,10 @@ public class MainActivity extends AppCompatActivity{
                             DateTime dateTime = new DateTime();
                             dateTime = dateTime.withDate(dialog.year,dialog.month+1,dialog.day);
                             long milis = dateTime.getMillis();
-                            itemId = TasDB.addItem(editText.getText().toString(), cat.getID(),milis , 2);                        }
+                            TasDB.addItem(editText.getText().toString(), cat.getID(),milis , 2);                        }
                         else
                         {
-                            type = 0;
-                            itemId = TasDB.addItem(editText.getText().toString(), cat.getID(), 0);
+                            TasDB.addItem(editText.getText().toString(), cat.getID(), 0);
                         }
                     }
 
@@ -529,14 +526,6 @@ public class MainActivity extends AppCompatActivity{
         fragment.activity = this;
         fragment.dialog = dialog;
         fragment.show(getFragmentManager(), "");
-    }
-
-    public void datePicker(String id){
-
-        DatePickerFragment fragment = new DatePickerFragment();
-        fragment.itemId = id;
-        fragment.activity = this;
-        fragment.show(getFragmentManager(), id);
     }
 
     public void datePicker(String id, CustomDialog dialog){

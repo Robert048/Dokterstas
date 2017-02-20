@@ -1,9 +1,7 @@
 package minor.dokterstas;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +13,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +32,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this.db = db;
         activity = act;
         this.groups = groups;
+        inflater = act.getLayoutInflater();
+        this.context = context;
+
         //Create items in categories
         for (int j = 0; j < groups.size(); j++) {
             List<Item> child = new ArrayList<>();
@@ -48,9 +44,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             }
             children.add(child);
         }
-        inflater = act.getLayoutInflater();
-        this.context = context;
 
+        //set check states
         for (int i = 0; i < children.size(); i++) {
             ArrayList<Integer> tmp = new ArrayList<>();
             for (int j = 0; j < children.get(i).size(); j++) {
@@ -73,7 +68,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return children.get(groupPosition).size();
     }
 
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+    {
         View grid;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         grid = inflater.inflate(R.layout.listrow_details, parent, false);
@@ -105,9 +101,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         final Item item = (Item) getChild(grpPos, childPos);
         txtData.setText(item.getData());
 
-        boxNaam.setOnLongClickListener(new View.OnLongClickListener() {
+        boxNaam.setOnLongClickListener(new View.OnLongClickListener()
+        {
             @Override
-            public boolean onLongClick(View arg1) {
+            public boolean onLongClick(View arg1)
+            {
                 CheckBox checkbox = (CheckBox) arg1;
 
                 final CustomDialog dialog = new CustomDialog(context);
@@ -129,7 +127,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 Button btnSave = (Button) dialog.findViewById(R.id.save);
                 Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
-
                 switch (item.getType()) {
                     case 0:
                         dateLayout.setVisibility(View.GONE);
@@ -145,26 +142,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 }
                 txtTitel.setText(checkbox.getText());
 
-                Cursor c = db.getItem(item.getID());
-                String voorraad = "";
-                if (c.moveToFirst()) {
-                    voorraad = c.getString(c.getColumnIndex("STOCK"));
-                }
-
-                long date = 0;
-
-
-                if (c.moveToFirst()) {
-                    date = c.getLong(c.getColumnIndex("EXPIRATION"));
-                }
-
-                DateTime dTime = new DateTime();
-                dTime = dTime.withMillis(date);
-
-                DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy");
-
-                //txtVoorraad.setText(voorraad);
-                //txtDate.setText(dTime.toString(dateTimeFormatter));
                 txtVoorraad.setText("" + item.getVoorraad());
                 txtDate.setText(item.getTht());
 
@@ -201,10 +178,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
                         //TODO Date button
                         ((MainActivity) activity).datePicker("" + item.getID(), dialog);
-
                     }
-
-
                 });
 
                 btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -241,16 +215,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         dialog.dismiss();
                         context.createList();
 
-                        Cursor dbItem = db.getItem(item.getID());
-
-
-
-
-                        /*int type = 0;
-                        if(dbItem.moveToFirst()){
-                            type = dbItem.getInt(dbItem.getColumnIndex("TYPE"));
-                        }*/
-
                         switch (item.getType()) {
                             case 2:
                                 if (dialog.day == 0) {
@@ -269,12 +233,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         ((MainActivity) activity).createList();
                     }
                 });
-
                 dialog.show();
                 return true;
             }
         });
-
         return grid;
     }
 
@@ -290,8 +252,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return groupPosition;
     }
 
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
-                             ViewGroup parent) {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
+    {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_group, null);
         }

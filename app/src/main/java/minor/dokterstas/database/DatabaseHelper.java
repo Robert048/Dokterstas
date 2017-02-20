@@ -459,7 +459,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public long addItem(String name, int categoryId, int type)
+    public void addItem(String name, int categoryId, int type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -467,10 +467,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
         values.put(COLUMN_ITEMS_TYPE, type);
-        return db.insert(TABLE_ITEMS, null, values);
+        db.insert(TABLE_ITEMS, null, values);
     }
 
-    public long addItem(String name, int categoryId,long datum, int type)
+    public void addItem(String name, int categoryId,long datum, int type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -479,10 +479,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
         values.put(COLUMN_ITEMS_EXPIRATION, datum);
         values.put(COLUMN_ITEMS_TYPE, type);
-        return db.insert(TABLE_ITEMS, null, values);
+        db.insert(TABLE_ITEMS, null, values);
     }
 
-    public long addItem(String name, int categoryId, int voorraad, int type)
+    public void addItem(String name, int categoryId, int voorraad, int type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -491,10 +491,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
         values.put(COLUMN_ITEMS_STOCK, voorraad);
         values.put(COLUMN_ITEMS_TYPE, type);
-        return db.insert(TABLE_ITEMS, null, values);
+        db.insert(TABLE_ITEMS, null, values);
     }
 
-    public long addItem(String name, int categoryId, int voorraad, long datum, int type)
+    public void addItem(String name, int categoryId, int voorraad, long datum, int type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -504,7 +504,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ITEMS_STOCK, voorraad);
         values.put(COLUMN_ITEMS_EXPIRATION, datum);
         values.put(COLUMN_ITEMS_TYPE, type);
-        return db.insert(TABLE_ITEMS, null, values);
+        db.insert(TABLE_ITEMS, null, values);
     }
 
     public void deleteItem(String id)
