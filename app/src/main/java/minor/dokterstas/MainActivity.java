@@ -23,6 +23,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 import org.joda.time.DateTime;
 import java.sql.Time;
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity{
         minimumStock = sharedPref.getInt("minimumStock", minimumStock);
         String time = sharedPref.getString("alarmTime", "8:30:00");
         String[] timeArray = time.split(":");
+
+
         alarmTime = new Time(Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]) ,Integer.parseInt(timeArray[2]));
         alarmUsed = sharedPref.getBoolean("alarmUsed", alarmUsed);
         if(alarmUsed)
@@ -71,6 +78,13 @@ public class MainActivity extends AppCompatActivity{
         while (c.moveToNext()) {
             counterAmount = c.getInt(column1);
         }
+/*
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-9987402400398249/6683581213");
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        */
     }
 
     private void setNotifications() {

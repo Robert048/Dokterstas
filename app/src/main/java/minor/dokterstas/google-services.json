@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1088918956998",
+    "firebase_url": "https://huisarts-tas.firebaseio.com",
+    "project_id": "huisarts-tas",
+    "storage_bucket": "huisarts-tas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088918956998:android:b4f7405e6267cc2c",
+        "android_client_info": {
+          "package_name": "minor.dokterstas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088918956998-rlfo7mbu0et14vmc92r3gb87939p2g42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARlwE8GdejynZJ49c7CqXAg6cfEWcaWnI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

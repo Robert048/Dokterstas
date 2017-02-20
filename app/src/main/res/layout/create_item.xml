@@ -2,13 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
 
     <TextView
-        android:text="Kies categorie voor nieuwe voorwerp:"
+        android:text="Kies categorie voor nieuwe item:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
+        android:textSize="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textColor="@android:color/black"
@@ -23,6 +27,7 @@
     <EditText
         android:id="@+id/editText"
         android:hint="Naam"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -30,8 +35,9 @@
     </EditText>
 
     <CheckBox
-        android:text="Heeft THT"
+        android:text="Houdbaarheidsdatum bijhouden"
         android:layout_width="match_parent"
+        android:textSize="18dp"
         android:layout_height="wrap_content"
         android:id="@+id/thtBox" />
     <LinearLayout
@@ -58,14 +64,21 @@
             android:id="@+id/txtDate"/>
         <Button
             android:id="@+id/createDate"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="set date"
-            android:onClick="showDatePickerNewItem"/>
+            android:text="Datum kiezen"
+            android:onClick="showDatePickerNewItem"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"/>
     </LinearLayout>
 
     <CheckBox
-        android:text="Heeft voorraad aantal"
+        android:text="Voorraad bijhouden"
+        android:textSize="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/voorraadBox" />
@@ -79,7 +92,7 @@
         android:visibility="gone">
 
         <TextView
-            android:text="Aantal op voorraad: "
+            android:text="Aantal: "
             android:layout_width="0dp"
             android:textColor="@color/colorText"
             android:layout_height="wrap_content"
@@ -95,7 +108,8 @@
     </LinearLayout>
 
     <CheckBox
-        android:text="Heeft een volume in mL"
+        android:text="Volume bijhouden"
+        android:textSize="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/volumeBox" />
@@ -109,7 +123,7 @@
         android:visibility="gone">
 
         <TextView
-            android:text="Aantal milliliters in voorraad: "
+            android:text="Volume(mL): "
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
