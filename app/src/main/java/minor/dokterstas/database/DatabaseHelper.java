@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ITEMS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_ITEMS_NAME + " TEXT, "
                 + COLUMN_ITEMS_STOCK + " INTEGER DEFAULT 1, "
-                + COLUMN_ITEMS_VOLUME + " INTEGER DEFAULT 0 "
+                + COLUMN_ITEMS_VOLUME + " INTEGER DEFAULT 0, "
                 + COLUMN_ITEMS_TYPE + " INTEGER DEFAULT 0, "
                 + COLUMN_ITEMS_EXPIRATION + " LONG DEFAULT 10000000000, "
                 + COLUMN_ITEMS_CATEGORIES_ID + " INTEGER, FOREIGN KEY("+ COLUMN_ITEMS_CATEGORIES_ID +") REFERENCES "+ TABLE_CATEGORIES  +"(" + COLUMN_CATEGORIES_ID + ") )");
@@ -287,8 +287,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.insert(TABLE_ITEMS, null, itemValues);
         }
     }
-
-
 
     public void updateDate(int item_id,int year, int month, int dayOfMonth)
     {

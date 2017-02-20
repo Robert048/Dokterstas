@@ -2,6 +2,7 @@ package minor.dokterstas;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -197,19 +198,46 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onClick(View view) {
                         //TODO confirmation box
-                        db.deleteItem("" + item.getID());
+                        final Dialog dialog3 = new Dialog(activity);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        dialog3.setContentView(R.layout.confirmation);
+                        dialog3.setTitle("Confirmation");
 
-                        builder.setMessage(item.getName() + " verwijderd uit lijst.");
-                        builder.setTitle("Verwijderd");
+                        Button btnYes = (Button) dialog3.findViewById(R.id.yes);
+                        Button btnNo = (Button) dialog3.findViewById(R.id.no);
 
-                        AlertDialog dialog2 = builder.create();
-                        dialog2.show();
+                        dialog3.show();
 
-                        dialog.dismiss();
-                        context.decreaseCounterAmount();
-                        context.createList();
+                        btnYes.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                db.deleteItem("" + item.getID());
+                                dialog3.dismiss();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                                builder.setMessage(item.getName() + " verwijderd uit lijst.");
+                                builder.setTitle("Verwijderd");
+
+                                context.decreaseCounterAmount();
+                                context.createList();
+
+                                AlertDialog dialog4 = builder.create();
+                                dialog4.show();
+
+                                dialog.dismiss();
+                            }
+                        });
+
+                        btnNo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog3.dismiss();
+                            }
+                        });
+
+
+
+
                     }
                 });
 
