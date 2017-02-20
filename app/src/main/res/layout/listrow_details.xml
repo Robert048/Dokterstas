@@ -27,11 +27,12 @@
     <TextView
         android:id="@+id/TextView"
         android:textSize="10sp"
+        android:gravity="center_vertical|right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:drawablePadding="5dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"/>
 
     <View
         android:layout_width="match_parent"
