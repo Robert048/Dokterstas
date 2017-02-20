@@ -182,7 +182,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnDate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //TODO Date button
                         ((MainActivity) activity).datePicker("" + item.getID(), dialog);
                     }
                 });
@@ -217,7 +216,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        db.setStock(item.getID(), txtVoorraad.getText().toString());
+                        db.updateStock(item.getID(), txtVoorraad.getText().toString());
                         dialog.dismiss();
                         context.createList();
 
@@ -230,7 +229,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                                 break;
                             case 3:
                                 if (dialog.day == 0) {
-                                    db.setStock(item.getID(), txtVoorraad.getText().toString());
+                                    db.updateStock(item.getID(), txtVoorraad.getText().toString());
                                 } else {
                                     db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
                                 }

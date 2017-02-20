@@ -216,7 +216,9 @@ public class MainActivity extends AppCompatActivity{
                     DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy");
                     String dateText = dt.toString(dateTimeFormatter);
 
-                    Item item = new Item(ID, Name, dateText, voorraad, type);
+                    //TODO volume van database
+                    int volume = 0;
+                    Item item = new Item(ID, Name, dateText, voorraad, volume, type);
                     Category category = categoryList.get(CategoryID - 1);
                     category.addItem(item);
                 }
@@ -413,7 +415,9 @@ public class MainActivity extends AppCompatActivity{
             final EditText editText = (EditText) dialog.findViewById(R.id.editText);
             final CheckBox checkboxVoorraad = (CheckBox) dialog.findViewById(R.id.voorraadBox);
             final CheckBox checkboxTht = (CheckBox) dialog.findViewById(R.id.thtBox);
+            final CheckBox checkboxvolume = (CheckBox) dialog.findViewById(R.id.volumeBox);
             final EditText voorraadText = (EditText) dialog.findViewById(R.id.txtVoorraad);
+            final EditText volumeText = (EditText) dialog.findViewById(R.id.txtVolume);
             Button btnDate = (Button) dialog.findViewById(R.id.createDate);
             Button btnSave = (Button) dialog.findViewById(R.id.save);
             Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
@@ -459,6 +463,22 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
+            checkboxvolume.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(checkboxvolume.isChecked())
+                    {
+                        LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.volumeLayout);
+                        layout.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.volumeLayout);
+                        layout.setVisibility(View.GONE);
+                    }
+                }
+            });
+
             btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -469,7 +489,6 @@ public class MainActivity extends AppCompatActivity{
             btnDate.setOnClickListener(new View.OnClickListener() {
                                            @Override
                                            public void onClick(View view) {
-                                               //TODO Date button
                                                (MainActivity.this).datePicker(dialog);
                                            }
                                        });
@@ -478,20 +497,34 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
                     Category cat = (Category) category.getSelectedItem();
+                    int volume = Integer.parseInt(volumeText.getText().toString());
+
                     if(checkboxVoorraad.isChecked())
                     {
                         if (checkboxTht.isChecked())
                         {
                             DateTime dateTime = new DateTime();
-                            dateTime = dateTime.withDate(dialog.year,dialog.month+1,dialog.day);
+                            dateTime = dateTime.withDate(dialog.year, dialog.month + 1, dialog.day);
                             long milis = dateTime.getMillis();
-
-                            TasDB.addItem(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()),milis , 3);
-
+                            if(checkboxvolume.isChecked())
+                            {
+                                TasDB.addItemStockDateVolume(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), milis, volume, 7);
+                            }
+                            else
+                            {
+                                TasDB.addItemStockDate(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), milis, 3);
+                            }
                         }
                         else
                         {
-                            TasDB.addItem(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), 1);
+                            if(checkboxvolume.isChecked())
+                            {
+                                TasDB.addItemStockVolume(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), volume, 5);
+                            }
+                            else
+                            {
+                                TasDB.addItemStock(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), 1);
+                            }
                         }
                     }
                     else
@@ -499,12 +532,27 @@ public class MainActivity extends AppCompatActivity{
                         if (checkboxTht.isChecked())
                         {
                             DateTime dateTime = new DateTime();
-                            dateTime = dateTime.withDate(dialog.year,dialog.month+1,dialog.day);
+                            dateTime = dateTime.withDate(dialog.year, dialog.month + 1, dialog.day);
                             long milis = dateTime.getMillis();
-                            TasDB.addItem(editText.getText().toString(), cat.getID(),milis , 2);                        }
+                            if (checkboxvolume.isChecked())
+                            {
+                                TasDB.addItemDateVolume(editText.getText().toString(), cat.getID(), milis, volume, 6);
+                            }
+                            else
+                            {
+                                TasDB.addItemDate(editText.getText().toString(), cat.getID(), milis, 2);
+                            }
+                        }
                         else
                         {
-                            TasDB.addItem(editText.getText().toString(), cat.getID(), 0);
+                            if(checkboxvolume.isChecked())
+                            {
+                                TasDB.addItemVolume(editText.getText().toString(), cat.getID(), volume, 4);
+                            }
+                            else
+                            {
+                                TasDB.addItemName(editText.getText().toString(), cat.getID(), 0);
+                            }
                         }
                     }
 
