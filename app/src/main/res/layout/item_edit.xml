@@ -36,12 +36,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtVoorraad"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"/>
 
         <Button
             android:id="@+id/minus"
             android:text="-"
-
             android:layout_weight="1.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,9 +49,7 @@
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
-            android:shadowRadius="5"
-
-            />
+            android:shadowRadius="5"/>
 
         <Button
             android:id="@+id/plus"
@@ -66,6 +63,31 @@
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/volumeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Volume in mL: "
+            android:textColor="@color/colorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:text="0"
+            android:ems="6"
+            android:textColor="@color/colorText"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtVolume"
+            android:layout_marginEnd="10dp"
+            />
     </LinearLayout>
 
     <LinearLayout
