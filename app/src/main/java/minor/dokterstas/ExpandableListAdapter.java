@@ -216,7 +216,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //TODO confirmation box
                         final Dialog dialog3 = new Dialog(activity);
 
                         dialog3.setContentView(R.layout.confirmation);
