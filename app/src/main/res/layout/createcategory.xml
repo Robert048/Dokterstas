@@ -6,7 +6,7 @@
 
 
     <TextView
-        android:text="Kies naam voor nieuwe categorie:"
+        android:text="Naam nieuwe categorie:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp"
@@ -16,7 +16,7 @@
 
     <EditText
         android:id="@+id/editText"
-        android:hint="Enter category name"
+        android:hint="Naam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -33,7 +33,7 @@
         <Button
             android:id="@+id/save"
 
-            android:text="SAVE"
+            android:text="opslaan"
             android:textColor="#FFFFFF"
 
             android:layout_marginTop="15dp"
@@ -58,7 +58,7 @@
             android:layout_weight="1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="Annuleer"
             android:textColor="#FFFFFF"/>
 
     </LinearLayout>

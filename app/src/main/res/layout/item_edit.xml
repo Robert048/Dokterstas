@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:textColor="@color/colorText"
         android:textSize="25dp"
         android:id="@+id/txtTitel" />
 
@@ -22,13 +23,14 @@
 
         <TextView
             android:text="Voorraad: "
+            android:textColor="@color/colorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <EditText
             android:text="105"
             android:ems="6"
-            android:textColor="@android:color/tertiary_text_dark"
+            android:textColor="@color/colorText"
             android:textSize="15sp"
             android:inputType="number"
             android:layout_width="wrap_content"
@@ -72,11 +74,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:text="Tenmiste houdbaar tot: "
+            android:text="THT: "
+            android:textColor="@color/colorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
             android:text="01/01/9999"
+            android:textColor="@color/colorText"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,7 +90,7 @@
             android:id="@+id/date"
             android:layout_width="95dp"
             android:layout_height="wrap_content"
-            android:text="set date"
+            android:text="nieuwe datum"
             android:onClick="showTimePickerDialog"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
@@ -105,8 +109,8 @@
 
         <Button
             android:id="@+id/delete"
-            android:layout_weight = "0"
-            android:text="delete"
+            android:layout_weight = "1"
+            android:text="verwijder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
@@ -115,13 +119,13 @@
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"/>
+
         <Button
             android:id="@+id/save"
             android:layout_weight = "1"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="save"
-
+            android:text="opslaan"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"
@@ -134,7 +138,7 @@
             android:layout_weight = "1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cancel"
+            android:text="annuleer"
 
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"

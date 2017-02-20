@@ -6,10 +6,11 @@
     android:weightSum="1">
 
     <TextView
-        android:text="Notification settings"
+        android:text="Instellingen"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textAlignment="center"
+        android:textColor="@color/colorText"
         android:textSize="22sp"
         android:id="@+id/textView"
         android:layout_weight="0.02" />
@@ -24,6 +25,7 @@
             android:text="Melding weergeven als voorraad lager is dan: "
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
             android:id="@+id/textView3"
             android:layout_weight="0.02" />
         <EditText
@@ -60,6 +62,7 @@
         <TextView
             android:text="Tijdstip voor notificatie: "
             android:layout_width="0dp"
+            android:textColor="@color/colorText"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <EditText

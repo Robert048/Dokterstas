@@ -7,10 +7,11 @@
 
 
     <TextView
-        android:text="Are you sure?"
+        android:text="Weet u het zeker?"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:textColor="@color/colorText"
         android:textSize="22dp"
         android:id="@+id/textView"
         android:layout_weight="0.02" />
@@ -27,7 +28,13 @@
             android:layout_weight="1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="yes" />
+            android:text="ja"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="@color/colorPrimary"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"/>
 
         <Button
             android:id="@+id/no"
@@ -35,7 +42,13 @@
             android:layout_weight="1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="no" />
+            android:text="nee"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"/>
 
     </LinearLayout>
 </LinearLayout>
