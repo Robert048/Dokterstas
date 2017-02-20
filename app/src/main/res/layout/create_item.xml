@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:textColor="@android:color/black"
         android:textStyle="bold"
         android:id="@+id/textView2" />
