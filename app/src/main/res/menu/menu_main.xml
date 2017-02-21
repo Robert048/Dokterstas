@@ -6,13 +6,13 @@
     <item
         android:id="@+id/Menu_Category"
         android:orderInCategory="1"
-        android:title="Nieuwe categorie"
+        android:title="Categorie toevoegen"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/Menu_Item"
         android:orderInCategory="2"
-        android:title="Nieuwe item"
+        android:title="Item toevoegen"
         app:showAsAction="never" />
 
     <item

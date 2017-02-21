@@ -13,6 +13,7 @@
     <TextView
         android:text="Weet u het zeker?"
         android:layout_width="match_parent"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"

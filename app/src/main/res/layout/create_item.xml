@@ -9,10 +9,28 @@
     android:paddingTop="10dp">
 
     <TextView
+        android:text="Item toevoegen"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:id="@+id/createItemTitle" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black" />
+
+    <TextView
         android:text="Kies categorie voor nieuwe item:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textColor="@android:color/black"
@@ -124,12 +142,13 @@
 
         <TextView
             android:text="Volume(mL): "
+            android:textColor="@color/colorText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <EditText
             android:text="0"
-            android:textColor="@android:color/tertiary_text_dark"
+            android:textColor="@color/colorText"
             android:textSize="15sp"
             android:inputType="number"
             android:id="@+id/txtVolume"

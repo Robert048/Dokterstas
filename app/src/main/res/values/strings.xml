@@ -5,7 +5,7 @@
     <string name="Menu_Item">New item</string>
     <string name="product_name">product</string>
     <string name="title_activity_edit">Edit</string>
-    <string name="setting_check">Notificatie voor controle van de checklist</string>
+    <string name="setting_check">Notificatie weergeven voor controle checklist</string>
     <string name="setting_expiration_checked">false</string>
     <string name="banner_ad_unit_id">ca-app-pub-9987402400398249~3730114819</string>
 </resources>

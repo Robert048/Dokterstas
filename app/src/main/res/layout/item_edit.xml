@@ -12,15 +12,33 @@
     android:paddingTop="10dp">
 
     <TextView
+        android:text="Item bewerken"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:id="@+id/createItemTitle" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black" />
+
+    <TextView
         android:text="TextView"
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
+
         android:textColor="@color/colorText"
-        android:textSize="30dp"
+        android:textSize="23dp"
         android:id="@+id/txtTitel"
-        android:paddingBottom="25dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="12dp"
         />
 
     <LinearLayout
@@ -31,7 +49,7 @@
 
         <TextView
             android:text="Voorraad: "
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:layout_width="wrap_content"
@@ -40,7 +58,7 @@
         <EditText
             android:text="105"
             android:ems="6"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:textColor="@color/colorText"
             android:inputType="number"
             android:layout_width="103dp"
@@ -83,7 +101,7 @@
 
         <TextView
             android:text="Volume (mL): "
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:layout_width="wrap_content"
@@ -92,7 +110,7 @@
         <EditText
             android:text="0"
             android:ems="6"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:textColor="@color/colorText"
             android:inputType="number"
             android:layout_width="wrap_content"
@@ -102,23 +120,22 @@
             />
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/dateLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="45dp">
+        android:paddingBottom="25dp">
         <TextView
             android:text="Datum: "
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
             android:text="01/01/9999"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:textColor="@color/colorText"
             android:layout_weight="0.60"
             android:layout_width="wrap_content"
@@ -138,7 +155,10 @@
             android:shadowDy="0"
             android:shadowRadius="5"
             android:layout_weight="1.17" />
+
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="fill_parent"

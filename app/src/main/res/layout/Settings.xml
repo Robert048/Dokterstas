@@ -9,6 +9,7 @@
         android:text="Instellingen"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="@color/colorText"
         android:textSize="22sp"
