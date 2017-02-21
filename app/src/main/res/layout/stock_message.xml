@@ -16,6 +16,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/voorraadTitel"
         android:text="Voorraad laag van:"
         android:background="@color/colorAccent"
         android:layout_width="match_parent"
@@ -59,6 +60,7 @@
         </ScrollView>
     </LinearLayout>
     <TextView
+        android:id="@+id/thtTitel"
         android:text="Houdbaarheidsdatum verstreken van:"
         android:background="@color/colorAccent"
         android:layout_width="match_parent"

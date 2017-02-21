@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity{
             dialog.setTitle("Voorraad meldingen");
             LinearLayout voorraadLayout = (LinearLayout) dialog.findViewById(R.id.voorraadLayout);
             ViewGroup.LayoutParams params = voorraadLayout.getLayoutParams();
-            LinearLayout thtVoorraad = (LinearLayout) dialog.findViewById(R.id.thtLayout);
+            LinearLayout thtLayout = (LinearLayout) dialog.findViewById(R.id.thtLayout);
             ViewGroup.LayoutParams params2 = voorraadLayout.getLayoutParams();
 
             int height = 50;
@@ -164,17 +164,33 @@ public class MainActivity extends AppCompatActivity{
             params.height = height;
             voorraadLayout.setLayoutParams(params);
             params2.height = height2;
-            thtVoorraad.setLayoutParams(params2);
+            thtLayout.setLayoutParams(params2);
 
 
-            TextView txtName = (TextView) dialog.findViewById(R.id.txtName);
-            TextView txtStock = (TextView) dialog.findViewById(R.id.txtStock);
-            TextView txtName2 = (TextView) dialog.findViewById(R.id.txtName2);
-            TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
-            txtName.setText(namen);
-            txtStock.setText(voorraden);
-            txtName2.setText(namen2);
-            txtDate.setText(expirationDateText);
+            if(voorraadUsed) {
+                TextView txtName = (TextView) dialog.findViewById(R.id.txtName);
+                TextView txtStock = (TextView) dialog.findViewById(R.id.txtStock);
+                txtName.setText(namen);
+                txtStock.setText(voorraden);
+            }
+            else
+            {
+                TextView voorraadTitel = (TextView) dialog.findViewById(R.id.voorraadTitel);
+                voorraadTitel.setVisibility(View.GONE);
+                voorraadLayout.setVisibility(View.GONE);
+            }
+            if(thtUsed) {
+                TextView txtName2 = (TextView) dialog.findViewById(R.id.txtName2);
+                TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
+                txtName2.setText(namen2);
+                txtDate.setText(expirationDateText);
+            }
+            else
+            {
+                TextView thtTitel = (TextView) dialog.findViewById(R.id.thtTitel);
+                thtTitel.setVisibility(View.GONE);
+                thtLayout.setVisibility(View.GONE);
+            }
             dialog.show();
         } catch (Exception e) {
             Log.e("Error", "Error", e);
