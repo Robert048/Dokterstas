@@ -191,7 +191,9 @@ public class MainActivity extends AppCompatActivity{
                 thtTitel.setVisibility(View.GONE);
                 thtLayout.setVisibility(View.GONE);
             }
-            dialog.show();
+            if(voorraadUsed || thtUsed) {
+                dialog.show();
+            }
         } catch (Exception e) {
             Log.e("Error", "Error", e);
         }
@@ -203,8 +205,8 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void decreaseCounterAmount()
-    {
-        counterAmount--;
+        {
+            counterAmount--;
     }
 
     public static int getMinimumStock()
@@ -332,6 +334,7 @@ public class MainActivity extends AppCompatActivity{
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("voorraadUsed", true);
                         editor.apply();
+                        voorraadUsed = sharedPref.getBoolean("voorraadUsed", voorraadUsed);
                     }else{
                         voorraadLayout.setVisibility(View.GONE);
                         Toast.makeText(MainActivity.this, "Lage voorraad melding uitgezet", Toast.LENGTH_SHORT).show();
@@ -339,6 +342,7 @@ public class MainActivity extends AppCompatActivity{
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("voorraadUsed", false);
                         editor.apply();
+                        voorraadUsed = sharedPref.getBoolean("voorraadUsed", voorraadUsed);
                     }
                 }
             });
@@ -358,6 +362,7 @@ public class MainActivity extends AppCompatActivity{
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("thtUsed", true);
                         editor.apply();
+                        thtUsed = sharedPref.getBoolean("thtUsed", thtUsed);
                     }else{
                         thtLayout.setVisibility(View.GONE);
                         Toast.makeText(MainActivity.this, "Houdbaarheidsdatum melding uitgezet", Toast.LENGTH_SHORT).show();
@@ -365,6 +370,7 @@ public class MainActivity extends AppCompatActivity{
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("thtUsed", false);
                         editor.apply();
+                        thtUsed = sharedPref.getBoolean("thtUsed", thtUsed);
                     }
                 }
             });
@@ -385,6 +391,7 @@ public class MainActivity extends AppCompatActivity{
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("alarmUsed", true);
                         editor.apply();
+                        alarmUsed = sharedPref.getBoolean("alarmUsed", thtUsed);
                         alarm.setAlarm(MainActivity.this);
                     }else{
                         checklistLayout.setVisibility(View.GONE);
@@ -393,6 +400,7 @@ public class MainActivity extends AppCompatActivity{
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("alarmUsed", false);
                         editor.apply();
+                        alarmUsed = sharedPref.getBoolean("alarmUsed", thtUsed);
                         alarm.cancelAlarm(MainActivity.this);
                     }
                 }
@@ -424,8 +432,6 @@ public class MainActivity extends AppCompatActivity{
                     btnYes.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //TODO Remove category
-                            //TODO dit is gekopieerd van item remove
                             Category cat = (Category) category.getSelectedItem();
                             TasDB.deleteCategory(String.valueOf(cat.getID()));
 

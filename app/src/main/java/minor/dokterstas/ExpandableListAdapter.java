@@ -262,7 +262,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //TODO opslaan van volume
                         dialog.dismiss();
                         context.createList();
 

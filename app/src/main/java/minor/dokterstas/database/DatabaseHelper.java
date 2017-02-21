@@ -477,6 +477,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.delete(TABLE_ITEMS,"C_ID=?",new String[]{id});
         db.delete(TABLE_CATEGORIES,"C_ID=?",new String[]{id});
+        //TODO verlaag item ids met 1 of remove method
     }
 
     @Override
