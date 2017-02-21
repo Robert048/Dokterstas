@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/textView1"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:gravity="left"
-    android:paddingLeft="27dp"
-    android:paddingTop="4dp"
-    android:background="@color/colorPrimary"
-    android:text="Category"
-    android:textColor="#FFFFFF"
-    android:textSize="20sp"
-    android:textStyle="bold"/>
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/colorPrimary">
+
+    <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingLeft="27dp"
+        android:layout_weight="1"
+        android:paddingTop="4dp"
+        android:background="@color/colorPrimary"
+        android:text="Category"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:background="@color/colorPrimary">
+
+</RelativeLayout>
+
+
+</RelativeLayout>
+

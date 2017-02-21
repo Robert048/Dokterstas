@@ -3,6 +3,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:weightSum="1">
 
     <TextView
@@ -14,11 +18,18 @@
         android:textColor="@color/colorText"
         android:textSize="30sp"
         android:id="@+id/textView"
-        android:paddingBottom="25dp" />
-    <Switch
-        android:text="Melding bij lage voorraad"
+        android:paddingBottom="10dp" />
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="2dp"
+        android:paddingBottom="10dp"
+        android:background="@color/colorText" />
+
+    <Switch
+        android:text="Melding lage voorraad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/switchVoorraad"/>
 
     <LinearLayout
@@ -47,9 +58,9 @@
     </LinearLayout>
 
     <Switch
-        android:text="Melding als houdbaarheidsdatum bereikt is."
+        android:text="Melding houdbaarheidsdatum bereikt."
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:id="@+id/switchDatum"/>
     <LinearLayout
         android:id="@+id/thtLayout"
@@ -61,7 +72,7 @@
         <TextView
             android:text="Aantal dagen van tevoren: "
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textColor="@color/colorText"
             android:layout_weight="1" />
         <EditText
@@ -76,7 +87,7 @@
     <Switch
         android:text="Melding voor controle checklist"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:id="@+id/switchChecklist"/>
     <LinearLayout
         android:id="@+id/checklistLayout"
@@ -105,7 +116,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone">
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
