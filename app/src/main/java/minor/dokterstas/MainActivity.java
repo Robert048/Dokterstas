@@ -18,10 +18,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import net.danlew.android.joda.JodaTimeAndroid;
@@ -36,14 +38,18 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import minor.dokterstas.database.DatabaseHelper;
 import static minor.dokterstas.R.id.spinner;
+import static minor.dokterstas.R.id.visible;
 
 public class MainActivity extends AppCompatActivity{
 
     DatabaseHelper TasDB;
     private List<Category> categoryList = new ArrayList<>();
     private static int minimumStock = 5;
+    private static int days = 1;
     private static Time alarmTime = new Time(8,30,0);
     private static boolean alarmUsed = false;
+    private static boolean voorraadUsed = false;
+    private static boolean thtUsed = false;
     private int counterAmount;
     AlarmReceiver alarm = new AlarmReceiver();
 
@@ -56,16 +62,20 @@ public class MainActivity extends AppCompatActivity{
         JodaTimeAndroid.init(this);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         minimumStock = sharedPref.getInt("minimumStock", minimumStock);
+        days = sharedPref.getInt("days", days);
         String time = sharedPref.getString("alarmTime", "8:30:00");
         String[] timeArray = time.split(":");
-
-
         alarmTime = new Time(Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]) ,Integer.parseInt(timeArray[2]));
+
         alarmUsed = sharedPref.getBoolean("alarmUsed", alarmUsed);
         if(alarmUsed)
         {
             alarm.setAlarm(this);
         }
+
+        voorraadUsed = sharedPref.getBoolean("voorraadUsed", voorraadUsed);
+        thtUsed = sharedPref.getBoolean("thtUsed", thtUsed);
+
         createList();
         setNotifications();
 
@@ -281,7 +291,97 @@ public class MainActivity extends AppCompatActivity{
             dialog.setContentView(R.layout.settings);
             dialog.setTitle("settings");
             final TextView txtMinimumVoorraad = (TextView) dialog.findViewById(R.id.txtMinimumVoorraad);
+            final TextView txtDatum = (TextView) dialog.findViewById(R.id.txtDatum);
+            final TextView txtTime = (TextView) dialog.findViewById(R.id.txtTime);
             final Spinner category = (Spinner) dialog.findViewById(spinner);
+            final LinearLayout voorraadLayout = (LinearLayout) dialog.findViewById(R.id.voorraadLayout);
+            final LinearLayout thtLayout = (LinearLayout) dialog.findViewById(R.id.thtLayout);
+            final LinearLayout checklistLayout = (LinearLayout) dialog.findViewById(R.id.checklistLayout);
+            Switch switchVoorraad = (Switch) dialog.findViewById(R.id.switchVoorraad);
+            Switch switchDatum = (Switch) dialog.findViewById(R.id.switchDatum);
+            Switch switchChecklist = (Switch) dialog.findViewById(R.id.switchChecklist);
+
+            if(voorraadUsed)
+            {
+                switchVoorraad.setChecked(true);
+                voorraadLayout.setVisibility(View.VISIBLE);
+            }
+            switchVoorraad.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        voorraadLayout.setVisibility(View.VISIBLE);
+                        Toast.makeText(MainActivity.this, "Lage voorraad melding aangezet", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("voorraadUsed", true);
+                        editor.apply();
+                    }else{
+                        voorraadLayout.setVisibility(View.GONE);
+                        Toast.makeText(MainActivity.this, "Lage voorraad melding uitgezet", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("voorraadUsed", false);
+                        editor.apply();
+                    }
+                }
+            });
+
+            if(thtUsed)
+            {
+                switchDatum.setChecked(true);
+                thtLayout.setVisibility(View.VISIBLE);
+            }
+            switchDatum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        thtLayout.setVisibility(View.VISIBLE);
+                        Toast.makeText(MainActivity.this, "Houdbaarheidsdatum melding aangezet", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("thtUsed", true);
+                        editor.apply();
+                    }else{
+                        thtLayout.setVisibility(View.GONE);
+                        Toast.makeText(MainActivity.this, "Houdbaarheidsdatum melding uitgezet", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("thtUsed", false);
+                        editor.apply();
+                    }
+                }
+            });
+
+            if(alarmUsed)
+            {
+                switchChecklist.setChecked(true);
+                checklistLayout.setVisibility(View.VISIBLE);
+                alarm.setAlarm(MainActivity.this);
+            }
+            switchChecklist.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        checklistLayout.setVisibility(View.VISIBLE);
+                        Toast.makeText(MainActivity.this, "Alarm dagelijks om: " + alarmTime, Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("alarmUsed", true);
+                        editor.apply();
+                        alarm.setAlarm(MainActivity.this);
+                    }else{
+                        checklistLayout.setVisibility(View.GONE);
+                        Toast.makeText(MainActivity.this, "Dagelijks alarm uitgezet", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("alarmUsed", false);
+                        editor.apply();
+                        alarm.cancelAlarm(MainActivity.this);
+                    }
+                }
+            });
+
             Button btnDelete = (Button) dialog.findViewById(R.id.delete);
             // Creating adapter for spinner
             ArrayAdapter<Category> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
@@ -354,36 +454,24 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
-            CheckBox setting_check = (CheckBox) dialog.findViewById(R.id.setting_check);
-            if(alarmUsed)
-            {
-                setting_check.setChecked(true);
-                alarm.setAlarm(MainActivity.this);
-            }
-            setting_check.setOnClickListener(new View.OnClickListener() {
+            txtDatum.setText("" + days);
+            txtDatum.setOnKeyListener(new View.OnKeyListener() {
                 @Override
-                public void onClick(View view) {
-                    if(((CheckBox)view).isChecked()) {
-                        Toast.makeText(MainActivity.this, "Alarm dagelijks om: " + alarmTime, Toast.LENGTH_SHORT).show();
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        Toast.makeText(MainActivity.this, "Aantal dagen aangepast naar: " + txtDatum.getText(), Toast.LENGTH_SHORT).show();
+                        days = Integer.parseInt(txtDatum.getText().toString());
+
                         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putBoolean("alarmUsed", true);
+                        editor.putInt("days", days);
                         editor.apply();
-                        alarm.setAlarm(MainActivity.this);
+                        return true;
                     }
-                    else
-                    {
-                        Toast.makeText(MainActivity.this, "Dagelijks alarm uitgezet", Toast.LENGTH_SHORT).show();
-                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putBoolean("alarmUsed", false);
-                        editor.apply();
-                        alarm.cancelAlarm(MainActivity.this);
-                    }
+                    return false;
                 }
             });
 
-            final TextView txtTime = (TextView) dialog.findViewById(R.id.txtTime);
             txtTime.setText("" + alarmTime);
             txtTime.setOnKeyListener(new View.OnKeyListener() {
                 @Override

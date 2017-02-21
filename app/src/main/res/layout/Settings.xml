@@ -7,95 +7,125 @@
 
     <TextView
         android:text="Instellingen"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
         android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/colorText"
-        android:textSize="22sp"
+        android:textSize="30sp"
         android:id="@+id/textView"
-        android:layout_weight="0.02" />
+        android:paddingBottom="25dp" />
+    <Switch
+        android:text="Melding weergeven als de voorraad laag is."
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/switchVoorraad"/>
 
     <LinearLayout
+        android:id="@+id/voorraadLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:visibility="gone">
 
         <TextView
-            android:text="Melding weergeven als voorraad lager is dan: "
+            android:text="Lager dan: "
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorText"
-            android:id="@+id/textView3"
-            android:layout_weight="0.02" />
+            android:layout_weight="1" />
         <EditText
+            android:id="@+id/txtMinimumVoorraad"
             android:textColor="@android:color/tertiary_text_dark"
             android:textSize="15sp"
             android:inputType="number"
-            android:id="@+id/txtMinimumVoorraad"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal">
-        </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <CheckBox
-            android:id="@+id/setting_check"
-            android:text="@string/setting_check"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
     </LinearLayout>
+
+    <Switch
+        android:text="Melding weergeven als de houdbaarheidsdatum bereikt is."
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/switchDatum"/>
     <LinearLayout
+        android:id="@+id/thtLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:visibility="gone">
         <TextView
-            android:text="Tijdstip voor notificatie: "
+            android:text="Aantal dagen van tevoren: "
             android:layout_width="0dp"
-            android:textColor="@color/colorText"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
             android:layout_weight="1" />
         <EditText
             android:textColor="@android:color/tertiary_text_dark"
             android:textSize="15sp"
+            android:inputType="number"
+            android:id="@+id/txtDatum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        </LinearLayout>
+    <Switch
+        android:text="Melding weergeven voor checklist controle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/switchChecklist"/>
+    <LinearLayout
+        android:id="@+id/checklistLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone">
+        <TextView
+            android:text="Tijdstip: "
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
+            android:layout_weight="1" />
+        <EditText
+            android:textColor="@android:color/tertiary_text_dark"
+            android:textSize="15sp"
+            android:inputType="number"
             android:id="@+id/txtTime"
-            android:inputType="time"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/black" />
-    <TextView
-        android:text="Categorie verwijderen"
-        android:layout_width="match_parent"
-        android:textColor="@color/colorText"
-        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:gravity="center">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:text="Categorie verwijderen"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:textColor="@color/colorText"
+            android:layout_height="wrap_content"/>
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
         <Button
             android:id="@+id/delete"
             android:layout_width="wrap_content"
@@ -107,5 +137,5 @@
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"/>
-        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
