@@ -468,8 +468,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues args = new ContentValues();
         db.delete(TABLE_ITEMS,"I_ID=?",new String[]{id});
+    }
+
+    public void deleteCategory(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TABLE_ITEMS,"C_ID=?",new String[]{id});
+        db.delete(TABLE_CATEGORIES,"C_ID=?",new String[]{id});
     }
 
     @Override

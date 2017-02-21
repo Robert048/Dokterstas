@@ -287,7 +287,6 @@ public class MainActivity extends AppCompatActivity{
             ArrayAdapter<Category> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
 
             // Drop down layout style - list view with radio button
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             // attaching data adapter to spinner
             category.setAdapter(dataAdapter);
@@ -310,6 +309,9 @@ public class MainActivity extends AppCompatActivity{
                         public void onClick(View view) {
                             //TODO Remove category
                             //TODO dit is gekopieerd van item remove
+                            Category cat = (Category) category.getSelectedItem();
+                            TasDB.deleteCategory(String.valueOf(cat.getID()));
+
                             dialog.dismiss();
                             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainActivity.this);
 
