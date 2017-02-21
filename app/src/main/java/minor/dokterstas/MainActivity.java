@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -96,6 +97,17 @@ public class MainActivity extends AppCompatActivity{
             String voorraden = "";
             String namen2 = "";
             String expirationDateText = "";
+
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.stock_message);
+            dialog.setTitle("Voorraad meldingen");
+            LinearLayout voorraadLayout = (LinearLayout) dialog.findViewById(R.id.voorraadLayout);
+            ViewGroup.LayoutParams params = voorraadLayout.getLayoutParams();
+            LinearLayout thtVoorraad = (LinearLayout) dialog.findViewById(R.id.thtLayout);
+            ViewGroup.LayoutParams params2 = voorraadLayout.getLayoutParams();
+
+            int height = 50;
+            int height2 = 50;
             while (c.moveToNext()) {
                 String Name = c.getString(Column1);
                 int Stock = c.getInt(Column2);
@@ -119,6 +131,7 @@ public class MainActivity extends AppCompatActivity{
                     {
                         namen = namen + Name + "\n";
                         voorraden = voorraden + Stock + "\n";
+                        if (height <= 300) height = height + 50;
                     }
                 }
                 Calendar calendar = new GregorianCalendar();
@@ -133,23 +146,25 @@ public class MainActivity extends AppCompatActivity{
                     {
                         namen2 = namen2 + Name + "\n";
                         expirationDateText = expirationDateText + dateText + "\n";
+                        if (height2 <= 300) height2 = height2 + 50;
                     }
                 }
 
             }
-            final Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.stock_message);
-            dialog.setTitle("Voorraad meldingen");
+            params.height = height;
+            voorraadLayout.setLayoutParams(params);
+            params2.height = height2;
+            thtVoorraad.setLayoutParams(params2);
+
+
             TextView txtName = (TextView) dialog.findViewById(R.id.txtName);
             TextView txtStock = (TextView) dialog.findViewById(R.id.txtStock);
             TextView txtName2 = (TextView) dialog.findViewById(R.id.txtName2);
             TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
-            //Scro thtLayout = (LinearLayout) dialog.findViewById(R.id.houdbaarheidsdatumLayout);
             txtName.setText(namen);
             txtStock.setText(voorraden);
             txtName2.setText(namen2);
             txtDate.setText(expirationDateText);
-            //thtLayout.setMovementMethod(new ScrollingMovementMethod());
             dialog.show();
         } catch (Exception e) {
             Log.e("Error", "Error", e);
