@@ -16,7 +16,7 @@
         android:id="@+id/textView"
         android:paddingBottom="25dp" />
     <Switch
-        android:text="Melding weergeven als de voorraad laag is."
+        android:text="Melding bij lage voorraad"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/switchVoorraad"/>
@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <Switch
-        android:text="Melding weergeven als de houdbaarheidsdatum bereikt is."
+        android:text="Melding als houdbaarheidsdatum bereikt is."
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/switchDatum"/>
@@ -74,7 +74,7 @@
             android:layout_weight="1"/>
         </LinearLayout>
     <Switch
-        android:text="Melding weergeven voor checklist controle"
+        android:text="Melding voor controle checklist"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/switchChecklist"/>
