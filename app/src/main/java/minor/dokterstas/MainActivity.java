@@ -280,7 +280,60 @@ public class MainActivity extends AppCompatActivity{
 
             dialog.setContentView(R.layout.settings);
             dialog.setTitle("settings");
-            final TextView txtMinimumVoorraad = (TextView) dialog.findViewById(R.id.txtMinimumVoorraad) ;
+            final TextView txtMinimumVoorraad = (TextView) dialog.findViewById(R.id.txtMinimumVoorraad);
+            final Spinner category = (Spinner) dialog.findViewById(spinner);
+            Button btnDelete = (Button) dialog.findViewById(R.id.delete);
+            // Creating adapter for spinner
+            ArrayAdapter<Category> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
+
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            category.setAdapter(dataAdapter);
+
+            btnDelete.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    final Dialog dialog = new Dialog(MainActivity.this);
+
+                    dialog.setContentView(R.layout.confirmation);
+                    dialog.setTitle("Confirmation");
+
+                    Button btnYes = (Button) dialog.findViewById(R.id.yes);
+                    Button btnNo = (Button) dialog.findViewById(R.id.no);
+
+                    dialog.show();
+
+                    btnYes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //TODO Remove category
+                            //TODO dit is gekopieerd van item remove
+                            dialog.dismiss();
+                            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainActivity.this);
+
+                            //builder.setMessage(item.getName() + " verwijderd uit lijst.");
+                            builder.setTitle("Verwijderd");
+
+                            createList();
+
+                            android.app.AlertDialog dialog4 = builder.create();
+                            dialog4.show();
+
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btnNo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+                }
+            });
+
             txtMinimumVoorraad.setText("" + getMinimumStock());
             txtMinimumVoorraad.setOnKeyListener(new View.OnKeyListener() {
                 @Override
