@@ -23,29 +23,42 @@
         android:textColor="@color/colorText"
         android:textAlignment="center"
         android:textSize="16sp"
-        android:textStyle="normal|bold"
+        android:textStyle="bold"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:background="@android:color/background_light"
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@android:color/background_light"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtName"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtStock"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
     <TextView
         android:text="Houdbaarheidsdatum verstreken van:"
@@ -53,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textStyle="normal|bold"
+        android:textStyle="bold"
         android:textColor="@color/colorText"
         android:textSize="16sp"
         android:paddingStart="10dp"
@@ -62,21 +75,38 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:background="@android:color/background_light"
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtName2"
-            android:layout_weight="1" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtDate"
-            android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@android:color/background_light"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtName2"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtDate"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+        </ScrollView>
+
+
     </LinearLayout>
 </LinearLayout>

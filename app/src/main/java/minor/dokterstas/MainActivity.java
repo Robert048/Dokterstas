@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,11 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-
 import net.danlew.android.joda.JodaTimeAndroid;
 import org.joda.time.DateTime;
 import java.sql.Time;
@@ -111,8 +106,6 @@ public class MainActivity extends AppCompatActivity{
                 dt = dt.withMillis(date);
 
                 DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy");
-
-                //String dateText = String.valueOf(dt.dayOfMonth().get()) + "/" + String.valueOf(dt.monthOfYear().get()) + "/" +  String.valueOf(dt.year().get());
                 String dateText = dt.toString(dateTimeFormatter);
 
                 Date expirationDate = dt.toDate();
@@ -151,10 +144,12 @@ public class MainActivity extends AppCompatActivity{
             TextView txtStock = (TextView) dialog.findViewById(R.id.txtStock);
             TextView txtName2 = (TextView) dialog.findViewById(R.id.txtName2);
             TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
+            //Scro thtLayout = (LinearLayout) dialog.findViewById(R.id.houdbaarheidsdatumLayout);
             txtName.setText(namen);
             txtStock.setText(voorraden);
             txtName2.setText(namen2);
             txtDate.setText(expirationDateText);
+            //thtLayout.setMovementMethod(new ScrollingMovementMethod());
             dialog.show();
         } catch (Exception e) {
             Log.e("Error", "Error", e);
