@@ -387,6 +387,7 @@ public class MainActivity extends AppCompatActivity{
             ArrayAdapter<Category> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
 
             // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             // attaching data adapter to spinner
             category.setAdapter(dataAdapter);
