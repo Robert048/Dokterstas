@@ -3,6 +3,7 @@ package minor.dokterstas;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -135,6 +136,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 Button btnDate = (Button) dialog.findViewById(R.id.date);
 
                 Button btnDelete = (Button) dialog.findViewById(R.id.delete);
+                Button btnOrder = (Button) dialog.findViewById(R.id.order);
                 Button btnSave = (Button) dialog.findViewById(R.id.save);
                 Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
 
@@ -254,6 +256,20 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         });
                     }
                 });
+
+                btnOrder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String email = "";
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("plain/text");
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { email });
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Bestelling " + item.getName());
+                        intent.putExtra(Intent.EXTRA_TEXT, "\n Verstuurd vanuit Dokterstas");
+                        activity.startActivity(Intent.createChooser(intent, ""));
+                    }
+                });
+
 
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
