@@ -578,18 +578,24 @@ public class MainActivity extends AppCompatActivity{
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TasDB.addCategory(editText.getText().toString());
+                    if(!editText.getText().toString().isEmpty()) {
+                        TasDB.addCategory(editText.getText().toString());
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-                    builder.setMessage(editText.getText().toString() + " categorie toegevoegd.");
-                    builder.setTitle("Nieuwe categorie");
+                        builder.setMessage(editText.getText().toString() + " categorie toegevoegd.");
+                        builder.setTitle("Nieuwe categorie");
 
-                    AlertDialog dialog2 = builder.create();
-                    dialog2.show();
-                    dialog.dismiss();
+                        AlertDialog dialog2 = builder.create();
+                        dialog2.show();
+                        dialog.dismiss();
 
-                    createList();
+                        createList();
+                    }
+                    else
+                    {
+                        editText.setHintTextColor(Color.RED);
+                    }
                 }
             });
 
