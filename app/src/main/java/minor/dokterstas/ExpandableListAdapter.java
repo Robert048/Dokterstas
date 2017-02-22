@@ -3,6 +3,7 @@ package minor.dokterstas;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -262,67 +263,108 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog.dismiss();
-                        context.createList();
+
 
                         switch (item.getType()) {
                             case 1:
                                 //alleen voorraad
-                                db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                if(!txtVoorraad.getText().toString().isEmpty()) {
+                                    db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                    dialog.dismiss();
+                                }
+                                else
+                                {
+                                    txtVoorraad.setHint("aantal");
+                                    txtVoorraad.setHintTextColor(Color.RED);
+                                }
                                 break;
                             case 2:
-                                if (dialog.day == 0)
-                                {
+                                if (dialog.day == 0) {
                                     //geen datum opgegeven
-                                }
-                                else {
+                                } else {
                                     //alleen datum
                                     db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
+                                    dialog.dismiss();
                                 }
                                 break;
                             case 3:
                                 if (dialog.day == 0) {
                                     //alleen voorraad
-                                    db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                    if(!txtVoorraad.getText().toString().isEmpty()) {
+                                        db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                        dialog.dismiss();
+                                    }
+                                    else {
+                                        txtVoorraad.setHint("aantal");
+                                        txtVoorraad.setHintTextColor(Color.RED);
+                                    }
                                 } else {
                                     // voorraad en tht
                                     db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
+                                    dialog.dismiss();
                                 }
                                 break;
                             case 4:
                                 db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                dialog.dismiss();
                                 break;
                             case 5:
-                                db.updateVolume(item.getID(), txtVolume.getText().toString());
-                                db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                if(!txtVoorraad.getText().toString().isEmpty() && !txtVolume.getText().toString().isEmpty()) {
+                                    db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                    db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                    dialog.dismiss();
+                                }
+                                else if(!txtVoorraad.getText().toString().isEmpty())
+                                {
+                                    txtVolume.setHint("aantal");
+                                    txtVolume.setHintTextColor(Color.RED);
+                                }
+                                else {
+                                    txtVoorraad.setHint("aantal");
+                                    txtVoorraad.setHintTextColor(Color.RED);
+                                }
+
                                 break;
                             case 6:
-                                if (dialog.day == 0)
-                                {
-                                    db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                if(!txtVolume.getText().toString().isEmpty()) {
+                                    if (dialog.day == 0) {
+                                        db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                        dialog.dismiss();
+                                    } else {
+                                        db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                        db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
+                                        dialog.dismiss();
+                                    }
                                 }
                                 else
                                 {
-                                    db.updateVolume(item.getID(), txtVolume.getText().toString());
-                                    db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
+                                    txtVolume.setHint("aantal");
+                                    txtVolume.setHintTextColor(Color.RED);
                                 }
                                 break;
                             case 7:
-                                if (dialog.day == 0)
-                                {
-                                    db.updateVolume(item.getID(), txtVolume.getText().toString());
-                                    db.updateStock(item.getID(), txtVoorraad.getText().toString());
-                                }
-                                else
-                                {
-                                    db.updateVolume(item.getID(), txtVolume.getText().toString());
-                                    db.updateStock(item.getID(), txtVoorraad.getText().toString());
-                                    db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
+                                if(!txtVoorraad.getText().toString().isEmpty() && !txtVolume.getText().toString().isEmpty()) {
+                                    if (dialog.day == 0) {
+                                        db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                        db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                        dialog.dismiss();
+                                    } else {
+                                        db.updateVolume(item.getID(), txtVolume.getText().toString());
+                                        db.updateStock(item.getID(), txtVoorraad.getText().toString());
+                                        db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
+                                        dialog.dismiss();
+                                    }
+                                    if (!txtVoorraad.getText().toString().isEmpty()) {
+                                        txtVolume.setHint("aantal");
+                                        txtVolume.setHintTextColor(Color.RED);
+                                    } else {
+                                        txtVoorraad.setHint("aantal");
+                                        txtVoorraad.setHintTextColor(Color.RED);
+                                    }
                                 }
                                 break;
-
                         }
-                        ((MainActivity) activity).createList();
+                        context.createList();
                     }
                 });
                 dialog.show();
