@@ -6,24 +6,24 @@
     <item
         android:id="@+id/Menu_Category"
         android:orderInCategory="1"
-        android:title="Categorie toevoegen"
+        android:title="@string/categorie_toevoegen"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/Menu_Item"
         android:orderInCategory="2"
-        android:title="Item toevoegen"
+        android:title="@string/item_toevoegen"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/Menu_Settings"
         android:orderInCategory="3"
-        android:title="Instellingen"
+        android:title="@string/instellingen"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/Menu_Reset"
         android:orderInCategory="4"
-        android:title="Herstel gegevens"
+        android:title="@string/herstel_gegevens"
         app:showAsAction="never" />
 </menu>

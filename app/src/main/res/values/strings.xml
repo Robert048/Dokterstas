@@ -46,4 +46,5 @@
     <string name="checklist_meldingen">Checklist meldingen:</string>
     <string name="voorraad_laag_van">Voorraad laag van:</string>
     <string name="houdbaarheidsdatum_verstreken_van">Houdbaarheidsdatum verstreken van:</string>
+    <string name="herstel_gegevens">Herstel gegevens</string>
 </resources>
