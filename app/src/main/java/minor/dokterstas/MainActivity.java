@@ -3,7 +3,9 @@ package minor.dokterstas;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +40,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import minor.dokterstas.database.DatabaseHelper;
 import static minor.dokterstas.R.id.spinner;
+import static minor.dokterstas.R.id.txtName;
 import static minor.dokterstas.R.id.visible;
 
 public class MainActivity extends AppCompatActivity{
@@ -686,70 +689,56 @@ public class MainActivity extends AppCompatActivity{
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Category cat = (Category) category.getSelectedItem();
-                    int volume = Integer.parseInt(volumeText.getText().toString());
-
-                    if(checkboxVoorraad.isChecked())
+                    if(!editText.getText().toString().isEmpty())
                     {
-                        if (checkboxTht.isChecked())
-                        {
-                            DateTime dateTime = new DateTime();
-                            dateTime = dateTime.withDate(dialog.year, dialog.month + 1, dialog.day);
-                            long milis = dateTime.getMillis();
-                            if(checkboxvolume.isChecked())
-                            {
-                                TasDB.addItemStockDateVolume(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), milis, volume, 7);
+                        Category cat = (Category) category.getSelectedItem();
+                        int volume = Integer.parseInt(volumeText.getText().toString());
+
+                        if (checkboxVoorraad.isChecked()) {
+                            if (checkboxTht.isChecked()) {
+                                DateTime dateTime = new DateTime();
+                                dateTime = dateTime.withDate(dialog.year, dialog.month + 1, dialog.day);
+                                long milis = dateTime.getMillis();
+                                if (checkboxvolume.isChecked()) {
+                                    TasDB.addItemStockDateVolume(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), milis, volume, 7);
+                                } else {
+                                    TasDB.addItemStockDate(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), milis, 3);
+                                }
+                            } else {
+                                if (checkboxvolume.isChecked()) {
+                                    TasDB.addItemStockVolume(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), volume, 5);
+                                } else {
+                                    TasDB.addItemStock(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), 1);
+                                }
                             }
-                            else
-                            {
-                                TasDB.addItemStockDate(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), milis, 3);
+                        } else {
+                            if (checkboxTht.isChecked()) {
+                                DateTime dateTime = new DateTime();
+                                dateTime = dateTime.withDate(dialog.year, dialog.month + 1, dialog.day);
+                                long milis = dateTime.getMillis();
+                                if (checkboxvolume.isChecked()) {
+                                    TasDB.addItemDateVolume(editText.getText().toString(), cat.getID(), milis, volume, 6);
+                                } else {
+                                    TasDB.addItemDate(editText.getText().toString(), cat.getID(), milis, 2);
+                                }
+                            } else {
+                                if (checkboxvolume.isChecked()) {
+                                    TasDB.addItemVolume(editText.getText().toString(), cat.getID(), volume, 4);
+                                } else {
+                                    TasDB.addItemName(editText.getText().toString(), cat.getID(), 0);
+                                }
                             }
                         }
-                        else
-                        {
-                            if(checkboxvolume.isChecked())
-                            {
-                                TasDB.addItemStockVolume(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), volume, 5);
-                            }
-                            else
-                            {
-                                TasDB.addItemStock(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), 1);
-                            }
-                        }
+
+                        counterAmount++;
+                        Toast.makeText(MainActivity.this, editText.getText().toString() + " toegevoegd aan categorie: " + cat.getName(), Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        createList();
                     }
                     else
                     {
-                        if (checkboxTht.isChecked())
-                        {
-                            DateTime dateTime = new DateTime();
-                            dateTime = dateTime.withDate(dialog.year, dialog.month + 1, dialog.day);
-                            long milis = dateTime.getMillis();
-                            if (checkboxvolume.isChecked())
-                            {
-                                TasDB.addItemDateVolume(editText.getText().toString(), cat.getID(), milis, volume, 6);
-                            }
-                            else
-                            {
-                                TasDB.addItemDate(editText.getText().toString(), cat.getID(), milis, 2);
-                            }
-                        }
-                        else
-                        {
-                            if(checkboxvolume.isChecked())
-                            {
-                                TasDB.addItemVolume(editText.getText().toString(), cat.getID(), volume, 4);
-                            }
-                            else
-                            {
-                                TasDB.addItemName(editText.getText().toString(), cat.getID(), 0);
-                            }
-                        }
+                        editText.setHintTextColor(Color.RED);
                     }
-
-                    counterAmount++;
-                    Toast.makeText(MainActivity.this, editText.getText().toString() + " toegevoegd aan categorie: " + cat.getName(), Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                    createList();
                 }
             });
 
