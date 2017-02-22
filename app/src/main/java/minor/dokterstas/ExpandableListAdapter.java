@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,6 +136,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
                 TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
                 Button btnDate = (Button) dialog.findViewById(R.id.date);
+
+
 
                 Button btnDelete = (Button) dialog.findViewById(R.id.delete);
                 Button btnOrder = (Button) dialog.findViewById(R.id.order);

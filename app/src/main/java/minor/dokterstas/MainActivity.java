@@ -26,19 +26,23 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import net.danlew.android.joda.JodaTimeAndroid;
+
 import org.joda.time.DateTime;
-import java.sql.Time;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
 import minor.dokterstas.database.DatabaseHelper;
+
 import static minor.dokterstas.R.id.spinner;
-import static minor.dokterstas.R.id.txtVoorraad;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -155,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 DateTime correctDate = new DateTime();
                 correctDate = correctDate.withMillis(correctMilis);
 
-                  if (expirationDate.before(correctDate.toDate()) && (type == 2 || type == 3)) {
+                if (expirationDate.before(correctDate.toDate()) && (type == 2 || type == 3)) {
                     if (namen2.equals("")) {
                         namen2 = Name + "\n";
                         expirationDateText = dateText + "\n";
@@ -608,9 +612,26 @@ public class MainActivity extends AppCompatActivity {
             final CheckBox checkboxvolume = (CheckBox) dialog.findViewById(R.id.volumeBox);
             final EditText voorraadText = (EditText) dialog.findViewById(R.id.txtVoorraad);
             final EditText volumeText = (EditText) dialog.findViewById(R.id.txtVolume);
+            TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
             Button btnDate = (Button) dialog.findViewById(R.id.createDate);
             Button btnSave = (Button) dialog.findViewById(R.id.save);
             Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
+
+            Calendar calendar = new GregorianCalendar();
+            DateTime today = new DateTime(calendar.getTime());
+
+            int month = today.getMonthOfYear();
+            String monthText;
+            if (month < 10) {
+                monthText = "0" + month;
+            } else {
+                monthText = "" + month;
+            }
+
+            txtDate.setText(today.getDayOfMonth() + "/" + monthText + "/" + today.getYear());
+            dialog.year = today.getYear();
+            dialog.month = today.getMonthOfYear();
+            dialog.day = today.getDayOfMonth();
 
             // Creating adapter for spinner
             ArrayAdapter<Category> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
@@ -682,7 +703,7 @@ public class MainActivity extends AppCompatActivity {
                         int volume = Integer.parseInt(volumeText.getText().toString());
 
                         if (checkboxVoorraad.isChecked()) {
-                            if(Integer.parseInt(voorraadText.getText().toString()) >= 0) {
+                            if (Integer.parseInt(voorraadText.getText().toString()) >= 0) {
                                 if (checkboxTht.isChecked()) {
                                     DateTime dateTime = new DateTime();
                                     dateTime = dateTime.withDate(dialog.year, dialog.month + 1, dialog.day);
@@ -699,9 +720,7 @@ public class MainActivity extends AppCompatActivity {
                                         TasDB.addItemStock(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), 1);
                                     }
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 voorraadText.setHintTextColor(Color.RED);
                             }
                         } else {
