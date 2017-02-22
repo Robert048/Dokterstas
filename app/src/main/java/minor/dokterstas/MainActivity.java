@@ -3,14 +3,12 @@ package minor.dokterstas;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -40,16 +38,14 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import minor.dokterstas.database.DatabaseHelper;
 import static minor.dokterstas.R.id.spinner;
-import static minor.dokterstas.R.id.txtName;
-import static minor.dokterstas.R.id.visible;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper TasDB;
     private List<Category> categoryList = new ArrayList<>();
     private static int minimumStock = 5;
     private static int days = 1;
-    private static Time alarmTime = new Time(8,30,0);
+    private static Time alarmTime = new Time(8, 30, 0);
     private static boolean alarmUsed = false;
     private static boolean voorraadUsed = false;
     private static boolean thtUsed = false;
@@ -63,23 +59,25 @@ public class MainActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         JodaTimeAndroid.init(this);
+        //SharedPreferences initialize for local storage
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         minimumStock = sharedPref.getInt("minimumStock", minimumStock);
         days = sharedPref.getInt("days", days);
         String time = sharedPref.getString("alarmTime", "8:30:00");
         String[] timeArray = time.split(":");
-        alarmTime = new Time(Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]) ,Integer.parseInt(timeArray[2]));
+        alarmTime = new Time(Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]), Integer.parseInt(timeArray[2]));
 
         alarmUsed = sharedPref.getBoolean("alarmUsed", alarmUsed);
-        if(alarmUsed)
-        {
+        if (alarmUsed) {
             alarm.setAlarm(this);
         }
 
         voorraadUsed = sharedPref.getBoolean("voorraadUsed", voorraadUsed);
         thtUsed = sharedPref.getBoolean("thtUsed", thtUsed);
 
+        //make checklist
         createList();
+        //give startup message
         setNotifications();
 
         Cursor c = TasDB.countAllItems();
@@ -102,10 +100,10 @@ public class MainActivity extends AppCompatActivity{
             TasDB = new DatabaseHelper(this);
             //Check Stock and expiration date per item
             Cursor c = TasDB.getAllItems();
-            int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
-            int Column2 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
-            int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_EXPIRATION);
-            int Column4 = c.getColumnIndex(TasDB.COLUMN_ITEMS_TYPE);
+            int Column1 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_NAME);
+            int Column2 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_STOCK);
+            int Column3 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_EXPIRATION);
+            int Column4 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_TYPE);
             String namen = "";
             String voorraden = "";
             String namen2 = "";
@@ -121,6 +119,7 @@ public class MainActivity extends AppCompatActivity{
 
             int height = 50;
             int height2 = 50;
+            //loop thru database cursor
             while (c.moveToNext()) {
                 String Name = c.getString(Column1);
                 int Stock = c.getInt(Column2);
@@ -135,28 +134,21 @@ public class MainActivity extends AppCompatActivity{
 
                 Date expirationDate = dt.toDate();
                 if (minimumStock >= Stock && (type == 1 || type == 3)) {
-                    if(namen.equals(""))
-                    {
+                    if (namen.equals("")) {
                         namen = Name + "\n";
                         voorraden = Stock + "\n";
-                    }
-                    else
-                    {
+                    } else {
                         namen = namen + Name + "\n";
                         voorraden = voorraden + Stock + "\n";
                         if (height <= 300) height = height + 50;
                     }
                 }
                 Calendar calendar = new GregorianCalendar();
-                if(expirationDate.before(calendar.getTime()) && (type == 2 || type == 3))
-                {
-                    if(namen2.equals(""))
-                    {
+                if (expirationDate.before(calendar.getTime()) && (type == 2 || type == 3)) {
+                    if (namen2.equals("")) {
                         namen2 = Name + "\n";
                         expirationDateText = dateText + "\n";
-                    }
-                    else
-                    {
+                    } else {
                         namen2 = namen2 + Name + "\n";
                         expirationDateText = expirationDateText + dateText + "\n";
                         if (height2 <= 300) height2 = height2 + 50;
@@ -164,37 +156,34 @@ public class MainActivity extends AppCompatActivity{
                 }
 
             }
+            //give layouts the correct height
             params.height = height;
             voorraadLayout.setLayoutParams(params);
             params2.height = height2;
             thtLayout.setLayoutParams(params2);
 
-
-            if(voorraadUsed) {
+            //hide layouts that aren't used
+            if (voorraadUsed) {
                 TextView txtName = (TextView) dialog.findViewById(R.id.txtName);
                 TextView txtStock = (TextView) dialog.findViewById(R.id.txtStock);
                 txtName.setText(namen);
                 txtStock.setText(voorraden);
-            }
-            else
-            {
+            } else {
                 TextView voorraadTitel = (TextView) dialog.findViewById(R.id.voorraadTitel);
                 voorraadTitel.setVisibility(View.GONE);
                 voorraadLayout.setVisibility(View.GONE);
             }
-            if(thtUsed) {
+            if (thtUsed) {
                 TextView txtName2 = (TextView) dialog.findViewById(R.id.txtName2);
                 TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
                 txtName2.setText(namen2);
                 txtDate.setText(expirationDateText);
-            }
-            else
-            {
+            } else {
                 TextView thtTitel = (TextView) dialog.findViewById(R.id.thtTitel);
                 thtTitel.setVisibility(View.GONE);
                 thtLayout.setVisibility(View.GONE);
             }
-            if(voorraadUsed || thtUsed) {
+            if (voorraadUsed || thtUsed) {
                 dialog.show();
             }
         } catch (Exception e) {
@@ -202,31 +191,25 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public int getCounterAmount()
-    {
+    public int getCounterAmount() {
         return counterAmount;
     }
 
-    public void decreaseCounterAmount()
-        {
-            counterAmount--;
+    public void decreaseCounterAmount() {
+        counterAmount--;
     }
 
-    public static int getMinimumStock()
-    {
+    public static int getMinimumStock() {
         return minimumStock;
     }
 
-    public static Time getAlarmTime()
-    {
+    public static Time getAlarmTime() {
         return alarmTime;
     }
 
-    public void setMinimumStock(int Stock)
-    {
+    public void setMinimumStock(int Stock) {
         minimumStock = Stock;
     }
-
 
     //Method to repopulate the category list including its items.
     //and reloads the checklists
@@ -240,8 +223,8 @@ public class MainActivity extends AppCompatActivity{
             {
                 Cursor c = TasDB.getAllDataFromTable(1);
 
-                int Column1 = c.getColumnIndex(TasDB.COLUMN_CATEGORIES_ID);
-                int Column2 = c.getColumnIndex(TasDB.COLUMN_CATEGORIES_NAME);
+                int Column1 = c.getColumnIndex(DatabaseHelper.COLUMN_CATEGORIES_ID);
+                int Column2 = c.getColumnIndex(DatabaseHelper.COLUMN_CATEGORIES_NAME);
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
@@ -252,13 +235,13 @@ public class MainActivity extends AppCompatActivity{
             {
                 Cursor c = TasDB.getAllDataFromTable(2);
 
-                int Column1 = c.getColumnIndex(TasDB.COLUMN_ITEMS_ID);
-                int Column2 = c.getColumnIndex(TasDB.COLUMN_ITEMS_NAME);
-                int Column3 = c.getColumnIndex(TasDB.COLUMN_ITEMS_EXPIRATION);
-                int Column4 = c.getColumnIndex(TasDB.COLUMN_ITEMS_STOCK);
-                int Column5 = c.getColumnIndex(TasDB.COLUMN_ITEMS_CATEGORIES_ID);
-                int Column6 = c.getColumnIndex(TasDB.COLUMN_ITEMS_TYPE);
-                int Column7 = c.getColumnIndex(TasDB.COLUMN_ITEMS_VOLUME);
+                int Column1 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_ID);
+                int Column2 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_NAME);
+                int Column3 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_EXPIRATION);
+                int Column4 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_STOCK);
+                int Column5 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_CATEGORIES_ID);
+                int Column6 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_TYPE);
+                int Column7 = c.getColumnIndex(DatabaseHelper.COLUMN_ITEMS_VOLUME);
                 while (c.moveToNext()) {
                     int ID = c.getInt(Column1);
                     String Name = c.getString(Column2);
@@ -278,8 +261,6 @@ public class MainActivity extends AppCompatActivity{
                     category.addItem(item);
                 }
             }
-
-
 
             ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
             ExpandableListAdapter adapter = new ExpandableListAdapter(this,
@@ -306,6 +287,7 @@ public class MainActivity extends AppCompatActivity{
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        //'Instellingen' button in menu
         if (id == R.id.Menu_Settings) {
             final Dialog dialog = new Dialog(this);
 
@@ -322,15 +304,14 @@ public class MainActivity extends AppCompatActivity{
             Switch switchDatum = (Switch) dialog.findViewById(R.id.switchDatum);
             Switch switchChecklist = (Switch) dialog.findViewById(R.id.switchChecklist);
 
-            if(voorraadUsed)
-            {
+            if (voorraadUsed) {
                 switchVoorraad.setChecked(true);
                 voorraadLayout.setVisibility(View.VISIBLE);
             }
             switchVoorraad.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
+                    if (isChecked) {
                         voorraadLayout.setVisibility(View.VISIBLE);
                         Toast.makeText(MainActivity.this, "Lage voorraad melding aangezet", Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
@@ -338,7 +319,7 @@ public class MainActivity extends AppCompatActivity{
                         editor.putBoolean("voorraadUsed", true);
                         editor.apply();
                         voorraadUsed = sharedPref.getBoolean("voorraadUsed", voorraadUsed);
-                    }else{
+                    } else {
                         voorraadLayout.setVisibility(View.GONE);
                         Toast.makeText(MainActivity.this, "Lage voorraad melding uitgezet", Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
@@ -350,15 +331,14 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
-            if(thtUsed)
-            {
+            if (thtUsed) {
                 switchDatum.setChecked(true);
                 thtLayout.setVisibility(View.VISIBLE);
             }
             switchDatum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
+                    if (isChecked) {
                         thtLayout.setVisibility(View.VISIBLE);
                         Toast.makeText(MainActivity.this, "Houdbaarheidsdatum melding aangezet", Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
@@ -366,7 +346,7 @@ public class MainActivity extends AppCompatActivity{
                         editor.putBoolean("thtUsed", true);
                         editor.apply();
                         thtUsed = sharedPref.getBoolean("thtUsed", thtUsed);
-                    }else{
+                    } else {
                         thtLayout.setVisibility(View.GONE);
                         Toast.makeText(MainActivity.this, "Houdbaarheidsdatum melding uitgezet", Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
@@ -378,8 +358,7 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
-            if(alarmUsed)
-            {
+            if (alarmUsed) {
                 switchChecklist.setChecked(true);
                 checklistLayout.setVisibility(View.VISIBLE);
                 alarm.setAlarm(MainActivity.this);
@@ -387,7 +366,7 @@ public class MainActivity extends AppCompatActivity{
             switchChecklist.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
+                    if (isChecked) {
                         checklistLayout.setVisibility(View.VISIBLE);
                         Toast.makeText(MainActivity.this, "Alarm dagelijks om: " + alarmTime, Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
@@ -396,7 +375,7 @@ public class MainActivity extends AppCompatActivity{
                         editor.apply();
                         alarmUsed = sharedPref.getBoolean("alarmUsed", thtUsed);
                         alarm.setAlarm(MainActivity.this);
-                    }else{
+                    } else {
                         checklistLayout.setVisibility(View.GONE);
                         Toast.makeText(MainActivity.this, "Dagelijks alarm uitgezet", Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
@@ -419,7 +398,7 @@ public class MainActivity extends AppCompatActivity{
             // attaching data adapter to spinner
             category.setAdapter(dataAdapter);
 
-            btnDelete.setOnClickListener(new View.OnClickListener(){
+            btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     final Dialog dialog = new Dialog(MainActivity.this);
@@ -462,7 +441,7 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
-            txtMinimumVoorraad.setText("" + getMinimumStock());
+            txtMinimumVoorraad.setText(String.valueOf(getMinimumStock()));
             txtMinimumVoorraad.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -480,7 +459,7 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
-            txtDatum.setText("" + days);
+            txtDatum.setText(String.valueOf(days));
             txtDatum.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -498,7 +477,7 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
-            txtTime.setText("" + alarmTime);
+            txtTime.setText(String.valueOf(alarmTime));
             txtTime.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -523,6 +502,7 @@ public class MainActivity extends AppCompatActivity{
             return true;
         }
 
+        //'Herstel gegevens' button in menu
         if (id == R.id.Menu_Reset) {
 
             final Dialog dialog = new Dialog(this);
@@ -555,6 +535,7 @@ public class MainActivity extends AppCompatActivity{
             return true;
         }
 
+        //'Categorie toevoegen' button in menu
         if (id == R.id.Menu_Category) {
 
             //open pop-up
@@ -578,7 +559,7 @@ public class MainActivity extends AppCompatActivity{
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(!editText.getText().toString().isEmpty()) {
+                    if (!editText.getText().toString().isEmpty()) {
                         TasDB.addCategory(editText.getText().toString());
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -591,9 +572,7 @@ public class MainActivity extends AppCompatActivity{
                         dialog.dismiss();
 
                         createList();
-                    }
-                    else
-                    {
+                    } else {
                         editText.setHintTextColor(Color.RED);
                     }
                 }
@@ -603,6 +582,7 @@ public class MainActivity extends AppCompatActivity{
             return true;
         }
 
+        //'Item toevoegen' button in menu
         if (id == R.id.Menu_Item) {
 
             //open pop-up
@@ -633,13 +613,10 @@ public class MainActivity extends AppCompatActivity{
             checkboxVoorraad.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(checkboxVoorraad.isChecked())
-                    {
+                    if (checkboxVoorraad.isChecked()) {
                         LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.voorraadLayout);
                         layout.setVisibility(View.VISIBLE);
-                    }
-                    else
-                    {
+                    } else {
                         LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.voorraadLayout);
                         layout.setVisibility(View.GONE);
                     }
@@ -649,13 +626,10 @@ public class MainActivity extends AppCompatActivity{
             checkboxTht.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(checkboxTht.isChecked())
-                    {
+                    if (checkboxTht.isChecked()) {
                         LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.thtLayout);
                         layout.setVisibility(View.VISIBLE);
-                    }
-                    else
-                    {
+                    } else {
                         LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.thtLayout);
                         layout.setVisibility(View.GONE);
                     }
@@ -665,13 +639,10 @@ public class MainActivity extends AppCompatActivity{
             checkboxvolume.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(checkboxvolume.isChecked())
-                    {
+                    if (checkboxvolume.isChecked()) {
                         LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.volumeLayout);
                         layout.setVisibility(View.VISIBLE);
-                    }
-                    else
-                    {
+                    } else {
                         LinearLayout layout = (LinearLayout) dialog.findViewById(R.id.volumeLayout);
                         layout.setVisibility(View.GONE);
                     }
@@ -686,17 +657,16 @@ public class MainActivity extends AppCompatActivity{
             });
 
             btnDate.setOnClickListener(new View.OnClickListener() {
-                                           @Override
-                                           public void onClick(View view) {
-                                               (MainActivity.this).datePicker(dialog);
-                                           }
-                                       });
+                @Override
+                public void onClick(View view) {
+                    (MainActivity.this).datePicker(dialog);
+                }
+            });
 
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(!editText.getText().toString().isEmpty())
-                    {
+                    if (!editText.getText().toString().isEmpty()) {
                         Category cat = (Category) category.getSelectedItem();
                         int volume = Integer.parseInt(volumeText.getText().toString());
 
@@ -740,9 +710,7 @@ public class MainActivity extends AppCompatActivity{
                         Toast.makeText(MainActivity.this, editText.getText().toString() + " toegevoegd aan categorie: " + cat.getName(), Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         createList();
-                    }
-                    else
-                    {
+                    } else {
                         editText.setHintTextColor(Color.RED);
                     }
                 }
@@ -754,7 +722,7 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public void datePicker(CustomDialog dialog){
+    public void datePicker(CustomDialog dialog) {
 
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.activity = this;

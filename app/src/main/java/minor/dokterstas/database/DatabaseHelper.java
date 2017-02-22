@@ -4,29 +4,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.joda.time.DateTime;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-/**
- * Created by Hakob on 8-2-2017.
- */
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "TasDatabase";
-
-    public static final String TABLE_CATEGORIES = "category_table";
+    private static final String DATABASE_NAME = "TasDatabase";
+    private static final String TABLE_CATEGORIES = "category_table";
     public static final String COLUMN_CATEGORIES_ID = "C_ID";
     public static final String COLUMN_CATEGORIES_NAME = "NAME";
-
-    public static final String TABLE_ITEMS = "items_table";
+    private static final String TABLE_ITEMS = "items_table";
     public static final String COLUMN_ITEMS_ID = "I_ID";
     public static final String COLUMN_ITEMS_NAME = "NAME";
     public static final String COLUMN_ITEMS_STOCK = "STOCK";
@@ -37,7 +25,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
-        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
@@ -54,8 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ITEMS_VOLUME + " INTEGER DEFAULT 0, "
                 + COLUMN_ITEMS_TYPE + " INTEGER DEFAULT 0, "
                 + COLUMN_ITEMS_EXPIRATION + " LONG DEFAULT 10000000000, "
-                + COLUMN_ITEMS_CATEGORIES_ID + " INTEGER, FOREIGN KEY("+ COLUMN_ITEMS_CATEGORIES_ID +") REFERENCES "+ TABLE_CATEGORIES  +"(" + COLUMN_CATEGORIES_ID + ") )");
-
+                + COLUMN_ITEMS_CATEGORIES_ID + " INTEGER, FOREIGN KEY(" + COLUMN_ITEMS_CATEGORIES_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + COLUMN_CATEGORIES_ID + ") )");
 
         //INSERT CATEGORIES
         ContentValues values = new ContentValues();
@@ -77,7 +63,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values5 = new ContentValues();
         values5.put(COLUMN_CATEGORIES_NAME, "Verbandmateriaal");
         db.insert(TABLE_CATEGORIES, null, values5);
-
 
         //INSERT DEFAULT ITEMS IN CATEGORIES
         {
@@ -288,87 +273,61 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateDate(int item_id,int year, int month, int dayOfMonth)
-    {
+    public void updateDate(int item_id, int year, int month, int dayOfMonth) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         DateTime dateTime = new DateTime();
-        dateTime = dateTime.withDate(year,month+1,dayOfMonth);
+        dateTime = dateTime.withDate(year, month + 1, dayOfMonth);
         long milis = dateTime.getMillis();
-        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_EXPIRATION + " = " + milis + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
+        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_EXPIRATION + " = " + milis + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id);
     }
 
-    public void updateStock(int item_id, String stock)
-    {
+    public void updateStock(int item_id, String stock) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_STOCK + " = " + stock + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
+        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_STOCK + " = " + stock + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id);
     }
 
-    public void updateVolume(int item_id, String volume)
-    {
+    public void updateVolume(int item_id, String volume) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_VOLUME + " = " + volume + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id );
+        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMS_VOLUME + " = " + volume + " WHERE " + COLUMN_ITEMS_ID + " = " + item_id);
     }
 
-    public Cursor getItem(int item_id)
-    {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "select * from " + TABLE_ITEMS + " where " + COLUMN_ITEMS_ID + " = " + item_id;
-        Cursor result = db.rawQuery(query, null);
-        return result;
-    }
-
-    public Cursor getAllItems()
-    {
+    public Cursor getAllItems() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select * from " + TABLE_ITEMS;
-        Cursor result = db.rawQuery(query, null);
-        return result;
+        return db.rawQuery(query, null);
     }
 
-    public Cursor countAllItems()
-    {
+    public Cursor countAllItems() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select count(*) from " + TABLE_ITEMS;
-        Cursor result = db.rawQuery(query, null);
-        return result;
+        return db.rawQuery(query, null);
     }
 
     public Cursor getAllDataFromTable(int table) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "";
-        if(table == 1) {
+        String query;
+        if (table == 1) {
             query = "select * from " + TABLE_CATEGORIES;
-        }
-        else
-        {
+        } else {
             query = "select * from " + TABLE_ITEMS;
         }
-        Cursor res = db.rawQuery(query, null);
-        return res;
+        return db.rawQuery(query, null);
     }
 
-    public void resetAll(Context context)
-    {
+    public void resetAll(Context context) {
         context.deleteDatabase(DATABASE_NAME);
     }
 
-    public void addCategory(String name)
-    {
+    public void addCategory(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_CATEGORIES_NAME, name);
 
         db.insert(TABLE_CATEGORIES, null, values);
     }
 
-    public void addItemName(String name, int categoryId, int type)
-    {
+    public void addItemName(String name, int categoryId, int type) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
@@ -376,10 +335,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, values);
     }
 
-    public void addItemDate(String name, int categoryId,long datum, int type)
-    {
+    public void addItemDate(String name, int categoryId, long datum, int type) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
@@ -388,10 +345,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, values);
     }
 
-    public void addItemVolume(String name, int categoryId, int volume, int type)
-    {
+    public void addItemVolume(String name, int categoryId, int volume, int type) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
@@ -400,22 +355,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, values);
     }
 
-    public void addItemDateVolume(String name, int categoryId, long datum, int volume, int type)
-    {
+    public void addItemDateVolume(String name, int categoryId, long datum, int volume, int type) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
+        values.put(COLUMN_ITEMS_EXPIRATION, datum);
         values.put(COLUMN_ITEMS_VOLUME, volume);
         values.put(COLUMN_ITEMS_TYPE, type);
         db.insert(TABLE_ITEMS, null, values);
     }
 
-    public void addItemStock(String name, int categoryId, int voorraad, int type)
-    {
+    public void addItemStock(String name, int categoryId, int voorraad, int type) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
@@ -424,10 +376,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, values);
     }
 
-    public void addItemStockVolume(String name, int categoryId, int voorraad, int volume, int type)
-    {
+    public void addItemStockVolume(String name, int categoryId, int voorraad, int volume, int type) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
@@ -437,10 +387,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, values);
     }
 
-    public void addItemStockDate(String name, int categoryId, int voorraad, long datum, int type)
-    {
+    public void addItemStockDate(String name, int categoryId, int voorraad, long datum, int type) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
@@ -450,10 +398,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, values);
     }
 
-    public void addItemStockDateVolume(String name, int categoryId, int voorraad, long datum, int volume, int type)
-    {
+    public void addItemStockDateVolume(String name, int categoryId, int voorraad, long datum, int volume, int type) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEMS_NAME, name);
         values.put(COLUMN_ITEMS_CATEGORIES_ID, categoryId);
@@ -464,19 +410,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, values);
     }
 
-    public void deleteItem(String id)
-    {
+    public void deleteItem(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        db.delete(TABLE_ITEMS,"I_ID=?",new String[]{id});
+        db.delete(TABLE_ITEMS, "I_ID=?", new String[]{id});
     }
 
-    public void deleteCategory(String id)
-    {
+    public void deleteCategory(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        db.delete(TABLE_ITEMS,"C_ID=?",new String[]{id});
-        db.delete(TABLE_CATEGORIES,"C_ID=?",new String[]{id});
+        db.delete(TABLE_ITEMS, "C_ID=?", new String[]{id});
+        db.delete(TABLE_CATEGORIES, "C_ID=?", new String[]{id});
         //TODO verlaag item ids met 1 of remove method
     }
 
@@ -484,10 +426,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS + " + TABLE_CATEGORIES);
         db.execSQL("DROP TABLE IF EXISTS + " + TABLE_ITEMS);
-
         onCreate(db);
-
     }
-
-
 }

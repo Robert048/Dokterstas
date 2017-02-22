@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
+ * Bron: https://developer.android.com/training/scheduling/alarms.html
+ */
+
+/**
  * This BroadcastReceiver automatically (re)starts the alarm when the device is
  * rebooted. This receiver is set to be disabled (android:enabled="false") in the
  * application's manifest file. When the user sets the alarm, the receiver is enabled.

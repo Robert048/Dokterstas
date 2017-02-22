@@ -16,6 +16,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
+ * Bron: https://developer.android.com/training/scheduling/alarms.html
+ */
+
+/**
  * This {@code IntentService} does the app's actual work.
  * {@code AlarmReceiver} (a {@code WakefulBroadcastReceiver}) holds a
  * partial wake lock for this service while the service does its work. When the
@@ -30,7 +34,6 @@ public class SchedulingService extends IntentService {
     // An ID used to post the notification.
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
 
     @Override
     protected void onHandleIntent(Intent intent) {

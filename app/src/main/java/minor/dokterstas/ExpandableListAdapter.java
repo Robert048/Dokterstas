@@ -15,17 +15,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import minor.dokterstas.database.DatabaseHelper;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
-    public LayoutInflater inflater;
-    public Activity activity;
+    private LayoutInflater inflater;
+    private Activity activity;
     private MainActivity context;
     private DatabaseHelper db;
-    ArrayList<ArrayList<Integer>> check_states = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> check_states = new ArrayList<>();
     private List<Category> groups;
     private List<List<Item>> children = new ArrayList<>();
     private int counter;
@@ -71,8 +72,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return children.get(groupPosition).size();
     }
 
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
-    {
+    //Method to make the items per category
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        //get layout file
         View grid;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         grid = inflater.inflate(R.layout.listrow_details, parent, false);
@@ -100,8 +102,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     check_states.get(grpPos).set(childPos, 0);
                     boxNaam.setChecked(false);
                 }
-                if(counter == context.getCounterAmount())
-                {
+                if (counter == context.getCounterAmount()) {
                     Toast.makeText(activity, "Lijst klaar", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -110,11 +111,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         final Item item = (Item) getChild(grpPos, childPos);
         txtData.setText(item.getData());
 
-        boxNaam.setOnLongClickListener(new View.OnLongClickListener()
-        {
+        boxNaam.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View arg1)
-            {
+            public boolean onLongClick(View arg1) {
                 CheckBox checkbox = (CheckBox) arg1;
 
                 final CustomDialog dialog = new CustomDialog(context);
@@ -253,10 +252,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                                 dialog3.dismiss();
                             }
                         });
-
-
-
-
                     }
                 });
 
@@ -268,12 +263,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         switch (item.getType()) {
                             case 1:
                                 //alleen voorraad
-                                if(!txtVoorraad.getText().toString().isEmpty()) {
+                                if (!txtVoorraad.getText().toString().isEmpty()) {
                                     db.updateStock(item.getID(), txtVoorraad.getText().toString());
                                     dialog.dismiss();
-                                }
-                                else
-                                {
+                                } else {
                                     txtVoorraad.setHint("aantal");
                                     txtVoorraad.setHintTextColor(Color.RED);
                                 }
@@ -290,11 +283,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                             case 3:
                                 if (dialog.day == 0) {
                                     //alleen voorraad
-                                    if(!txtVoorraad.getText().toString().isEmpty()) {
+                                    if (!txtVoorraad.getText().toString().isEmpty()) {
                                         db.updateStock(item.getID(), txtVoorraad.getText().toString());
                                         dialog.dismiss();
-                                    }
-                                    else {
+                                    } else {
                                         txtVoorraad.setHint("aantal");
                                         txtVoorraad.setHintTextColor(Color.RED);
                                     }
@@ -309,24 +301,21 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                                 dialog.dismiss();
                                 break;
                             case 5:
-                                if(!txtVoorraad.getText().toString().isEmpty() && !txtVolume.getText().toString().isEmpty()) {
+                                if (!txtVoorraad.getText().toString().isEmpty() && !txtVolume.getText().toString().isEmpty()) {
                                     db.updateVolume(item.getID(), txtVolume.getText().toString());
                                     db.updateStock(item.getID(), txtVoorraad.getText().toString());
                                     dialog.dismiss();
-                                }
-                                else if(!txtVoorraad.getText().toString().isEmpty())
-                                {
+                                } else if (!txtVoorraad.getText().toString().isEmpty()) {
                                     txtVolume.setHint("aantal");
                                     txtVolume.setHintTextColor(Color.RED);
-                                }
-                                else {
+                                } else {
                                     txtVoorraad.setHint("aantal");
                                     txtVoorraad.setHintTextColor(Color.RED);
                                 }
 
                                 break;
                             case 6:
-                                if(!txtVolume.getText().toString().isEmpty()) {
+                                if (!txtVolume.getText().toString().isEmpty()) {
                                     if (dialog.day == 0) {
                                         db.updateVolume(item.getID(), txtVolume.getText().toString());
                                         dialog.dismiss();
@@ -335,15 +324,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                                         db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
                                         dialog.dismiss();
                                     }
-                                }
-                                else
-                                {
+                                } else {
                                     txtVolume.setHint("aantal");
                                     txtVolume.setHintTextColor(Color.RED);
                                 }
                                 break;
                             case 7:
-                                if(!txtVoorraad.getText().toString().isEmpty() && !txtVolume.getText().toString().isEmpty()) {
+                                if (!txtVoorraad.getText().toString().isEmpty() && !txtVolume.getText().toString().isEmpty()) {
                                     if (dialog.day == 0) {
                                         db.updateVolume(item.getID(), txtVolume.getText().toString());
                                         db.updateStock(item.getID(), txtVoorraad.getText().toString());
@@ -386,15 +373,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return groupPosition;
     }
 
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
-    {
+    //Method the make the Categories
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_group, null);
         }
-
         CheckedTextView header = (CheckedTextView) convertView.findViewById(R.id.textView1);
         header.setText(getGroup(groupPosition).toString());
-
         return convertView;
     }
 
