@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary">
 
     <TextView
-        android:text="Checklist meldingen:"
+        android:text="@string/checklist_meldingen"
         android:textColor="@android:color/background_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/voorraadTitel"
-        android:text="Voorraad laag van:"
+        android:text="@string/voorraad_laag_van"
         android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         android:paddingEnd="10dp"
         android:id="@+id/voorraadLayout">
         <ScrollView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -61,7 +61,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/thtTitel"
-        android:text="Houdbaarheidsdatum verstreken van:"
+        android:text="@string/houdbaarheidsdatum_verstreken_van"
         android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         android:id="@+id/thtLayout">
 
         <ScrollView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
@@ -104,7 +104,5 @@
                     android:layout_weight="1"/>
             </LinearLayout>
         </ScrollView>
-
-
     </LinearLayout>
 </LinearLayout>

@@ -12,11 +12,11 @@
     android:paddingTop="10dp">
 
     <TextView
-        android:text="Item bewerken"
+        android:text="@string/item_bewerken"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textColor="@android:color/black"
@@ -29,13 +29,11 @@
         android:background="@color/colorText" />
 
     <TextView
-        android:text="TextView"
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:textColor="@color/colorText"
-        android:textSize="23dp"
+        android:textSize="23sp"
         android:id="@+id/txtTitel"
         android:paddingBottom="10dp"
         android:paddingTop="12dp"
@@ -48,17 +46,16 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="Voorraad: "
-            android:textSize="17dp"
+            android:text="@string/voorraad"
+            android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <EditText
-            android:text="105"
             android:ems="6"
-            android:textSize="17dp"
+            android:textSize="17sp"
             android:textColor="@color/colorText"
             android:inputType="number"
             android:layout_width="103dp"
@@ -68,7 +65,7 @@
 
         <Button
             android:id="@+id/minus"
-            android:text="-"
+            android:text="@string/min"
             android:layout_weight="1.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +78,7 @@
 
         <Button
             android:id="@+id/plus"
-            android:text="+"
+            android:text="@string/plus"
             android:layout_weight="1.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -100,24 +97,22 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="Volume (mL): "
-            android:textSize="17dp"
+            android:text="@string/volume_ml"
+            android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <EditText
-            android:text="0"
             android:ems="6"
-            android:textSize="17dp"
+            android:textSize="17sp"
             android:textColor="@color/colorText"
             android:inputType="number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtVolume"
-            android:layout_marginEnd="10dp"
-            />
+            android:layout_marginEnd="10dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -127,15 +122,14 @@
         android:orientation="horizontal"
         android:paddingBottom="25dp">
         <TextView
-            android:text="Datum: "
-            android:textSize="17dp"
+            android:text="@string/datum"
+            android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
-            android:text="01/01/9999"
-            android:textSize="17dp"
+            android:textSize="17sp"
             android:textColor="@color/colorText"
             android:layout_weight="0.60"
             android:layout_width="wrap_content"
@@ -146,8 +140,7 @@
             android:id="@+id/date"
             android:layout_width="95dp"
             android:layout_height="wrap_content"
-            android:text="nieuwe datum"
-            android:onClick="showTimePickerDialog"
+            android:text="@string/nieuwe_datum"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"
@@ -155,7 +148,6 @@
             android:shadowDy="0"
             android:shadowRadius="5"
             android:layout_weight="1.17" />
-
     </LinearLayout>
 
 
@@ -163,13 +155,12 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/date">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/delete"
             android:layout_weight = "1"
-            android:text="verwijder"
+            android:text="@string/verwijder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
@@ -184,21 +175,20 @@
             android:layout_weight = "1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="opslaan"
+            android:text="@string/opslaan"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
-            android:shadowRadius="5"/>/>
+            android:shadowRadius="5"/>
 
         <Button
             android:id="@+id/cancel"
             android:layout_weight = "1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="annuleer"
-
+            android:text="@string/annuleer"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"
@@ -206,8 +196,6 @@
             android:shadowDy="0"
             android:shadowRadius="5"/>
     </LinearLayout>
-
-
 </LinearLayout>
 
 

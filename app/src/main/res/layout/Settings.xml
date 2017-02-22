@@ -10,7 +10,7 @@
     android:weightSum="1">
 
     <TextView
-        android:text="Instellingen"
+        android:text="@string/instellingen"
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:background="@color/colorText" />
 
     <Switch
-        android:text="Melding lage voorraad"
+        android:text="@string/melding_lage_voorraad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/switchVoorraad"/>
@@ -37,11 +37,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:visibility="gone">
 
         <TextView
-            android:text="Lager dan: "
+            android:text="@string/lager_dan"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorText"
@@ -58,7 +59,7 @@
     </LinearLayout>
 
     <Switch
-        android:text="Melding houdbaarheidsdatum bereikt."
+        android:text="@string/melding_houdbaarheidsdatum_bereikt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/switchDatum"/>
@@ -67,10 +68,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:visibility="gone">
         <TextView
-            android:text="Aantal dagen van tevoren: "
+            android:text="@string/aantal_dagen_van_tevoren"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textColor="@color/colorText"
@@ -85,7 +87,7 @@
             android:layout_weight="1"/>
         </LinearLayout>
     <Switch
-        android:text="Melding voor controle checklist"
+        android:text="@string/melding_voor_controle_checklist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/switchChecklist"/>
@@ -94,10 +96,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:visibility="gone">
         <TextView
-            android:text="Tijdstip: "
+            android:text="@string/tijdstip"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorText"
@@ -126,7 +129,7 @@
             android:background="@android:color/black" />
 
         <TextView
-            android:text="Categorie verwijderen"
+            android:text="@string/categorie_verwijderen"
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_width="match_parent"
@@ -142,7 +145,7 @@
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Verwijderen"
+            android:text="@string/verwijderen"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"

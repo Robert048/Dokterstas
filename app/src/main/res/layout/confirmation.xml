@@ -11,7 +11,7 @@
 
 
     <TextView
-        android:text="Weet u het zeker?"
+        android:text="@string/Confirmation"
         android:layout_width="match_parent"
         android:textStyle="bold"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:paddingBottom="10dp"
         android:textAlignment="center"
         android:textColor="@color/colorText"
-        android:textSize="22dp"
+        android:textSize="22sp"
         android:id="@+id/textView"
         android:layout_weight="0.02" />
 
@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="ja"
+            android:text="@string/ja"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
             android:shadowColor="@color/colorPrimary"
@@ -51,7 +51,7 @@
             android:layout_weight="1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="nee"
+            android:text="@string/nee"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"

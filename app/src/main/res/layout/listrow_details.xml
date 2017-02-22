@@ -12,7 +12,6 @@
     android:background="@android:color/background_light"
     tools:context=".MainActivity">
 
-
     <CheckBox
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
@@ -24,16 +23,15 @@
         android:textStyle="bold"
         android:textColorLink="@color/colorPrimaryDark"
         android:longClickable="true"
-        android:onClick="checkbox_checked"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true" />
 
 
     <TextView
         android:id="@+id/TextView"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textColor="@color/colorText"
-        android:gravity="center_vertical|right"
+        android:gravity="center_vertical|end"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:drawablePadding="5dp"

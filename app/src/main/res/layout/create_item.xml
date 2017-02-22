@@ -9,29 +9,27 @@
     android:paddingTop="10dp">
 
     <TextView
-        android:text="Item toevoegen"
+        android:text="@string/item_toevoegen"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textColor="@android:color/black"
         android:textStyle="bold"
         android:id="@+id/createItemTitle" />
 
-
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-
         android:background="@color/colorText" />
 
     <TextView
-        android:text="Kies categorie voor nieuwe item:"
+        android:text="@string/kies_categorie_voor_nieuwe_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textColor="@android:color/black"
@@ -45,8 +43,8 @@
 
     <EditText
         android:id="@+id/editText"
-        android:hint="Naam"
-        android:textSize="20dp"
+        android:hint="@string/naam"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -54,22 +52,21 @@
     </EditText>
 
     <CheckBox
-        android:text="Houdbaarheidsdatum bijhouden"
+        android:text="@string/houdbaarheidsdatum_bijhouden"
         android:layout_width="match_parent"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:layout_height="wrap_content"
         android:id="@+id/thtBox" />
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="30dp"
-
+        android:layout_marginStart="15dp"
         android:id="@+id/thtLayout"
         android:visibility="gone">
 
         <TextView
-            android:text="Datum: "
+            android:text="@string/datum"
             android:layout_width="0dp"
             android:textColor="@color/colorText"
             android:layout_height="wrap_content"
@@ -83,10 +80,9 @@
             android:id="@+id/txtDate"/>
         <Button
             android:id="@+id/createDate"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Datum kiezen"
-            android:onClick="showDatePickerNewItem"
+            android:text="@string/datum_kiezen"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"
@@ -96,8 +92,8 @@
     </LinearLayout>
 
     <CheckBox
-        android:text="Voorraad bijhouden"
-        android:textSize="18dp"
+        android:text="@string/voorraad_bijhouden"
+        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/voorraadBox" />
@@ -111,13 +107,13 @@
         android:visibility="gone">
 
         <TextView
-            android:text="Aantal: "
+            android:text="@string/aantal"
             android:layout_width="0dp"
             android:textColor="@color/colorText"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <EditText
-            android:text="0"
+            android:text="@string/_0"
             android:textColor="@color/colorText"
             android:textSize="15sp"
             android:inputType="number"
@@ -127,8 +123,8 @@
     </LinearLayout>
 
     <CheckBox
-        android:text="Volume bijhouden"
-        android:textSize="18dp"
+        android:text="@string/volume_bijhouden"
+        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/volumeBox" />
@@ -142,13 +138,13 @@
         android:visibility="gone">
 
         <TextView
-            android:text="Volume(mL): "
+            android:text="@string/volume_ml"
             android:textColor="@color/colorText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <EditText
-            android:text="0"
+            android:text="@string/_0"
             android:textColor="@color/colorText"
             android:textSize="15sp"
             android:inputType="number"
@@ -169,7 +165,7 @@
             android:layout_weight="1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Opslaan"
+            android:text="@string/opslaan"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"
@@ -183,14 +179,12 @@
             android:layout_weight="1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Annuleer"
-
+            android:text="@string/annuleer"
             android:textColor="#FFFFFF"
             android:background="@drawable/buttonshape"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"/>
-
     </LinearLayout>
 </LinearLayout>
