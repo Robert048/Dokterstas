@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 DateTime dateTime = new DateTime(calendar.getTime());
                 long pickedMilis = dateTime.getMillis();
                 long correctMilis = pickedMilis + daysBefore;
+                long gsdgsdgs = pickedMilis + daysBefore;
 
                 DateTime correctDate = new DateTime();
                 correctDate = correctDate.withMillis(correctMilis);
