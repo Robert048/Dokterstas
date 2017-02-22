@@ -108,7 +108,7 @@
         <EditText
             android:textColor="@android:color/tertiary_text_dark"
             android:textSize="15sp"
-            android:inputType="number"
+            android:inputType="time"
             android:id="@+id/txtTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
