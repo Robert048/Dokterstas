@@ -55,7 +55,7 @@ public class SchedulingService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.notification_icon)
+                        .setSmallIcon(R.drawable.notif_tas_icon)
                         .setContentTitle("Checklist Notificatie")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
