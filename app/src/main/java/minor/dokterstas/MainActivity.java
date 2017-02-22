@@ -156,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
                 correctDate = correctDate.withMillis(correctMilis);
 
                   if (expirationDate.before(correctDate.toDate()) && (type == 2 || type == 3)) {
-          //      if (correctDate.toDate().before(calendar.getTime()) && (type == 2 || type == 3)) {
                     if (namen2.equals("")) {
                         namen2 = Name + "\n";
                         expirationDateText = dateText + "\n";
