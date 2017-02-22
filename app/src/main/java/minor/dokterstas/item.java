@@ -1,6 +1,6 @@
 package minor.dokterstas;
 
-public class Item {
+class Item {
     private int ID;
     private String name;
     private String tht;
@@ -18,7 +18,7 @@ public class Item {
     7 = Volume, Voorraad en houdbaarheidsdatum
     */
 
-    public Item(int ID, String name, String tht, int voorraad, int volume, int type) {
+    Item(int ID, String name, String tht, int voorraad, int volume, int type) {
         this.ID = ID;
         this.name = name;
         this.tht = tht;
@@ -27,7 +27,7 @@ public class Item {
         this.volume = volume;
     }
 
-    public int getID() {
+    int getID() {
         return ID;
     }
 
@@ -35,35 +35,32 @@ public class Item {
         return name;
     }
 
-    public String getTht()
-    {
+    String getTht() {
         return tht;
     }
 
-    public int getVoorraad() {
+    int getVoorraad() {
         return voorraad;
     }
 
-    public int getType() {
+    int getType() {
         return type;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return name;
     }
 
-    public String getData()
-    {
+    public String getData() {
         String returnString = "";
-        if(type == 0) returnString = "";
-        else if(type == 1) returnString = voorraad + " op voorraad";
-        else if(type == 2) returnString = tht;
-        else if(type == 3) returnString = tht + "\n" + voorraad + " op voorraad";
-        else if(type == 4) returnString = volume + "mL";
-        else if(type == 5) returnString = voorraad + " op voorraad" + "\n" + volume + "mL";
-        else if(type == 6) returnString = tht + "\n" + volume + "mL";
-        else if(type == 7) returnString = tht + "\n" + voorraad + " op voorraad" + "\n" + volume + "mL";
+        if (type == 0) returnString = "";
+        else if (type == 1) returnString = voorraad + " op voorraad";
+        else if (type == 2) returnString = tht;
+        else if (type == 3) returnString = tht + "\n" + voorraad + " op voorraad";
+        else if (type == 4) returnString = volume + "mL";
+        else if (type == 5) returnString = voorraad + " op voorraad" + "\n" + volume + "mL";
+        else if (type == 6) returnString = tht + "\n" + volume + "mL";
+        else if (type == 7) returnString = tht + "\n" + voorraad + " op voorraad" + "\n" + volume + "mL";
 
         return returnString;
     }
