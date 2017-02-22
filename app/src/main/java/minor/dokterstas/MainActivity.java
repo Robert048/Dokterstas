@@ -144,7 +144,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 Calendar calendar = new GregorianCalendar();
-                if (expirationDate.before(calendar.getTime()) && (type == 2 || type == 3)) {
+
+                //get date
+                long daysBefore = days * 86400000 + 43200000;
+                DateTime dateTime = new DateTime(calendar.getTime());
+                long pickedMilis = dateTime.getMillis();
+                long correctMilis = pickedMilis + daysBefore;
+
+                DateTime correctDate = new DateTime();
+                correctDate = correctDate.withMillis(correctMilis);
+
+                  if (expirationDate.before(correctDate.toDate()) && (type == 2 || type == 3)) {
+          //      if (correctDate.toDate().before(calendar.getTime()) && (type == 2 || type == 3)) {
                     if (namen2.equals("")) {
                         namen2 = Name + "\n";
                         expirationDateText = dateText + "\n";
