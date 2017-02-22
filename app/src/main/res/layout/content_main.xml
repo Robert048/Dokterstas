@@ -14,8 +14,19 @@
     tools:context="minor.dokterstas.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Checklist"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:id="@+id/textView3" />
+
+
     <ExpandableListView
         android:id="@+id/listView"
+        android:paddingTop="28dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
