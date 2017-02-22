@@ -683,7 +683,7 @@ public class MainActivity extends AppCompatActivity {
                         int volume = Integer.parseInt(volumeText.getText().toString());
 
                         if (checkboxVoorraad.isChecked()) {
-                            if(Integer.parseInt(voorraadText.getText().toString()) >= 0) {
+                            if(Integer.parseInt(voorraadText.getText().toString()) >= 0 && Integer.parseInt(voorraadText.getText().toString()) < 10000) {
                                 if (checkboxTht.isChecked()) {
                                     DateTime dateTime = new DateTime();
                                     dateTime = dateTime.withDate(dialog.year, dialog.month + 1, dialog.day);
@@ -694,7 +694,7 @@ public class MainActivity extends AppCompatActivity {
                                         TasDB.addItemStockDate(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), milis, 3);
                                     }
                                 } else {
-                                    if (checkboxvolume.isChecked()) {
+                                    if (checkboxvolume.isChecked() && volume > 0 && volume < 100000) {
                                         TasDB.addItemStockVolume(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), volume, 5);
                                     } else {
                                         TasDB.addItemStock(editText.getText().toString(), cat.getID(), Integer.parseInt(voorraadText.getText().toString()), 1);
@@ -710,7 +710,7 @@ public class MainActivity extends AppCompatActivity {
                                 DateTime dateTime = new DateTime();
                                 dateTime = dateTime.withDate(dialog.year, dialog.month + 1, dialog.day);
                                 long milis = dateTime.getMillis();
-                                if (checkboxvolume.isChecked()) {
+                                if (checkboxvolume.isChecked()  && volume > 0 && volume < 100000) {
                                     TasDB.addItemDateVolume(editText.getText().toString(), cat.getID(), milis, volume, 6);
                                 } else {
                                     TasDB.addItemDate(editText.getText().toString(), cat.getID(), milis, 2);
