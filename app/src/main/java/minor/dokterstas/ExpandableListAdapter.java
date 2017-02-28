@@ -239,6 +239,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                             public void onClick(View view) {
                                 db.deleteItem("" + item.getID());
                                 dialog3.dismiss();
+
                                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                                 builder.setMessage(item.getName() + " verwijderd uit lijst.");
