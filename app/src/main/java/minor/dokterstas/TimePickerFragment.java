@@ -9,6 +9,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import java.util.Calendar;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import minor.dokterstas.database.DatabaseHelper;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
     public CustomDialog dialog;
+    public MainActivity activity;
 
 
     @Override
@@ -49,13 +53,15 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         }
 
         String dateText =  hours + ":" + minutes + ":00";
-        TextView txtTime = (TextView) dialog.findViewById(R.id.txtTime);
-        txtTime.setText(dateText);
+        TextView txtTimeSet = (TextView) dialog.findViewById(R.id.txtTime);
+        txtTimeSet.setText(dateText);
 
         dialog.hour = i;
         dialog.minute = i1;
 
 
+        //update alarm time and alarm
+        activity.resetAlarm(dateText);
 
     }
 }

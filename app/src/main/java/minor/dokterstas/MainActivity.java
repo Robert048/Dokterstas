@@ -218,6 +218,11 @@ public class MainActivity extends AppCompatActivity {
         return alarmTime;
     }
 
+    public void setAlarmTime(Time time)
+    {
+        alarmTime = time;
+    }
+
     public void setMinimumStock(int Stock) {
         minimumStock = Stock;
     }
@@ -497,19 +502,6 @@ public class MainActivity extends AppCompatActivity {
             });
 
             txtTime.setText(String.valueOf(alarmTime));
-            txtTime.setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                        Toast.makeText(MainActivity.this, "Notificatie tijdstip aangepast naar: " + txtTime.getText(), Toast.LENGTH_SHORT).show();
-
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-
             dialog.show();
             return true;
         }
@@ -773,20 +765,25 @@ public class MainActivity extends AppCompatActivity {
     public void pickTime(CustomDialog dialog) {
         TimePickerFragment fragment = new TimePickerFragment();
         fragment.dialog = dialog;
+        fragment.activity = this;
         fragment.show(getFragmentManager(), "");
 
-        TextView txtTime = (TextView) dialog.findViewById(R.id.txtTime);
+    }
+
+    public void resetAlarm(String dateText)
+    {
+        String stringTime = dateText;
+        String[] timeArray = stringTime.split(":");
+        Time time = new Time(Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]), Integer.parseInt(timeArray[2]));
+        setAlarmTime(time);
 
         SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("AlarmTime", txtTime.getText().toString());
+        editor.putString("alarmTime", alarmTime.toString());
         editor.apply();
-    }
-
-    public void cancelOldAlarm()
-    {
         //cancel old alarm
         alarm.cancelAlarm(MainActivity.this);
         alarm.setAlarm(MainActivity.this);
+        Toast.makeText(MainActivity.this, "Notificatie tijdstip aangepast naar: " + stringTime, Toast.LENGTH_SHORT).show();
     }
 }
