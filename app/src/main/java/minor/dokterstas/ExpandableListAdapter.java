@@ -181,6 +181,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnPlus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(txtVoorraad.getText().toString().isEmpty())
+                        {
+                            txtVoorraad.setText("0");
+                        }
                         String stock = txtVoorraad.getText().toString();
                         int aantal = Integer.parseInt(stock);
                         aantal = aantal + 1;
@@ -191,6 +195,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnMinus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(txtVoorraad.getText().toString().isEmpty())
+                        {
+                            txtVoorraad.setText("0");
+                        }
                         String stock = txtVoorraad.getText().toString();
                         int aantal = Integer.parseInt(stock);
                         if (aantal > 0) {
