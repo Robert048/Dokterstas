@@ -35,10 +35,12 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
+
         DateTime dateTime = new DateTime();
         dateTime = dateTime.withDate(year, month + 1, day);
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy");
         String dateText = dateTime.toString(dateTimeFormatter);
+
         TextView txtDate = (TextView) dialog.findViewById(R.id.txtDate);
         txtDate.setText(dateText);
 

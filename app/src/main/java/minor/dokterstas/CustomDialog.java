@@ -8,6 +8,8 @@ class CustomDialog extends Dialog {
     int year;
     int month;
     int day;
+    int hour;
+    int minute;
 
     CustomDialog(Context context) {
         super(context);

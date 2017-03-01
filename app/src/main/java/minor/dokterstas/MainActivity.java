@@ -1,6 +1,7 @@
 package minor.dokterstas;
 
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -90,13 +92,7 @@ public class MainActivity extends AppCompatActivity {
         while (c.moveToNext()) {
             counterAmount = c.getInt(column1);
         }
-/*
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-9987402400398249/6683581213");
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        */
     }
 
     private void setNotifications() {
@@ -304,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
 
         //'Instellingen' button in menu
         if (id == R.id.Menu_Settings) {
-            final Dialog dialog = new Dialog(this);
+            final CustomDialog dialog = new CustomDialog(this);
 
             dialog.setContentView(R.layout.settings);
             dialog.setTitle("settings");
@@ -318,6 +314,14 @@ public class MainActivity extends AppCompatActivity {
             Switch switchVoorraad = (Switch) dialog.findViewById(R.id.switchVoorraad);
             Switch switchDatum = (Switch) dialog.findViewById(R.id.switchDatum);
             Switch switchChecklist = (Switch) dialog.findViewById(R.id.switchChecklist);
+            Button btnTimePicker = (Button) dialog.findViewById(R.id.pickTime);
+
+            btnTimePicker.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    pickTime(dialog);
+                }
+            });
 
             if (voorraadUsed) {
                 switchVoorraad.setChecked(true);
@@ -499,13 +503,6 @@ public class MainActivity extends AppCompatActivity {
                     if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                         Toast.makeText(MainActivity.this, "Notificatie tijdstip aangepast naar: " + txtTime.getText(), Toast.LENGTH_SHORT).show();
 
-                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("AlarmTime", txtTime.getText().toString());
-                        editor.apply();
-                        //cancel old alarm
-                        alarm.cancelAlarm(MainActivity.this);
-                        alarm.setAlarm(MainActivity.this);
                         return true;
                     }
                     return false;
@@ -701,7 +698,6 @@ public class MainActivity extends AppCompatActivity {
                     if (!editText.getText().toString().isEmpty()) {
                         Category cat = (Category) category.getSelectedItem();
                         int volume = Integer.parseInt(volumeText.getText().toString());
-
                         if (checkboxVoorraad.isChecked()) {
                             if(Integer.parseInt(voorraadText.getText().toString()) >= 0 && Integer.parseInt(voorraadText.getText().toString()) < 10000) {
                                 if (checkboxTht.isChecked()) {
@@ -767,11 +763,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void datePicker(String id, CustomDialog dialog) {
-
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.itemId = id;
         fragment.activity = this;
         fragment.dialog = dialog;
         fragment.show(getFragmentManager(), id);
+    }
+
+    public void pickTime(CustomDialog dialog) {
+        TimePickerFragment fragment = new TimePickerFragment();
+        fragment.dialog = dialog;
+        fragment.show(getFragmentManager(), "");
+
+        TextView txtTime = (TextView) dialog.findViewById(R.id.txtTime);
+
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("AlarmTime", txtTime.getText().toString());
+        editor.apply();
+        //cancel old alarm
+        alarm.cancelAlarm(MainActivity.this);
+        alarm.setAlarm(MainActivity.this);
     }
 }
