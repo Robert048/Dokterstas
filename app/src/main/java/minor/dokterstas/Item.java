@@ -43,6 +43,11 @@ class Item {
         return voorraad;
     }
 
+    int getVolume()
+    {
+        return volume;
+    }
+
     int getType() {
         return type;
     }

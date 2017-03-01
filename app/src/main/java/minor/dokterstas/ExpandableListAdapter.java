@@ -176,11 +176,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 txtTitel.setText(checkbox.getText());
 
                 txtVoorraad.setText("" + item.getVoorraad());
+                txtVolume.setText("" + item.getVolume());
                 txtDate.setText(item.getTht());
 
                 btnPlus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(txtVoorraad.getText().toString().isEmpty())
+                        {
+                            txtVoorraad.setText("0");
+                        }
                         String stock = txtVoorraad.getText().toString();
                         int aantal = Integer.parseInt(stock);
                         aantal = aantal + 1;
@@ -191,6 +196,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 btnMinus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(txtVoorraad.getText().toString().isEmpty())
+                        {
+                            txtVoorraad.setText("0");
+                        }
                         String stock = txtVoorraad.getText().toString();
                         int aantal = Integer.parseInt(stock);
                         if (aantal > 0) {
@@ -364,13 +373,20 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                                         db.updateDate(item.getID(), dialog.year, dialog.month, dialog.day);
                                         dialog.dismiss();
                                     }
-                                    if (!txtVoorraad.getText().toString().isEmpty()) {
-                                        txtVolume.setHint("aantal");
-                                        txtVolume.setHintTextColor(Color.RED);
-                                    } else {
-                                        txtVoorraad.setHint("aantal");
-                                        txtVoorraad.setHintTextColor(Color.RED);
-                                    }
+                                }
+                                if (!txtVoorraad.getText().toString().isEmpty()) {
+                                    txtVolume.setHint("aantal");
+                                    txtVolume.setHintTextColor(Color.RED);
+                                }
+                                else if (!txtVolume.getText().toString().isEmpty()) {
+                                    txtVoorraad.setHint("aantal");
+                                    txtVoorraad.setHintTextColor(Color.RED);
+                                }
+                                else {
+                                    txtVoorraad.setHint("aantal");
+                                    txtVoorraad.setHintTextColor(Color.RED);
+                                    txtVolume.setHint("aantal");
+                                    txtVolume.setHintTextColor(Color.RED);
                                 }
                                 break;
                         }
