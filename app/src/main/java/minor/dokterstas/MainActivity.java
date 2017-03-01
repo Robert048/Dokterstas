@@ -781,6 +781,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("AlarmTime", txtTime.getText().toString());
         editor.apply();
+    }
+
+    public void cancelOldAlarm()
+    {
         //cancel old alarm
         alarm.cancelAlarm(MainActivity.this);
         alarm.setAlarm(MainActivity.this);
